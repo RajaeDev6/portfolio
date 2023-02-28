@@ -5,7 +5,7 @@ import PortfolioImage from "../assets/images/portfolio.jpg";
 const projectCards = [
   {
     title: "Social Links",
-    text: "This is a project that display my social media handles?",
+    text: "This is a project that display my social media handles",
     image: SocialImage,
     link: "https://www.rajae-socials.tk",
     tools: ["REACT JS", "HTML", "CSS"],
@@ -14,8 +14,8 @@ const projectCards = [
     title: "Portfolio",
     text: "This is a my Portfolio",
     image: PortfolioImage,
-    link: "rajaedev.netlify.app",
-    tools: ["REACT JS", "TAILWINDCSS", "VITE"],
+    link: "https://rajaedev.netlify.app/",
+    tools: ["REACT JS", "TYPESCRIPT","TAILWINDCSS", "VITE"],
   },
 ];
 

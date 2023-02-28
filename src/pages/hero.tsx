@@ -24,7 +24,7 @@ const socials = [
   },
   {
     name: "instagram",
-    link: "www.instagram.com/rajae876__",
+    link: "https://instagram.com/rajae876__",
     icon: <AiOutlineInstagram size={30} className="text-red-400" />,
   },
 
