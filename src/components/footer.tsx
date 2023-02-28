@@ -44,7 +44,7 @@ const navlinks = [
     smooth: true,
     offset: -180,
     duration: 500,
-  },,
+  },
 ];
 
 const Footer: FC = () => {
