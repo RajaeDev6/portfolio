@@ -6,14 +6,14 @@ const projectCards = [
     title: "Social Links",
     text: "This is a project that display my social media handles?",
     image: SocialImage,
-    link: "rajae-socials.tk",
+    link: "https://www.rajae-socials.tk",
     tools: ["REACT JS", "HTML", "CSS"],
   },
   {
     title: "Portfolio",
     text: "This is a my Portfolio",
     image: SocialImage,
-    link: "rajae-socials.tk",
+    link: "https://www.rajaeDev.netlify.app",
     tools: ["REACT JS", "TAILWINDCSS", "VITE"],
   },
 ];
