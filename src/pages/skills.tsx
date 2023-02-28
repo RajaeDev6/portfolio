@@ -53,7 +53,7 @@ const SkillsPage: FC = () => {
             <SiGnubash size={30} />
           </li>
           <li className={style.listitems2}>
-            Express js
+            Expressjs
             <IoLogoNodejs size={30} />
           </li>
         </ul>

@@ -33,7 +33,7 @@ const ProjectPage: FC = () => {
             </figure>
             <div className="card-body">
               <h2 className="card-title">{card.title}</h2>
-              <p>{card.text}</p>
+              <p className="mb-2">{card.text}</p>
               <div className="card-actions justify-end">
                 {card.tools.map((tool) => (
                   <div className="badge badge-outline">{tool}</div>
