@@ -63,19 +63,11 @@ const navlinks = [
     offset: -180,
     duration: 500,
   },
-  {
-    url: "contact",
-    text: "Contact",
-    spy: true,
-    smooth: true,
-    offset: -180,
-    duration: 500,
-  },
 ];
 
 const Footer: FC = () => {
   return (
-    <footer className="footer footer-center p-10 bg-base-200 text-base-content rounded">
+    <footer className="footer items-center footer-center p-5 bg-base-200 text-base-content rounded">
       <div className="grid grid-flow-col gap-4">
         {navlinks.map((item) => (
           <Link

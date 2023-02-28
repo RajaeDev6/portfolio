@@ -40,7 +40,7 @@ const Main: FC = () => {
     <div className="w-full mb-20 md:mb-40 lg:mb-0 lg:h-screen " id="hero">
       <div className={style.content}>
         <div className="flex flex-col items-center md:items-start">
-          <h2 className="text-5xl mt-6">
+          <h2 className="text-4xl md:text-5xl mt-6">
             HI, I AM <span className={style.span}>RAJAE</span>
           </h2>
           <p className="md:text-xl pt-2 text-slate-200">
