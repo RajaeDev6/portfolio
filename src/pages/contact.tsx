@@ -1,9 +1,9 @@
 import { FC, useState, ChangeEvent } from "react";
 
 const style = {
-  content: `h-screen flex flex-col justify-center`,
+  content: `flex flex-col justify-center mt-14 py-10`,
   heading: `text-[#fff] font-bold text-4xl md:text-6xl mb-20 text-center`,
-  formWrap: `md:w-[500px] p-4 mx-auto items-center bg-[#Fff] rounded-lg`,
+  formWrap: `md:w-[500px] p-4 mx-auto mb-14 items-center bg-[#Fff] rounded-lg`,
     form:`p-4 mx-auto flex flex-col justify-center gap-4`,
 };
 
