@@ -11,12 +11,12 @@ import {
 import { IoLogoNodejs } from "react-icons/io";
 
 const style = {
-  content: `flex flex-col h-screen mb-40`,
+  content: `flex flex-col py-20 mb-10`,
   heading: `text-4xl lg:text-6xl text-[#fff] text-center font-bold mb-20`,
   list: `text-black font-bold bg-[#06D2FF] p-4`,
-  skills: `grid grid-cols-2 gap-x-8 gap-y-20 md:grid-cols-3`,
-  listitems1: ` rounded-lg text-black text-2xl flex font-bold bg-[#06D2FF] p-4 gap-4 justify-center items-center`,
-  listitems2: `text-black rounded-lg font-bold text-2xl bg-[#fff] p-4 flex items-center justify-center gap-4`,
+  skills: `grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3`,
+  listitems1: ` rounded-lg text-black text-lg md:text-2xl flex font-bold bg-[#06D2FF] p-2 gap-4 justify-center items-center`,
+  listitems2: `text-black rounded-lg font-bold text-lg md:text-2xl bg-[#fff] p-2 flex items-center justify-center gap-4`,
 };
 const SkillsPage: FC = () => {
   return (

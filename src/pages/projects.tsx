@@ -20,13 +20,13 @@ const projectCards = [
 
 const ProjectPage: FC = () => {
   return (
-    <div className="flex flex-col h-screen mb-8" id="projects">
+    <div className="flex flex-col" id="projects">
       <h1 className="text-4xl mb-12 md:text-6xl text-[#fff] font-bold text-center">
         Projects
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 justify-center gap-8">
         {projectCards.map((card) => (
-          <div className="mx-auto card w-96 bg-black-100 border-solid border-slate-100 border-2 shadow-xl">
+          <div className="card mx-auto w-full bg-black-100 border-solid border-slate-100 border-2 shadow-xl">
             <figure>
               <img src={card.image} width="300" className="rounded-lg mt-2" alt="Shoes" />
             </figure>

@@ -11,15 +11,15 @@ const style = {
   content: `flex flex-col-reverse md:flex-row items-center text-[#fff]`,
   span: `font-bold text-[#06D2FF]`,
   img: ` w-[400px] lg:w-[600px] mb-14`,
-  contactbutton: `bg-[#06D2FF] rounded-lg cursor-pointer text-black p-2 md:px-4 md:py-3 mr-8`,
-  projectbutton: `bg-[#fff] text-black rounded-lg p-2 cursor-pointer md:px-4 md:py-3`,
+  contactbutton: `bg-[#06D2FF] rounded-lg cursor-pointer text-black py-2 px-4 md:py-3 mr-8`,
+  projectbutton: `bg-[#fff] text-black rounded-lg py-2 px-4 cursor-pointer md:py-3`,
   socialHandles: ` cursor-pointer`,
 };
 
 const socials = [
   {
     name: "github",
-    link: "github.com",
+    link: "https://github.com/RajaeDev6",
     icon: <AiFillGithub size={30} className="text-slate-300" />,
   },
   {
@@ -30,7 +30,7 @@ const socials = [
 
   {
     name: "twitter",
-    link: "www.twitter.com",
+    link: "https://twitter.com/rajae876_",
     icon: <AiOutlineTwitter size={30} className="text-[#06D2FF]" />,
   },
 ];
@@ -40,7 +40,7 @@ const Main: FC = () => {
     <div className="w-full mb-20 md:mb-40 lg:mb-0 lg:h-screen " id="hero">
       <div className={style.content}>
         <div className="flex flex-col items-center md:items-start">
-          <h2 className="lg:text-5xl text-4xl mt-6">
+          <h2 className="text-5xl mt-6">
             HI, I AM <span className={style.span}>RAJAE</span>
           </h2>
           <p className="md:text-xl pt-2 text-slate-200">
@@ -82,7 +82,7 @@ const Main: FC = () => {
         <ul className="flex gap-4 mt-16">
           {socials.map((items) => (
             <li>
-              <a key={items.name} href={items.link} className={style.socialHandles}>
+              <a key={items.name} href={items.link} target="_blank" className={style.socialHandles}>
                 {items.icon}
               </a>
             </li>
