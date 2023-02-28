@@ -1,5 +1,6 @@
 import { FC } from "react";
 import SocialImage from "../assets/images/socials.jpg";
+import PortfolioImage from "../assets/images/portfolio.jpg";
 
 const projectCards = [
   {
@@ -12,7 +13,7 @@ const projectCards = [
   {
     title: "Portfolio",
     text: "This is a my Portfolio",
-    image: SocialImage,
+    image: PortfolioImage,
     link: "rajaedev.netlify.app",
     tools: ["REACT JS", "TAILWINDCSS", "VITE"],
   },
