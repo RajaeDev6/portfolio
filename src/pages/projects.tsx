@@ -13,7 +13,7 @@ const projectCards = [
     title: "Portfolio",
     text: "This is a my Portfolio",
     image: SocialImage,
-    link: "https://www.rajaeDev.netlify.app",
+    link: "rajaedev.netlify.app",
     tools: ["REACT JS", "TAILWINDCSS", "VITE"],
   },
 ];
