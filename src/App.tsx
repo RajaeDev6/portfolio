@@ -9,8 +9,8 @@ import ContactPage from "./pages/contact";
 import Footer from "./components/footer";
 
 const style = {
-  background: `bg-black w-full font-roboto`,
-  container: `md:max-w-5xl w-[90%] mx-auto relative`,
+  background: `bg-black w-screen font-roboto overflow-x-hidden`,
+  container: `md:max-w-5xl w-[80%] mx-auto relative`,
 };
 
 const App: FC = () => {
