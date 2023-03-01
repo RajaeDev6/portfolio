@@ -41,6 +41,7 @@ const ContactPage: FC = () => {
     setMessage("");
     setName("");
     setEmail("");
+        from.current.reset()
   };
 
   const style = {
