@@ -69,8 +69,9 @@ const Footer: FC = () => {
   return (
     <footer className="footer items-center footer-center p-5 bg-base-200 text-base-content rounded">
       <div className="grid grid-flow-col gap-4">
-        {navlinks.map((item) => (
+        {navlinks.map((item,index) => (
           <Link
+                        key={index}
             to={item.url}
             spy={item.spy}
             smooth={item.smooth}

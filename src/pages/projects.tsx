@@ -26,8 +26,8 @@ const ProjectPage: FC = () => {
         Projects
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 justify-center gap-8">
-        {projectCards.map((card) => (
-          <div className="card mx-auto w-full bg-black-100 border-solid border-slate-100 border-2 shadow-xl">
+        {projectCards.map((card,index) => (
+          <div key={index} className="card mx-auto w-full bg-black-100 border-solid border-slate-100 border-2 shadow-xl">
             <figure>
               <img src={card.image} width="300" className="rounded-lg mt-2" alt="Shoes" />
             </figure>
@@ -35,8 +35,8 @@ const ProjectPage: FC = () => {
               <h2 className="card-title">{card.title}</h2>
               <p className="mb-2">{card.text}</p>
               <div className="card-actions justify-end">
-                {card.tools.map((tool) => (
-                  <div className="badge badge-outline">{tool}</div>
+                {card.tools.map((tool, index) => (
+                  <div key={index} className="badge badge-outline">{tool}</div>
                 ))}
               </div>
               <a
