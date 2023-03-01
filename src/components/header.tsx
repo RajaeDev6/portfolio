@@ -61,8 +61,9 @@ const Header: FC = () => {
             togglemenu ? "top-[100%]" : "top-[-400px]"
           } bg-[#fff]  md:flex-row text-blacck md:flex md:mx-auto`}
         >
-          {navlinks.map((item) => (
+          {navlinks.map((item, index) => (
             <Link
+                            key={index}
               to={item.url}
               spy={item.spy}
               onClick={killMenu}
