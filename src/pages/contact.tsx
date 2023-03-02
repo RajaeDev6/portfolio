@@ -1,7 +1,7 @@
-import { FC, useState, ChangeEvent, useRef } from "react";
+import { useState, ChangeEvent, useRef } from "react";
 import emailjs from "emailjs-com";
 
-const ContactPage: FC = () => {
+const ContactPage: React.FunctionComponent = () => {
   const form = useRef<HTMLFormElement>(null);
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
