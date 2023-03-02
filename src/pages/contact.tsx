@@ -1,12 +1,12 @@
-import { FC, useState, ChangeEvent } from "react";
-import { useRef } from "react";
+import { FC, useState, ChangeEvent, useRef } from "react";
 import emailjs from "emailjs-com";
 
 const ContactPage: FC = () => {
-  const form = useRef();
+  const form = useRef<HTMLFormElement>(null);
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [message, setMessage] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -20,27 +20,24 @@ const ContactPage: FC = () => {
     setMessage(e.target.value);
   };
 
-  const sendEmail = (e) => {
+  const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    emailjs
-      .sendForm(
-        "service_tgu49x5",
-        "template_hicyvzi",
-        form.current,
-        "aHBKk1L7DqVNdw8r5"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
-        }
+    try {
+      await emailjs.sendForm(
+        process.env.SERVICE!,
+        process.env.EMAIL_TEMPLATE!,
+        form.current!,
+        process.env.EMAIL_API!
       );
-    setMessage("");
-    setName("");
-    setEmail("");
+      setSuccessMessage("Message sent!");
+      setName("");
+      setEmail("");
+      setMessage("");
+    } catch (error) {
+      console.log(error);
+      setSuccessMessage("Failed to send message.");
+    }
   };
 
   const style = {
@@ -48,13 +45,14 @@ const ContactPage: FC = () => {
     heading: `text-[#fff] font-bold text-4xl md:text-6xl mb-20 text-center`,
     formWrap: `md:w-[500px] p-4 mx-auto mb-14 items-center bg-[#Fff] rounded-lg`,
     form: `p-4 mx-auto flex flex-col justify-center gap-4`,
+    successMessage: `text-green-500 font-bold text-center`,
   };
 
   return (
     <div className={style.content} id="contact">
       <h1 className={style.heading}>Contact</h1>
       <div className={style.formWrap}>
-        <form ref={form} onSubmit={sendEmail} className={style.form}>
+        <form onSubmit={sendEmail} ref={form} className={style.form}>
           <div>
             <input
               type="text"
@@ -85,6 +83,9 @@ const ContactPage: FC = () => {
             ></textarea>
           </div>
           <button className="btn btn-primary btn-md rounded-md">Send</button>
+          {successMessage && (
+            <p className={style.successMessage}>{successMessage}</p>
+          )}
         </form>
       </div>
     </div>
@@ -92,3 +93,4 @@ const ContactPage: FC = () => {
 };
 
 export default ContactPage;
+
