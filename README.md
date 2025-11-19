@@ -3,7 +3,7 @@
 A clean and minimal portfolio website that highlights my software engineering and cybersecurity work.  
 The site focuses on clarity, structure, and simple navigation while showcasing both my engineering projects and academic cybersecurity labs.
 
-Live Demo: (rajae's portfolio)[https://rajaedev.netlify.app]
+Live Demo: [Rajae's portfolio](https://rajaedev.netlify.app)
 
 ---
 
