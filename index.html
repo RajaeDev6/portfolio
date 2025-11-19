@@ -1,13 +1,452 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rajae Portfolio</title>
+    <title>Rajae | Portfolio</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      .fade {
+        opacity: 0;
+        transform: translateY(15px);
+        transition: 0.5s ease;
+      }
+      .fade.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+
+  <body class="bg-white text-black antialiased font-light">
+    <!-- NAV -->
+    <nav
+      class="fixed top-0 left-0 w-full bg-white/80 backdrop-blur border-b border-gray-200 z-50 font-light"
+    >
+      <div
+        class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"
+      >
+        <!-- Brand -->
+        <a
+          href="#home"
+          class="tracking-tight text-lg hover:text-gray-500 transition font-normal"
+        >
+          Rajae
+        </a>
+
+        <!-- Desktop Links -->
+        <div class="hidden md:flex gap-6 text-sm">
+          <a href="#about" class="hover:text-gray-500 transition">About</a>
+          <a href="#projects" class="hover:text-gray-500 transition"
+            >Projects</a
+          >
+          <a href="#cyber" class="hover:text-gray-500 transition"
+            >Cybersecurity</a
+          >
+          <a href="#skills" class="hover:text-gray-500 transition">Skills</a>
+          <a href="#certs" class="hover:text-gray-500 transition">Certs</a>
+          <a href="#contact" class="hover:text-gray-500 transition">Contact</a>
+        </div>
+
+        <!-- Mobile Burger -->
+        <button id="menu-btn" class="md:hidden text-2xl focus:outline-none">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div
+        id="mobile-menu"
+        class="md:hidden hidden flex-col text-center bg-white border-t border-gray-200 py-4 space-y-4"
+      >
+        <a href="#about" class="block text-gray-700 hover:text-black transition"
+          >About</a
+        >
+        <a
+          href="#projects"
+          class="block text-gray-700 hover:text-black transition"
+          >Projects</a
+        >
+        <a href="#cyber" class="block text-gray-700 hover:text-black transition"
+          >Cybersecurity</a
+        >
+        <a
+          href="#skills"
+          class="block text-gray-700 hover:text-black transition"
+          >Skills</a
+        >
+        <a href="#certs" class="block text-gray-700 hover:text-black transition"
+          >Certs</a
+        >
+        <a
+          href="#contact"
+          class="block text-gray-700 hover:text-black transition"
+          >Contact</a
+        >
+
+        <!-- MOBILE Social Icons -->
+        <div class="flex justify-center gap-6 text-2xl pt-2">
+          <a
+            href="https://github.com/RajaeDev6"
+            target="_blank"
+            class="hover:text-black transition"
+          >
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <a
+            href="https://linkedin.com/in/rajae-g"
+            target="_blank"
+            class="hover:text-black transition"
+          >
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section
+      id="home"
+      class="min-h-screen flex items-center justify-center px-6 text-center font-light"
+    >
+      <div class="max-w-3xl fade">
+        <h1 class="text-5xl font-normal mb-4 tracking-tight">
+          Hi, I'm <span class="text-gray-700">Rajae</span>
+        </h1>
+
+        <p
+          class="text-gray-600 text-lg leading-relaxed max-w-xl mx-auto font-light"
+        >
+          A cybersecurity student with love and interest for software
+          engineering. I build software with a focus on clarity and function. I
+          like creating tools, apps, and systems that feel simple, fast, and
+          dependable.
+        </p>
+
+        <div class="flex justify-center gap-6 text-3xl mt-8">
+          <a
+            href="https://github.com/RajaeDev6"
+            target="_blank"
+            class="hover:opacity-60 transition"
+          >
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <a
+            href="https://linkedin.com/in/rajae-g"
+            target="_blank"
+            class="hover:opacity-60 transition"
+          >
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="px-6 mt-10 fade font-light">
+      <div
+        class="max-w-xl mx-auto text-center py-10 border border-gray-200 rounded-xl bg-white"
+      >
+        <h3 class="text-2xl font-normal mb-2">Get in touch</h3>
+        <p class="text-gray-600 text-md leading-relaxed mb-6">
+          I'm open to collaborations, internships, and software projects. If
+          you're working on something meaningful, feel free to reach out.
+        </p>
+
+        <a
+          href="#contact"
+          class="px-5 py-2 border border-gray-300 text-sm hover:bg-gray-100 transition font-light"
+        >
+          Contact
+        </a>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="max-w-5xl mx-auto px-6 py-24 fade">
+      <h2 class="text-3xl font-normal mb-4">About Me</h2>
+      <p class="text-gray-700 text-lg leading-relaxed max-w-3xl">
+        I like building software that is straightforward and reliable. Most of
+        what I work on focuses on core logic, problem solving, and making
+        systems behave the way they should. I enjoy backend work, tooling, and
+        anything that feels practical.
+        <br /><br />
+        I approach software with curiosity and patience. If something is broken,
+        confusing, or inefficient, I like understanding why and figuring out a
+        better way to do it. It doesn’t matter if it's a small script or a full
+        application. If I can improve it, I will.
+      </p>
+    </section>
+
+    <!-- SOFTWARE PROJECTS -->
+    <section id="projects" class="max-w-6xl mx-auto px-6 py-24 fade">
+      <h2 class="text-3xl font-normal mb-10">Projects</h2>
+
+      <div class="grid md:grid-cols-2 gap-10">
+        <!-- PUBLIC EYE -->
+        <div
+          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
+        >
+          <h3 class="text-xl font-normal mb-2">Public Eye JA</h3>
+          <p class="text-gray-700 text-sm mb-4">
+            AI-powered platform that identifies infrastructure issues from a
+            single photo. It classifies the problem, finds the location, and
+            sends the report to the correct authority.
+          </p>
+          <a
+            href="https://github.com/RajaeDev6/public-eye-ja"
+            target="_blank"
+            class="text-sm hover:opacity-60 transition"
+          >
+            <i class="fa-brands fa-github mr-1"></i>GitHub
+          </a>
+        </div>
+
+        <!-- ASSISTIA -->
+        <div
+          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
+        >
+          <h3 class="text-xl font-normal mb-2">Assistia</h3>
+          <p class="text-gray-700 text-sm mb-4">
+            A conversational AI learning assistant where users explore topics,
+            open guided chats, ask questions, and take auto-graded quizzes.
+          </p>
+          <a
+            href="https://github.com/RajaeDev6/Assistia"
+            target="_blank"
+            class="text-sm hover:opacity-60 transition"
+          >
+            <i class="fa-brands fa-github mr-1"></i>GitHub
+          </a>
+        </div>
+
+        <!-- LUMOS -->
+        <div
+          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
+        >
+          <h3 class="text-xl font-normal mb-2">Lumos</h3>
+          <p class="text-gray-700 text-sm mb-4">
+            Curriculum intelligence engine that analyzes syllabi, test papers,
+            and performance to generate personalized lesson plans.
+          </p>
+          <a
+            href="https://github.com/RajaeDev6/Lumos"
+            target="_blank"
+            class="text-sm hover:opacity-60 transition"
+          >
+            <i class="fa-brands fa-github mr-1"></i>GitHub
+          </a>
+        </div>
+
+        <!-- PINGSWEEPER -->
+        <div
+          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
+        >
+          <h3 class="text-xl font-normal mb-2">PingSweeper</h3>
+          <p class="text-gray-700 text-sm mb-4">
+            A subnet scanner written in Go using raw ICMP sockets. It detects
+            active hosts and measures latency across networks.
+          </p>
+          <a
+            href="https://github.com/RajaeDev6/PingSweeper"
+            target="_blank"
+            class="text-sm hover:opacity-60 transition"
+          >
+            <i class="fa-brands fa-github mr-1"></i>GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CYBERSECURITY PROJECTS -->
+    <section id="cyber" class="max-w-6xl mx-auto px-6 py-24 fade">
+      <h2 class="text-3xl font-normal mb-10">Cybersecurity Projects</h2>
+
+      <div class="grid md:grid-cols-2 gap-10">
+        <!-- Penetration Testing -->
+        <div
+          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
+        >
+          <h3 class="text-xl font-normal mb-2">
+            Penetration Testing Lab - Metasploitable2
+          </h3>
+          <p class="text-gray-700 text-sm mb-4">
+            Conducted a full penetration test using Kali Linux: reconnaissance
+            (Nmap), enumeration (SMB, FTP), exploitation (vsftpd, DistCC,
+            Samba), and post-exploitation. Delivered a structured professional
+            penetration test report.
+          </p>
+        </div>
+
+        <!-- Forensics -->
+        <div
+          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
+        >
+          <h3 class="text-xl font-normal mb-2">
+            Digital Forensics Research - Anti-Forensic Techniques
+          </h3>
+          <p class="text-gray-700 text-sm mb-4">
+            Investigated modern anti-forensic techniques and performed
+            controlled experiments using tools like Volatility, FTK Imager,
+            Autopsy, Ghidra, and x64dbg. Produced a technical research paper
+            analyzing effectiveness and countermeasures.
+          </p>
+        </div>
+
+        <!-- Nessus -->
+        <div
+          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
+        >
+          <h3 class="text-xl font-normal mb-2">
+            Vulnerability Assessment - Nessus
+          </h3>
+          <p class="text-gray-700 text-sm mb-4">
+            Performed authenticated and unauthenticated scans on multiple hosts,
+            analyzed vulnerabilities, and generated remediation-focused reports.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="max-w-5xl mx-auto px-6 py-24 fade">
+      <h2 class="text-3xl font-normal mb-6">Skills</h2>
+
+      <div class="flex flex-wrap gap-3 text-sm">
+        <span
+          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
+        >
+          <i class="fa-brands fa-linux"></i> Linux
+        </span>
+
+        <span
+          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
+        >
+          🛰️ Nmap
+        </span>
+
+        <span
+          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
+        >
+          <i class="fa-brands fa-js"></i> JavaScript
+        </span>
+
+        <span
+          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
+        >
+          <i class="fa-brands fa-react"></i> React / Next.js
+        </span>
+
+        <span
+          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
+        >
+          <i class="fa-brands fa-python"></i> Python
+        </span>
+
+        <span
+          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
+        >
+          <i class="fa-brands fa-golang"></i> Go
+        </span>
+
+        <span
+          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
+        >
+          <i class="fa-solid fa-terminal"></i> Bash
+        </span>
+
+        <span
+          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
+        >
+          <i class="fa-solid fa-code"></i> Lua
+        </span>
+
+        <span
+          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
+        >
+          <i class="fa-solid fa-fire"></i> Firebase
+        </span>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section id="certs" class="max-w-4xl mx-auto px-6 py-24 fade">
+      <h2 class="text-3xl font-normal mb-6">Certifications</h2>
+
+      <div class="flex items-center gap-4 border p-4 rounded-xl bg-gray-50">
+        <i class="fa-brands fa-google text-3xl text-gray-700"></i>
+        <span class="text-gray-700 text-lg"
+          >Google Cybersecurity Certificate</span
+        >
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="max-w-4xl mx-auto px-6 py-24 fade">
+      <h2 class="text-3xl font-normal mb-6">Contact</h2>
+
+      <p class="text-gray-700 text-lg leading-relaxed mb-6">
+        You can reach out through any of the links below.
+      </p>
+
+      <div class="flex gap-6 text-3xl">
+        <a
+          href="https://github.com/RajaeDev6"
+          target="_blank"
+          class="hover:text-gray-500 transition"
+        >
+          <i class="fa-brands fa-github"></i>
+        </a>
+
+        <a
+          href="https://linkedin.com/in/rajae-g"
+          target="_blank"
+          class="hover:text-gray-500 transition"
+        >
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-10 text-center text-gray-500 text-sm">
+      © 2025 Rajae
+    </footer>
+
+    <!-- Fade Animation -->
+    <script>
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("show");
+        });
+      });
+      document.querySelectorAll(".fade").forEach((el) => observer.observe(el));
+    </script>
+
+    <!-- Burger Menu Script -->
+    <script>
+      const menuBtn = document.getElementById("menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      menuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+
+      // Auto-close menu on link click
+      document.querySelectorAll("#mobile-menu a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("hidden");
+        });
+      });
+    </script>
   </body>
 </html>
