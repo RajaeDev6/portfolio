@@ -85,7 +85,6 @@ simple, functional, and intentional.
 
 Some future enhancements I’m considering:
 
-- **Dark mode** toggle  
 - **Small project screenshots** to visually show each project  
 - **Dedicated project pages** for deeper breakdowns  
 - **Add a downloadable resume button**  

@@ -1,9 +1,15 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rajae | Portfolio</title>
+
+    <!-- Inter Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,9 +18,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 
     <style>
-      html {
-        scroll-behavior: smooth;
+      body {
+        font-family: "Inter", sans-serif;
       }
+
       .fade {
         opacity: 0;
         transform: translateY(15px);
@@ -24,13 +31,24 @@
         opacity: 1;
         transform: translateY(0);
       }
+
+      /* DARK THEME (Invert Trick) */
+      html.dark {
+        filter: invert(1) hue-rotate(180deg);
+        background: #000;
+      }
+
+      /* Fix icons in dark mode */
+      html.dark i {
+        filter: invert(1) hue-rotate(180deg);
+      }
     </style>
   </head>
 
-  <body class="bg-white text-black antialiased font-light">
+  <body class="bg-white text-black antialiased font-normal">
     <!-- NAV -->
     <nav
-      class="fixed top-0 left-0 w-full bg-white/80 backdrop-blur border-b border-gray-200 z-50 font-light"
+      class="fixed top-0 left-0 w-full bg-white/80 backdrop-blur border-b border-gray-200 z-50 font-normal"
     >
       <div
         class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"
@@ -44,7 +62,7 @@
         </a>
 
         <!-- Desktop Links -->
-        <div class="hidden md:flex gap-6 text-sm">
+        <div class="hidden md:flex gap-6 text-sm font-normal">
           <a href="#about" class="hover:text-gray-500 transition">About</a>
           <a href="#projects" class="hover:text-gray-500 transition"
             >Projects</a
@@ -56,6 +74,14 @@
           <a href="#certs" class="hover:text-gray-500 transition">Certs</a>
           <a href="#contact" class="hover:text-gray-500 transition">Contact</a>
         </div>
+
+        <!-- Desktop Theme Toggle -->
+        <button
+          id="theme-toggle"
+          class="hidden md:block text-xl hover:text-gray-600 transition"
+        >
+          <i id="theme-icon" class="fa-solid fa-moon"></i>
+        </button>
 
         <!-- Mobile Burger -->
         <button id="menu-btn" class="md:hidden text-2xl focus:outline-none">
@@ -93,6 +119,14 @@
           >Contact</a
         >
 
+        <!-- MOBILE Theme Toggle -->
+        <button
+          id="theme-toggle-mobile"
+          class="text-xl hover:text-black transition pt-2"
+        >
+          <i id="theme-icon-mobile" class="fa-solid fa-moon"></i>
+        </button>
+
         <!-- MOBILE Social Icons -->
         <div class="flex justify-center gap-6 text-2xl pt-2">
           <a
@@ -116,7 +150,7 @@
     <!-- HERO -->
     <section
       id="home"
-      class="min-h-screen flex items-center justify-center px-6 text-center font-light"
+      class="min-h-screen flex items-center justify-center px-6 text-center font-normal"
     >
       <div class="max-w-3xl fade">
         <h1 class="text-5xl font-normal mb-4 tracking-tight">
@@ -124,7 +158,7 @@
         </h1>
 
         <p
-          class="text-gray-600 text-lg leading-relaxed max-w-xl mx-auto font-light"
+          class="text-gray-600 text-lg leading-relaxed max-w-xl mx-auto font-normal"
         >
           A cybersecurity student with love and interest for software
           engineering. I build software with a focus on clarity and function. I
@@ -152,7 +186,7 @@
     </section>
 
     <!-- CTA -->
-    <section class="px-6 mt-10 fade font-light">
+    <section class="px-6 mt-10 fade font-normal">
       <div
         class="max-w-xl mx-auto text-center py-10 border border-gray-200 rounded-xl bg-white"
       >
@@ -164,7 +198,7 @@
 
         <a
           href="#contact"
-          class="px-5 py-2 border border-gray-300 text-sm hover:bg-gray-100 transition font-light"
+          class="px-5 py-2 border border-gray-300 text-sm hover:bg-gray-100 transition font-normal"
         >
           Contact
         </a>
@@ -174,7 +208,7 @@
     <!-- ABOUT -->
     <section id="about" class="max-w-5xl mx-auto px-6 py-24 fade">
       <h2 class="text-3xl font-normal mb-4">About Me</h2>
-      <p class="text-gray-700 text-lg leading-relaxed max-w-3xl">
+      <p class="text-gray-700 text-lg leading-relaxed max-w-3xl font-normal">
         I like building software that is straightforward and reliable. Most of
         what I work on focuses on core logic, problem solving, and making
         systems behave the way they should. I enjoy backend work, tooling, and
@@ -187,17 +221,16 @@
       </p>
     </section>
 
-    <!-- SOFTWARE PROJECTS -->
+    <!-- PROJECTS -->
     <section id="projects" class="max-w-6xl mx-auto px-6 py-24 fade">
       <h2 class="text-3xl font-normal mb-10">Projects</h2>
 
       <div class="grid md:grid-cols-2 gap-10">
-        <!-- PUBLIC EYE -->
         <div
           class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
         >
           <h3 class="text-xl font-normal mb-2">Public Eye JA</h3>
-          <p class="text-gray-700 text-sm mb-4">
+          <p class="text-gray-700 text-sm mb-4 font-normal">
             AI-powered platform that identifies infrastructure issues from a
             single photo. It classifies the problem, finds the location, and
             sends the report to the correct authority.
@@ -211,12 +244,11 @@
           </a>
         </div>
 
-        <!-- ASSISTIA -->
         <div
           class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
         >
           <h3 class="text-xl font-normal mb-2">Assistia</h3>
-          <p class="text-gray-700 text-sm mb-4">
+          <p class="text-gray-700 text-sm mb-4 font-normal">
             A conversational AI learning assistant where users explore topics,
             open guided chats, ask questions, and take auto-graded quizzes.
           </p>
@@ -229,12 +261,11 @@
           </a>
         </div>
 
-        <!-- LUMOS -->
         <div
           class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
         >
           <h3 class="text-xl font-normal mb-2">Lumos</h3>
-          <p class="text-gray-700 text-sm mb-4">
+          <p class="text-gray-700 text-sm mb-4 font-normal">
             Curriculum intelligence engine that analyzes syllabi, test papers,
             and performance to generate personalized lesson plans.
           </p>
@@ -247,12 +278,11 @@
           </a>
         </div>
 
-        <!-- PINGSWEEPER -->
         <div
           class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
         >
           <h3 class="text-xl font-normal mb-2">PingSweeper</h3>
-          <p class="text-gray-700 text-sm mb-4">
+          <p class="text-gray-700 text-sm mb-4 font-normal">
             A subnet scanner written in Go using raw ICMP sockets. It detects
             active hosts and measures latency across networks.
           </p>
@@ -267,19 +297,18 @@
       </div>
     </section>
 
-    <!-- CYBERSECURITY PROJECTS -->
+    <!-- CYBERSECURITY -->
     <section id="cyber" class="max-w-6xl mx-auto px-6 py-24 fade">
       <h2 class="text-3xl font-normal mb-10">Cybersecurity Projects</h2>
 
       <div class="grid md:grid-cols-2 gap-10">
-        <!-- Penetration Testing -->
         <div
           class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
         >
           <h3 class="text-xl font-normal mb-2">
             Penetration Testing Lab - Metasploitable2
           </h3>
-          <p class="text-gray-700 text-sm mb-4">
+          <p class="text-gray-700 text-sm font-normal">
             Conducted a full penetration test using Kali Linux: reconnaissance
             (Nmap), enumeration (SMB, FTP), exploitation (vsftpd, DistCC,
             Samba), and post-exploitation. Delivered a structured professional
@@ -287,14 +316,13 @@
           </p>
         </div>
 
-        <!-- Forensics -->
         <div
           class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
         >
           <h3 class="text-xl font-normal mb-2">
             Digital Forensics Research - Anti-Forensic Techniques
           </h3>
-          <p class="text-gray-700 text-sm mb-4">
+          <p class="text-gray-700 text-sm font-normal">
             Investigated modern anti-forensic techniques and performed
             controlled experiments using tools like Volatility, FTK Imager,
             Autopsy, Ghidra, and x64dbg. Produced a technical research paper
@@ -302,14 +330,13 @@
           </p>
         </div>
 
-        <!-- Nessus -->
         <div
           class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
         >
           <h3 class="text-xl font-normal mb-2">
             Vulnerability Assessment - Nessus
           </h3>
-          <p class="text-gray-700 text-sm mb-4">
+          <p class="text-gray-700 text-sm font-normal">
             Performed authenticated and unauthenticated scans on multiple hosts,
             analyzed vulnerabilities, and generated remediation-focused reports.
           </p>
@@ -331,7 +358,7 @@
         <span
           class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
         >
-          🛰️ Nmap
+          ≡ƒ¢░∩╕Å Nmap
         </span>
 
         <span
@@ -384,9 +411,9 @@
 
       <div class="flex items-center gap-4 border p-4 rounded-xl bg-gray-50">
         <i class="fa-brands fa-google text-3xl text-gray-700"></i>
-        <span class="text-gray-700 text-lg"
-          >Google Cybersecurity Certificate</span
-        >
+        <span class="text-gray-700 text-lg font-normal">
+          Google Cybersecurity Certificate
+        </span>
       </div>
     </section>
 
@@ -394,7 +421,7 @@
     <section id="contact" class="max-w-4xl mx-auto px-6 py-24 fade">
       <h2 class="text-3xl font-normal mb-6">Contact</h2>
 
-      <p class="text-gray-700 text-lg leading-relaxed mb-6">
+      <p class="text-gray-700 text-lg leading-relaxed mb-6 font-normal">
         You can reach out through any of the links below.
       </p>
 
@@ -418,8 +445,8 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="py-10 text-center text-gray-500 text-sm">
-      © 2025 Rajae
+    <footer class="py-10 text-center text-gray-500 text-sm font-normal">
+      ┬⌐ 2025 Rajae
     </footer>
 
     <!-- Fade Animation -->
@@ -432,7 +459,7 @@
       document.querySelectorAll(".fade").forEach((el) => observer.observe(el));
     </script>
 
-    <!-- Burger Menu Script -->
+    <!-- Burger Menu -->
     <script>
       const menuBtn = document.getElementById("menu-btn");
       const mobileMenu = document.getElementById("mobile-menu");
@@ -441,12 +468,33 @@
         mobileMenu.classList.toggle("hidden");
       });
 
-      // Auto-close menu on link click
       document.querySelectorAll("#mobile-menu a").forEach((link) => {
         link.addEventListener("click", () => {
           mobileMenu.classList.add("hidden");
         });
       });
+    </script>
+
+    <!-- Theme Toggle -->
+    <script>
+      const html = document.documentElement;
+
+      const desktopToggle = document.getElementById("theme-toggle");
+      const mobileToggle = document.getElementById("theme-toggle-mobile");
+
+      const desktopIcon = document.getElementById("theme-icon");
+      const mobileIcon = document.getElementById("theme-icon-mobile");
+
+      function toggleTheme() {
+        html.classList.toggle("dark");
+
+        const isDark = html.classList.contains("dark");
+        desktopIcon.className = isDark ? "fa-solid fa-sun" : "fa-solid fa-moon";
+        mobileIcon.className = isDark ? "fa-solid fa-sun" : "fa-solid fa-moon";
+      }
+
+      desktopToggle.addEventListener("click", toggleTheme);
+      mobileToggle.addEventListener("click", toggleTheme);
     </script>
   </body>
 </html>
