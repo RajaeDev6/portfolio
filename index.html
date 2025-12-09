@@ -158,9 +158,7 @@
         <p
           class="text-gray-600 text-lg leading-relaxed max-w-xl mx-auto font-normal"
         >
-          I build websites, mobile apps, and small digital tools. I focus on
-          creating things that are clean, fast, and easy to use tools that feel
-          simple, reliable, and built with purpose.
+		I'm a Cybersecurity and Backend engineering student based in Jamaica. I build security tools and backend systems. My work includes network scanners, log analysis utilities and lightweight APIs focused on understanding systems deeply and creating software that solves real problems. Currently looking to contribute to open source software
         </p>
 
         <div class="flex justify-center gap-6 text-3xl mt-8">
@@ -201,36 +199,30 @@
       </div>
     </section>
 
-    <!-- ABOUT -->
-    <section id="about" class="max-w-5xl mx-auto px-6 py-24 fade">
-      <h2 class="text-3xl font-normal mb-4">About Me</h2>
-      <p class="text-gray-700 text-lg leading-relaxed max-w-3xl font-normal">
-        I like building software that is straightforward and reliable. Most of
-        what I work on focuses on core logic, problem solving, and making
-        systems behave the way they should.
-        <br /><br />
-        I approach software with curiosity and patience. If something is broken,
-        confusing, or inefficient, I like understanding why and figuring out a
-        better way to do it. If I can improve it, I will.
-      </p>
-    </section>
+    <!-- <!-1- ABOUT -1-> -->
+    <!-- <section id="about" class="max-w-5xl mx-auto px-6 py-24 fade"> -->
+    <!--   <h2 class="text-3xl font-normal mb-4">About Me</h2> -->
+    <!--   <p class="text-gray-700 text-lg leading-relaxed max-w-3xl font-normal"> -->
+	  <!-- I'm a Cybersecurity & Backend engineering student. I focus on understanding how systems behave from networks and logs to low level processes. I enjoy working on tools that sit close to the system:  scanners, log analysis and small backend services that help me understand real world behavior. Im mostly productive in environment where clarity, reliablity, and praticality matter. whether it's breaking down a problem, tracing unexpected behavior, or tightening up a tool. Currently i am trying to contribute to open source projects and preparing to join and learning ffrom Google Summer of Code. -->
+    <!--   </p> -->
+    <!-- </section> -->
 
     <!-- PROJECTS -->
     <section id="projects" class="max-w-6xl mx-auto px-6 py-24 fade">
       <h2 class="text-3xl font-normal mb-10">Projects</h2>
 
       <div class="grid md:grid-cols-2 gap-10">
+
         <div
           class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
         >
-          <h3 class="text-xl font-normal mb-2">Public Eye JA</h3>
+          <h3 class="text-xl font-normal mb-2">PingSweeper</h3>
           <p class="text-gray-700 text-sm mb-4 font-normal">
-            An app that identifies infrastructure issues from a single photo. It
-            classifies the problem, finds the location, and sends the report to
-            the correct authority.
+            A subnet scanner written in Go using raw ICMP sockets. It detects
+            active hosts and measures latency across networks.
           </p>
           <a
-            href="https://github.com/RajaeDev6/public-eye-ja"
+            href="https://github.com/RajaeDev6/PingSweeper"
             target="_blank"
             class="text-sm hover:opacity-60 transition"
           >
@@ -238,6 +230,23 @@
           </a>
         </div>
 
+        <div
+          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
+        >
+          <h3 class="text-xl font-normal mb-2">CoreSight</h3>
+          <p class="text-gray-700 text-sm mb-4 font-normal">
+		  A terminal baased log analysis engine.
+		  Injest syslogs, access logs and auth logs; indexes them; and supports simple SPL style search queries.
+		  Includes a custom TUI, lightweight dashboards and hand written parsers to understand how log ingestion and filtering working at a system level
+          </p>
+          <a
+            href="https://github.com/RajaeDev6/CoreSight"
+            target="_blank"
+            class="text-sm hover:opacity-60 transition"
+          >
+            <i class="fa-brands fa-github mr-1"></i>GitHub
+          </a>
+        </div>
         <div
           class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
         >
@@ -258,6 +267,23 @@
         <div
           class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
         >
+          <h3 class="text-xl font-normal mb-2">Public Eye JA</h3>
+          <p class="text-gray-700 text-sm mb-4 font-normal">
+            An app that identifies infrastructure issues from a single photo. It
+            classifies the problem, finds the location, and sends the report to
+            the correct authority.
+          </p>
+          <a
+            href="https://github.com/RajaeDev6/public-eye-ja"
+            target="_blank"
+            class="text-sm hover:opacity-60 transition"
+          >
+            <i class="fa-brands fa-github mr-1"></i>GitHub
+          </a>
+        </div>
+        <div
+          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
+        >
           <h3 class="text-xl font-normal mb-2">Lumos</h3>
           <p class="text-gray-700 text-sm mb-4 font-normal">
             A curriculum intelligence engine that analyzes syllabi and student
@@ -272,65 +298,7 @@
           </a>
         </div>
 
-        <div
-          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
-        >
-          <h3 class="text-xl font-normal mb-2">PingSweeper</h3>
-          <p class="text-gray-700 text-sm mb-4 font-normal">
-            A subnet scanner written in Go using raw ICMP sockets. It detects
-            active hosts and measures latency across networks.
-          </p>
-          <a
-            href="https://github.com/RajaeDev6/PingSweeper"
-            target="_blank"
-            class="text-sm hover:opacity-60 transition"
-          >
-            <i class="fa-brands fa-github mr-1"></i>GitHub
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- CYBERSECURITY -->
-    <section id="cyber" class="max-w-6xl mx-auto px-6 py-24 fade">
-      <h2 class="text-3xl font-normal mb-10">Cybersecurity Projects</h2>
-
-      <div class="grid md:grid-cols-2 gap-10">
-        <div
-          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
-        >
-          <h3 class="text-xl font-normal mb-2">
-            Penetration Testing Lab - Metasploitable2
-          </h3>
-          <p class="text-gray-700 text-sm font-normal">
-            Performed full penetration testing using Kali Linux: Nmap, SMB
-            enumeration, vsftpd exploit, DistCC, Samba, and full reporting.
-          </p>
-        </div>
-
-        <div
-          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
-        >
-          <h3 class="text-xl font-normal mb-2">
-            Digital Forensics - Anti-Forensic Techniques
-          </h3>
-          <p class="text-gray-700 text-sm font-normal">
-            Conducted analysis using Volatility, FTK Imager, Autopsy, and
-            Ghidra. Tested anti-forensic strategies and documented findings.
-          </p>
-        </div>
-
-        <div
-          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
-        >
-          <h3 class="text-xl font-normal mb-2">
-            Vulnerability Assessment - Nessus
-          </h3>
-          <p class="text-gray-700 text-sm font-normal">
-            Performed authenticated and unauthenticated scans, analyzed
-            vulnerabilities, and prepared remediation reports.
-          </p>
-        </div>
+		
       </div>
     </section>
 
@@ -354,13 +322,7 @@
         <span
           class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
         >
-          <i class="fa-brands fa-js"></i> JavaScript
-        </span>
-
-        <span
-          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
-        >
-          <i class="fa-brands fa-react"></i> React / Next.js
+          <i class="fa-brands fa-js"></i> Javascript
         </span>
 
         <span
@@ -387,11 +349,6 @@
           <i class="fa-solid fa-code"></i> Lua
         </span>
 
-        <span
-          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
-        >
-          <i class="fa-solid fa-fire"></i> Firebase
-        </span>
       </div>
     </section>
 
