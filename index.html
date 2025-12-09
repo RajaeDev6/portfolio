@@ -112,7 +112,7 @@
     <div class="card">
       <h3 class="text-lg font-medium mb-2">PingSweeper</h3>
       <p class="text-[var(--sub)] text-sm mb-3">
-        A high-performance subnet scanner built in Go using raw ICMP sockets and concurrency.
+A high-performance subnet scanner written in Go. Designed to explore low-level host discovery techniques used in security and network diagnostic tools. It sends raw ICMP echo requests, parses responses, and measures round-trip latency across an entire subnet.
       </p>
       <ul class="list-disc ml-5 mb-4 text-[var(--sub)] text-sm">
         <li>Raw socket ICMP probing</li>
@@ -138,12 +138,10 @@
     <div class="card">
       <h3 class="text-lg font-medium mb-2">CoreSight</h3>
       <p class="text-[var(--sub)] text-sm mb-3">
-        A lightweight log-analysis engine with custom parsers, in-memory indexing,
-        and SPL-style filtering.
-      </p>
+        A lightweight log-analysis engine to explore how logs move through systems, includes custom parsers, indexing, and filtering, userful for understanding how security logs are ingested and searched in monitoring tools      </p>
       <ul class="list-disc ml-5 mb-4 text-[var(--sub)] text-sm">
         <li>Parses syslog, auth logs, access logs</li>
-        <li>Custom search operators</li>
+        <li>Custom query operators and pattern detection</li>
         <li>Built for understanding log ingestion pipelines</li>
       </ul>
 
