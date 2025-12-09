@@ -1,437 +1,306 @@
 <!doctype html>
-<html lang="en" class="scroll-smooth dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rajae | Portfolio</title>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rajae | Portfolio</title>
 
-    <!-- Inter Font -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
-      rel="stylesheet"
-    />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 
-    <!-- Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg: #0c0c0c;
+      --card: #141414;
+      --border: #222222;
+      --text: #e8e6e3;
+      --sub: #b0aba2;
+      --accent: #d2b48c;
+    }
 
-    <!-- Icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
 
-    <style>
-      body {
-        font-family: "Inter", sans-serif;
-      }
+    .section {
+      padding: 6rem 1.5rem;
+      max-width: 900px;
+      margin: auto;
+    }
 
-      .fade {
-        opacity: 0;
-        transform: translateY(15px);
-        transition: 0.5s ease;
-      }
-      .fade.show {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.25rem;
+      border-radius: 12px;
+      transition: border-color .25s ease;
+    }
 
-      /* DARK THEME (Invert Trick) */
-      html.dark {
-        filter: invert(1) hue-rotate(180deg);
-        background: #000;
-      }
+    .card:hover {
+      border-color: var(--accent);
+    }
 
-      /* Fix icons in dark mode */
-      html.dark i {
-        filter: invert(1) hue-rotate(180deg);
-      }
-    </style>
-  </head>
+    .badge {
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+      background: #1b1b1b;
+    }
 
-  <body class="bg-white text-black antialiased font-normal">
-    <!-- NAV -->
-    <nav
-      class="fixed top-0 left-0 w-full bg-white/80 backdrop-blur border-b border-gray-200 z-50 font-normal"
-    >
-      <div
-        class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"
-      >
-        <a
-          href="#home"
-          class="tracking-tight text-lg hover:text-gray-500 transition font-normal"
-          >Rajae</a
-        >
+    .badge img {
+      width: 14px;
+      height: 14px;
+    }
 
-        <!-- Desktop Links -->
-        <div class="hidden md:flex gap-6 text-sm font-normal">
-          <!-- <a href="#about" class="hover:text-gray-500 transition">About</a> -->
-          <a href="#projects" class="hover:text-gray-500 transition"
-            >Projects</a
-          >
-          <!-- <a href="#cyber" class="hover:text-gray-500 transition" -->
-            >Cybersecurity</a
-          >
-          <a href="#skills" class="hover:text-gray-500 transition">Skills</a>
-          <a href="#certs" class="hover:text-gray-500 transition">Certs</a>
-          <a href="#contact" class="hover:text-gray-500 transition">Contact</a>
-        </div>
+    .fade { opacity: 0; transform: translateY(20px); transition: .6s; }
+    .fade.show { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
 
-        <!-- Desktop Theme Toggle -->
-        <button
-          id="theme-toggle"
-          class="hidden md:block text-xl hover:text-gray-600 transition"
-        >
-          <i id="theme-icon" class="fa-solid fa-sun"></i>
-        </button>
+<body>
 
-        <!-- Mobile Burger -->
-        <button id="menu-btn" class="md:hidden text-2xl focus:outline-none">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-      </div>
+<!-- NAV -->
+<nav class="fixed top-0 w-full backdrop-blur bg-black/40 border-b border-[var(--border)] z-50">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+    <span class="text-lg font-medium">Rajae</span>
+    <div class="hidden md:flex gap-8 text-sm text-[var(--sub)]">
+      <a href="#projects" class="hover:text-[var(--accent)]">Projects</a>
+      <a href="#skills" class="hover:text-[var(--accent)]">Skills</a>
+      <a href="#certs" class="hover:text-[var(--accent)]">Certifications</a>
+      <a href="#contact" class="hover:text-[var(--accent)]">Contact</a>
+    </div>
+  </div>
+</nav>
 
-      <!-- Mobile Menu -->
-      <div
-        id="mobile-menu"
-        class="md:hidden hidden flex-col text-center bg-white border-t border-gray-200 py-4 space-y-4"
-      >
-        <a href="#about" class="block text-gray-700 hover:text-black transition"
-          >About</a
-        >
-        <a
-          href="#projects"
-          class="block text-gray-700 hover:text-black transition"
-          >Projects</a
-        >
-        <a href="#cyber" class="block text-gray-700 hover:text-black transition"
-          >Cybersecurity</a
-        >
-        <a
-          href="#skills"
-          class="block text-gray-700 hover:text-black transition"
-          >Skills</a
-        >
-        <a href="#certs" class="block text-gray-700 hover:text-black transition"
-          >Certs</a
-        >
-        <a
-          href="#contact"
-          class="block text-gray-700 hover:text-black transition"
-          >Contact</a
-        >
+<!-- HERO -->
+<section class="section pt-40 fade text-left" id="home">
+  <h1 class="text-5xl font-semibold mb-6">Hi, I’m <span class="text-[var(--accent)]">Rajae</span></h1>
 
-        <!-- MOBILE Theme Toggle -->
-        <button
-          id="theme-toggle-mobile"
-          class="text-xl hover:text-black transition pt-2"
-        >
-          <i id="theme-icon-mobile" class="fa-solid fa-sun"></i>
-        </button>
+  <p class="text-lg text-[var(--sub)] leading-relaxed max-w-xl">
+    I'm a Cybersecurity & Backend Engineering student based in Jamaica.
+    I study how systems, networks, and software behave, and I build tools and backend services
+    to understand these layers more deeply.
+    I’m currently improving my system-level engineering foundation and contributing to open-source security projects.
+  </p>
 
-        <!-- MOBILE Social Icons -->
-        <div class="flex justify-center gap-6 text-2xl pt-2">
-          <a
-            href="https://github.com/RajaeDev6"
-            target="_blank"
-            class="hover:text-black transition"
-          >
-            <i class="fa-brands fa-github"></i>
-          </a>
-          <a
-            href="https://linkedin.com/in/rajae-g"
-            target="_blank"
-            class="hover:text-black transition"
-          >
-            <i class="fa-brands fa-linkedin"></i>
-          </a>
-        </div>
-      </div>
-    </nav>
-
-    <!-- HERO -->
-    <section
-      id="home"
-      class="min-h-screen flex items-center justify-center px-6 text-center font-normal"
-    >
-      <div class="max-w-3xl fade">
-        <h1 class="text-5xl font-normal mb-4 tracking-tight">
-          Hi, I'm <span class="text-gray-700">Rajae</span>
-        </h1>
-
-        <p
-          class="text-gray-600 text-lg leading-relaxed max-w-xl mx-auto font-normal"
-        >
-		I'm a Cybersecurity and Backend engineering student based in Jamaica. I focus on how systems, networks, and software behave, and enjoy workin gon projects that help me understand these layers better. Most of my work involves backend development, networking concepts, and building reliable solutions.
-		I'm currently strengthening my foundation in cybersecurity and backend engineering while contributing to projects that help me grow as a developer and security engineer</p>
-
-        <div class="flex justify-center gap-6 text-3xl mt-8">
-          <a
-            href="https://github.com/RajaeDev6"
-            target="_blank"
-            class="hover:opacity-60 transition"
-          >
-            <i class="fa-brands fa-github"></i>
-          </a>
-          <a
-            href="https://linkedin.com/in/rajae-g"
-            target="_blank"
-			>
-            class="hover:opacity-60 transition"
-            <i class="fa-brands fa-linkedin"></i>
-          </a>
-        </div>
-      </div>
-    </section>
+  <div class="flex gap-6 text-3xl mt-8">
+    <a href="https://github.com/RajaeDev6" class="hover:text-[var(--accent)]"><i class="fa-brands fa-github"></i></a>
+    <a href="https://linkedin.com/in/rajae-g" class="hover:text-[var(--accent)]"><i class="fa-brands fa-linkedin"></i></a>
+  </div>
+</section>
 
 
-    <!-- <!-1- ABOUT -1-> -->
-    <!-- <section id="about" class="max-w-5xl mx-auto px-6 py-24 fade"> -->
-    <!--   <h2 class="text-3xl font-normal mb-4">About Me</h2> -->
-    <!--   <p class="text-gray-700 text-lg leading-relaxed max-w-3xl font-normal"> -->
-	  <!-- I'm a Cybersecurity & Backend engineering student. I focus on understanding how systems behave from networks and logs to low level processes. I enjoy working on tools that sit close to the system:  scanners, log analysis and small backend services that help me understand real world behavior. Im mostly productive in environment where clarity, reliablity, and praticality matter. whether it's breaking down a problem, tracing unexpected behavior, or tightening up a tool. Currently i am trying to contribute to open source projects and preparing to join and learning ffrom Google Summer of Code. -->
-    <!--   </p> -->
-    <!-- </section> -->
+<!-- PROJECTS -->
+<section class="section fade" id="projects">
+  <h2 class="text-3xl font-semibold mb-10">Projects</h2>
 
-    <!-- PROJECTS -->
-    <section id="projects" class="max-w-6xl mx-auto px-6 py-24 fade">
-      <h2 class="text-3xl font-normal mb-10">Projects</h2>
+  <div class="grid md:grid-cols-2 gap-6">
 
-      <div class="grid md:grid-cols-2 gap-10">
-
-        <div
-          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
-        >
-          <h3 class="text-xl font-normal mb-2">PingSweeper</h3>
-          <p class="text-gray-700 text-sm mb-4 font-normal">
-            A subnet scanner written in Go using raw ICMP sockets. It detects
-            active hosts and measures latency across networks.
-          </p>
-          <a
-            href="https://github.com/RajaeDev6/PingSweeper"
-            target="_blank"
-            class="text-sm hover:opacity-60 transition"
-          >
-            <i class="fa-brands fa-github mr-1"></i>GitHub
-          </a>
-        </div>
-
-        <div
-          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
-        >
-          <h3 class="text-xl font-normal mb-2">CoreSight</h3>
-          <p class="text-gray-700 text-sm mb-4 font-normal">
-		  A terminal baased log analysis engine.
-		  Injest syslogs, access logs and auth logs; indexes them; and supports simple SPL style search queries.
-		  Includes a custom TUI, lightweight dashboards and hand written parsers to understand how log ingestion and filtering working at a system level
-          </p>
-          <a
-            href="https://github.com/RajaeDev6/CoreSight"
-            target="_blank"
-            class="text-sm hover:opacity-60 transition"
-          >
-            <i class="fa-brands fa-github mr-1"></i>GitHub
-          </a>
-        </div>
-        <div
-          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
-        >
-          <h3 class="text-xl font-normal mb-2">Assistia</h3>
-          <p class="text-gray-700 text-sm mb-4 font-normal">
-            A conversational AI learning assistant where users explore topics,
-            open guided chats, ask questions, and take auto-graded quizzes.
-          </p>
-          <a
-            href="https://github.com/RajaeDev6/Assistia"
-            target="_blank"
-            class="text-sm hover:opacity-60 transition"
-          >
-            <i class="fa-brands fa-github mr-1"></i>GitHub
-          </a>
-        </div>
-
-        <div
-          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
-        >
-          <h3 class="text-xl font-normal mb-2">Public Eye JA</h3>
-          <p class="text-gray-700 text-sm mb-4 font-normal">
-            An app that identifies infrastructure issues from a single photo. It
-            classifies the problem, finds the location, and sends the report to
-            the correct authority.
-          </p>
-          <a
-            href="https://github.com/RajaeDev6/public-eye-ja"
-            target="_blank"
-            class="text-sm hover:opacity-60 transition"
-          >
-            <i class="fa-brands fa-github mr-1"></i>GitHub
-          </a>
-        </div>
-        <div
-          class="p-6 border border-gray-200 rounded-xl bg-white hover:shadow-md transition"
-        >
-          <h3 class="text-xl font-normal mb-2">Lumos</h3>
-          <p class="text-gray-700 text-sm mb-4 font-normal">
-            A curriculum intelligence engine that analyzes syllabi and student
-            performance to generate personalized lesson plans.
-          </p>
-          <a
-            href="https://github.com/RajaeDev6/Lumos"
-            target="_blank"
-            class="text-sm hover:opacity-60 transition"
-          >
-            <i class="fa-brands fa-github mr-1"></i>GitHub
-          </a>
-        </div>
-
-		
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section id="skills" class="max-w-5xl mx-auto px-6 py-24 fade">
-      <h2 class="text-3xl font-normal mb-6">Skills</h2>
-
-      <div class="flex flex-wrap gap-3 text-sm">
-        <span
-          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
-        >
-          <i class="fa-brands fa-linux"></i> Linux
-        </span>
-
-        <span
-          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
-        >
-          Nmap
-        </span>
-
-        <span
-          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
-        >
-          <i class="fa-brands fa-js"></i> Javascript
-        </span>
-
-        <span
-          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
-        >
-          <i class="fa-brands fa-python"></i> Python
-        </span>
-
-        <span
-          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
-        >
-          <i class="fa-brands fa-golang"></i> Go
-        </span>
-
-        <span
-          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
-        >
-          <i class="fa-solid fa-terminal"></i> Bash
-        </span>
-
-        <span
-          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
-        >
-          <i class="fa-solid fa-code"></i> Lua
-        </span>
-        <span
-          class="flex items-center gap-2 px-3 py-2 border rounded-lg bg-gray-50"
-        >
-          <i class="fa-solid fa-sqlite"></i> SQLite
-        </span>
-
-      </div>
-    </section>
-
-    <!-- CERTIFICATIONS -->
-    <section id="certs" class="max-w-4xl mx-auto px-6 py-24 fade">
-      <h2 class="text-3xl font-normal mb-6">Certifications</h2>
-
-      <div class="flex items-center gap-4 border p-4 rounded-xl bg-gray-50">
-        <i class="fa-brands fa-google text-3xl text-gray-700"></i>
-        <span class="text-gray-700 text-lg font-normal"
-          >Google Cybersecurity Certificate</span
-        >
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="max-w-4xl mx-auto px-6 py-24 fade">
-      <h2 class="text-3xl font-normal mb-6">Contact</h2>
-
-      <p class="text-gray-700 text-lg leading-relaxed mb-6 font-normal">
-        You can reach out through any of the links below.
+    <!-- 1. PingSweeper -->
+    <div class="card">
+      <h3 class="text-lg font-medium mb-2">PingSweeper</h3>
+      <p class="text-[var(--sub)] text-sm mb-3">
+        A high-performance subnet scanner built in Go using raw ICMP sockets and concurrency.
       </p>
+      <ul class="list-disc ml-5 mb-4 text-[var(--sub)] text-sm">
+        <li>Raw socket ICMP probing</li>
+        <li>Concurrent host discovery</li>
+        <li>Latency measurement</li>
+      </ul>
 
-      <div class="flex gap-6 text-3xl">
-        <a
-          href="https://github.com/RajaeDev6"
-          target="_blank"
-          class="hover:text-gray-500 transition"
-        >
-          <i class="fa-brands fa-github"></i>
-        </a>
-        <a
-          href="https://linkedin.com/in/rajae-g"
-          target="_blank"
-          class="hover:text-gray-500 transition"
-        >
-          <i class="fa-brands fa-linkedin"></i>
-        </a>
+      <div class="flex flex-wrap">
+        <span class="badge">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg">
+          Go
+        </span>
+        <span class="badge">
+          <i class="fa-solid fa-network-wired text-blue-400"></i>
+          Networking
+        </span>
       </div>
-    </section>
 
-    <!-- FOOTER -->
-    <footer class="py-10 text-center text-gray-500 text-sm font-normal">
-      © 2025 Rajae
-    </footer>
+      <a href="https://github.com/RajaeDev6/PingSweeper" class="text-[var(--accent)] mt-3 inline-block text-sm">GitHub →</a>
+    </div>
 
-    <!-- Fade Animation -->
-    <script>
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("show");
-        });
-      });
-      document.querySelectorAll(".fade").forEach((el) => observer.observe(el));
-    </script>
+    <!-- 2. CoreSight -->
+    <div class="card">
+      <h3 class="text-lg font-medium mb-2">CoreSight</h3>
+      <p class="text-[var(--sub)] text-sm mb-3">
+        A lightweight log-analysis engine with custom parsers, in-memory indexing,
+        and SPL-style filtering.
+      </p>
+      <ul class="list-disc ml-5 mb-4 text-[var(--sub)] text-sm">
+        <li>Parses syslog, auth logs, access logs</li>
+        <li>Custom search operators</li>
+        <li>Built for understanding log ingestion pipelines</li>
+      </ul>
 
-    <!-- Burger Menu -->
-    <script>
-      const menuBtn = document.getElementById("menu-btn");
-      const mobileMenu = document.getElementById("mobile-menu");
+      <div class="flex flex-wrap">
+        <span class="badge">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg">
+          Python
+        </span>
+        <span class="badge">
+          <i class="fa-solid fa-database text-purple-300"></i>
+          Parsing
+        </span>
+      </div>
 
-      menuBtn.addEventListener("click", () => {
-        mobileMenu.classList.toggle("hidden");
-      });
+      <a href="https://github.com/RajaeDev6/CoreSight" class="text-[var(--accent)] mt-3 inline-block text-sm">GitHub →</a>
+    </div>
 
-      document.querySelectorAll("#mobile-menu a").forEach((link) => {
-        link.addEventListener("click", () => {
-          mobileMenu.classList.add("hidden");
-        });
-      });
-    </script>
+    <!-- 3. Bug Reporter API -->
+    <div class="card">
+      <h3 class="text-lg font-medium mb-2">Bug Reporter API</h3>
+      <p class="text-[var(--sub)] text-sm mb-3">
+        A simple backend service for creating, updating, and tracking bug reports.
+        Built to practice REST principles and backend fundamentals.
+      </p>
+      <ul class="list-disc ml-5 mb-4 text-[var(--sub)] text-sm">
+        <li>Flask REST architecture</li>
+        <li>SQLite data layer</li>
+        <li>Includes automated tests</li>
+      </ul>
 
-    <!-- Theme Toggle -->
-    <script>
-      const htmlEl = document.documentElement;
+      <div class="flex flex-wrap">
+        <span class="badge">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg">
+          Flask
+        </span>
+        <span class="badge">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg">
+          SQLite
+        </span>
+        <span class="badge">
+          <i class="fa-solid fa-gears text-gray-300"></i>
+          Backend
+        </span>
+      </div>
 
-      const desktopToggle = document.getElementById("theme-toggle");
-      const mobileToggle = document.getElementById("theme-toggle-mobile");
+      <a href="https://github.com/RajaeDev6" class="text-[var(--accent)] mt-3 inline-block text-sm">GitHub →</a>
+    </div>
 
-      const desktopIcon = document.getElementById("theme-icon");
-      const mobileIcon = document.getElementById("theme-icon-mobile");
+    <!-- 4. Public Eye JA -->
+    <div class="card">
+      <h3 class="text-lg font-medium mb-2">Public Eye JA</h3>
+      <p class="text-[var(--sub)] text-sm mb-3">
+        A mobile app that identifies infrastructure issues from a photo,
+        determines location, and sends automated reports to authorities.
+      </p>
+      <ul class="list-disc ml-5 mb-4 text-[var(--sub)] text-sm">
+        <li>Image classification</li>
+        <li>Location extraction</li>
+        <li>Report routing workflow</li>
+      </ul>
 
-      // DARK MODE IS DEFAULT
-      htmlEl.classList.add("dark");
-      desktopIcon.className = "fa-solid fa-sun";
-      mobileIcon.className = "fa-solid fa-sun";
+      <div class="flex flex-wrap">
+        <span class="badge">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg">
+          React Native
+        </span>
+        <span class="badge">
+          <i class="fa-solid fa-brain text-pink-300"></i>
+          AI
+        </span>
+        <span class="badge">
+          <i class="fa-solid fa-map text-green-300"></i>
+          Location
+        </span>
+      </div>
 
-      function toggleTheme() {
-        const isDark = htmlEl.classList.toggle("dark");
+      <a href="https://github.com/RajaeDev6/public-eye-ja" class="text-[var(--accent)] mt-3 inline-block text-sm">GitHub →</a>
+    </div>
 
-        desktopIcon.className = isDark ? "fa-solid fa-sun" : "fa-solid fa-moon";
-        mobileIcon.className = isDark ? "fa-solid fa-sun" : "fa-solid fa-moon";
-      }
+    <!-- 5. Assistia -->
+    <div class="card">
+      <h3 class="text-lg font-medium mb-2">Assistia</h3>
+      <p class="text-[var(--sub)] text-sm mb-3">
+        A structured learning platform that teaches AI topics through guided lessons,
+        interactive chat, and auto-graded quizzes.
+      </p>
+      <ul class="list-disc ml-5 mb-4 text-[var(--sub)] text-sm">
+        <li>Topic-based AI lesson system</li>
+        <li>Interactive chatbot</li>
+        <li>Auto-grading engine</li>
+      </ul>
 
-      desktopToggle.addEventListener("click", toggleTheme);
-      mobileToggle.addEventListener("click", toggleTheme);
-    </script>
-  </body>
+      <div class="flex flex-wrap">
+        <span class="badge">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg">
+          Flask
+        </span>
+        <span class="badge">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg">
+          MongoDB
+        </span>
+        <span class="badge">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg">
+          JS
+        </span>
+      </div>
+
+      <a href="https://github.com/RajaeDev6/Assistia" class="text-[var(--accent)] mt-3 inline-block text-sm">GitHub →</a>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- SKILLS -->
+<section class="section fade" id="skills">
+  <h2 class="text-3xl font-semibold mb-6">Skills</h2>
+
+  <div class="flex flex-wrap gap-4 text-sm">
+    <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg">Go</span>
+    <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg">Python</span>
+    <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg">JavaScript</span>
+    <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg">Bash</span>
+    <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg">React Native</span>
+    <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg">MongoDB</span>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="section fade" id="certs">
+  <h2 class="text-3xl font-semibold mb-6">Certifications</h2>
+  <div class="card flex items-center gap-4">
+    <i class="fa-brands fa-google text-3xl text-[var(--accent)]"></i>
+    <span class="text-lg text-[var(--sub)]">Google Cybersecurity Certificate</span>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section fade" id="contact">
+  <h2 class="text-3xl font-semibold mb-6">Contact</h2>
+  <p class="text-[var(--sub)] mb-6">Feel free to reach out.</p>
+
+  <div class="flex gap-6 text-3xl">
+    <a href="https://github.com/RajaeDev6" class="hover:text-[var(--accent)]"><i class="fa-brands fa-github"></i></a>
+    <a href="https://linkedin.com/in/rajae-g" class="hover:text-[var(--accent)]"><i class="fa-brands fa-linkedin"></i></a>
+  </div>
+</section>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) e.target.classList.add("show");
+    });
+  });
+  document.querySelectorAll(".fade").forEach(el => observer.observe(el));
+</script>
+
+</body>
 </html>
