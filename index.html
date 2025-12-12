@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Rajae | Portfolio</title>
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 
@@ -30,7 +27,7 @@
 
     .section {
       padding: 6rem 1.5rem;
-      max-width: 900px;
+      max-width: 1100px;
       margin: auto;
     }
 
@@ -39,11 +36,16 @@
       border: 1px solid var(--border);
       padding: 1.25rem;
       border-radius: 12px;
-      transition: border-color .25s ease;
     }
 
-    .card:hover {
-      border-color: var(--accent);
+    .no-hover:hover {
+      transform: none !important;
+      border-color: var(--border) !important;
+    }
+
+    .link-hover:hover {
+      text-decoration: underline;
+      color: var(--accent);
     }
 
     .badge {
@@ -60,12 +62,14 @@
     }
 
     .badge img {
-      width: 14px;
-      height: 14px;
+      width: 20px;
+      height: 20px;
     }
 
     .fade { opacity: 0; transform: translateY(20px); transition: .6s; }
     .fade.show { opacity: 1; transform: translateY(0); }
+
+
   </style>
 </head>
 
@@ -85,22 +89,53 @@
 </nav>
 
 <!-- HERO -->
-<section class="section pt-40 fade text-left" id="home">
-  <h1 class="text-5xl font-semibold mb-6">Hi, I’m <span class="text-[var(--accent)]">Rajae</span></h1>
+<section class="section pt-40 fade" id="home">
+  <div class="flex flex-col lg:flex-row justify-between items-center gap-12">
 
-  <p class="text-lg text-[var(--sub)] leading-relaxed max-w-xl">
-    I'm a Cybersecurity & Backend Engineering student based in Jamaica.
-    I study how systems, networks, and software behave, and I build tools and backend services
-    to understand these layers more deeply.
-    I’m currently improving my system-level engineering foundation and contributing to open-source security projects.
-  </p>
+    <!-- LEFT -->
+    <div class="max-w-xl">
+      <h1 class="text-5xl font-semibold mb-6">
+        Hi, I’m <span class="text-[var(--accent)]">Rajae</span>
+      </h1>
 
-  <div class="flex gap-6 text-3xl mt-8">
-    <a href="https://github.com/RajaeDev6" class="hover:text-[var(--accent)]"><i class="fa-brands fa-github"></i></a>
-    <a href="https://linkedin.com/in/rajae-g" class="hover:text-[var(--accent)]"><i class="fa-brands fa-linkedin"></i></a>
+      <p class="text-lg text-[var(--sub)] leading-relaxed">
+        I'm a Cybersecurity & Backend Engineering student based in Jamaica.
+        I study how systems, networks, and software behave, and I build tools
+        to understand these layers more deeply. I’m currently improving my
+        system-level engineering foundation and contributing to open-source security projects.
+      </p>
+
+      <div class="flex gap-6 text-3xl mt-8">
+        <a href="https://github.com/RajaeDev6" class="hover:text-[var(--accent)]"><i class="fa-brands fa-github"></i></a>
+        <a href="https://linkedin.com/in/rajae-g" class="hover:text-[var(--accent)]"><i class="fa-brands fa-linkedin"></i></a>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="hidden lg:flex flex-col gap-4 p-6 bg-[var(--card)] border border-[var(--border)] rounded-xl w-[380px] shadow-lg">
+      <h3 class="text-xl font-semibold text-[var(--accent)]">Focus Areas</h3>
+
+      <div class="flex flex-col gap-3">
+        <div class="flex items-center gap-3">
+          <i class="fa-solid fa-lock text-[var(--accent)]"></i>
+          <span class="text-[var(--sub)]">Cybersecurity</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <i class="fa-solid fa-server text-[var(--accent)]"></i>
+          <span class="text-[var(--sub)]">Backend Engineering</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <i class="fa-solid fa-microchip text-[var(--accent)]"></i>
+          <span class="text-[var(--sub)]">Systems & Infrastructure</span>
+        </div>
+      </div>
+
+      <div class="mt-4 pt-4 border-t border-[var(--border)] text-sm text-[var(--sub)]">
+        Exploring: Go • Low-Level Networking • Log Pipelines • CLI Tools
+      </div>
+    </div>
   </div>
 </section>
-
 
 <!-- PROJECTS -->
 <section class="section fade" id="projects">
@@ -108,8 +143,8 @@
 
   <div class="grid md:grid-cols-2 gap-6">
 
-    <!-- 1. PingSweeper -->
-    <div class="card">
+    <!-- PingSweeper -->
+    <div class="card no-hover">
       <h3 class="text-lg font-medium mb-2">PingSweeper</h3>
       <p class="text-[var(--sub)] text-sm mb-3">
 A high-performance subnet scanner written in Go. Designed to explore low-level host discovery techniques used in security and network diagnostic tools. It sends raw ICMP echo requests, parses responses, and measures round-trip latency across an entire subnet.
@@ -121,24 +156,19 @@ A high-performance subnet scanner written in Go. Designed to explore low-level h
       </ul>
 
       <div class="flex flex-wrap">
-        <span class="badge">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg">
-          Go
-        </span>
-        <span class="badge">
-          <i class="fa-solid fa-network-wired text-blue-400"></i>
-          Networking
-        </span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg">Go</span>
+        <span class="badge"><i class="fa-solid fa-network-wired text-blue-400"></i>Networking</span>
       </div>
 
-      <a href="https://github.com/RajaeDev6/PingSweeper" class="text-[var(--accent)] mt-3 inline-block text-sm">GitHub →</a>
+      <a href="https://github.com/RajaeDev6/PingSweeper" class="text-sm text-[var(--accent)] mt-3 inline-block link-hover">GitHub →</a>
     </div>
 
-    <!-- 2. CoreSight -->
-    <div class="card">
+    <!-- CoreSight -->
+    <div class="card no-hover">
       <h3 class="text-lg font-medium mb-2">CoreSight</h3>
       <p class="text-[var(--sub)] text-sm mb-3">
-        A lightweight log-analysis engine to explore how logs move through systems, includes custom parsers, indexing, and filtering, userful for understanding how security logs are ingested and searched in monitoring tools      </p>
+        A lightweight log-analysis engine to explore how logs move through systems, includes custom parsers, indexing, and filtering, useful for understanding how security logs are ingested and searched in monitoring tools.
+      </p>
       <ul class="list-disc ml-5 mb-4 text-[var(--sub)] text-sm">
         <li>Parses syslog, auth logs, access logs</li>
         <li>Custom query operators and pattern detection</li>
@@ -146,21 +176,15 @@ A high-performance subnet scanner written in Go. Designed to explore low-level h
       </ul>
 
       <div class="flex flex-wrap">
-        <span class="badge">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg">
-          Python
-        </span>
-        <span class="badge">
-          <i class="fa-solid fa-database text-purple-300"></i>
-          Parsing
-        </span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg">Python</span>
+        <span class="badge"><i class="fa-solid fa-database text-purple-300"></i>Parsing</span>
       </div>
 
-      <a href="https://github.com/RajaeDev6/CoreSight" class="text-[var(--accent)] mt-3 inline-block text-sm">GitHub →</a>
+      <a href="https://github.com/RajaeDev6/CoreSight" class="text-sm text-[var(--accent)] mt-3 inline-block link-hover">GitHub →</a>
     </div>
 
-    <!-- 3. Bug Reporter API -->
-    <div class="card">
+    <!-- Bug Reporter -->
+    <div class="card no-hover">
       <h3 class="text-lg font-medium mb-2">Bug Reporter API</h3>
       <p class="text-[var(--sub)] text-sm mb-3">
         A simple backend service for creating, updating, and tracking bug reports.
@@ -173,25 +197,16 @@ A high-performance subnet scanner written in Go. Designed to explore low-level h
       </ul>
 
       <div class="flex flex-wrap">
-        <span class="badge">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg">
-          Flask
-        </span>
-        <span class="badge">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg">
-          SQLite
-        </span>
-        <span class="badge">
-          <i class="fa-solid fa-gears text-gray-300"></i>
-          Backend
-        </span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg">Flask</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg">SQLite</span>
+        <span class="badge"><i class="fa-solid fa-gears text-gray-300"></i>Backend</span>
       </div>
 
-      <a href="https://github.com/RajaeDev6" class="text-[var(--accent)] mt-3 inline-block text-sm">GitHub →</a>
+      <a href="https://github.com/RajaeDev6" class="text-sm text-[var(--accent)] mt-3 inline-block link-hover">GitHub →</a>
     </div>
 
-    <!-- 4. Public Eye JA -->
-    <div class="card">
+    <!-- Public Eye JA -->
+    <div class="card no-hover">
       <h3 class="text-lg font-medium mb-2">Public Eye JA</h3>
       <p class="text-[var(--sub)] text-sm mb-3">
         A mobile app that identifies infrastructure issues from a photo,
@@ -204,25 +219,16 @@ A high-performance subnet scanner written in Go. Designed to explore low-level h
       </ul>
 
       <div class="flex flex-wrap">
-        <span class="badge">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg">
-          React Native
-        </span>
-        <span class="badge">
-          <i class="fa-solid fa-brain text-pink-300"></i>
-          AI
-        </span>
-        <span class="badge">
-          <i class="fa-solid fa-map text-green-300"></i>
-          Location
-        </span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg">React Native</span>
+        <span class="badge"><i class="fa-solid fa-brain text-pink-300"></i>AI</span>
+        <span class="badge"><i class="fa-solid fa-map text-green-300"></i>Location</span>
       </div>
 
-      <a href="https://github.com/RajaeDev6/public-eye-ja" class="text-[var(--accent)] mt-3 inline-block text-sm">GitHub →</a>
+      <a href="https://github.com/RajaeDev6/public-eye-ja" class="text-sm text-[var(--accent)] mt-3 inline-block link-hover">GitHub →</a>
     </div>
 
-    <!-- 5. Assistia -->
-    <div class="card">
+    <!-- Assistia -->
+    <div class="card no-hover">
       <h3 class="text-lg font-medium mb-2">Assistia</h3>
       <p class="text-[var(--sub)] text-sm mb-3">
         A structured learning platform that teaches AI topics through guided lessons,
@@ -235,27 +241,16 @@ A high-performance subnet scanner written in Go. Designed to explore low-level h
       </ul>
 
       <div class="flex flex-wrap">
-        <span class="badge">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg">
-          Flask
-        </span>
-        <span class="badge">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg">
-          MongoDB
-        </span>
-        <span class="badge">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg">
-          JS
-        </span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg">Flask</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg">MongoDB</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg">JS</span>
       </div>
 
-      <a href="https://github.com/RajaeDev6/Assistia" class="text-[var(--accent)] mt-3 inline-block text-sm">GitHub →</a>
+      <a href="https://github.com/RajaeDev6/Assistia" class="text-sm text-[var(--accent)] mt-3 inline-block link-hover">GitHub →</a>
     </div>
 
   </div>
 </section>
-
-
 
 <!-- SKILLS -->
 <section class="section fade" id="skills">
@@ -271,12 +266,30 @@ A high-performance subnet scanner written in Go. Designed to explore low-level h
   </div>
 </section>
 
+
 <!-- CERTIFICATIONS -->
 <section class="section fade" id="certs">
   <h2 class="text-3xl font-semibold mb-6">Certifications</h2>
-  <div class="card flex items-center gap-4">
-    <i class="fa-brands fa-google text-3xl text-[var(--accent)]"></i>
-    <span class="text-lg text-[var(--sub)]">Google Cybersecurity Certificate</span>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    
+    <!-- Example Cert Badge -->
+    <a 
+      href="https://www.coursera.org/account/accomplishments/specialization/CYH35LX5QN9V" 
+      target="_blank"
+      class="flex items-center gap-3 bg-[var(--card)] border border-[var(--border)] px-4 py-3 rounded-xl hover:border-[var(--accent)] transition"
+      style="width: fit-content;"
+    >
+
+      <i class="fa-brands fa-google text-[var(--accent)] text-4xl mb-2"></i>
+
+      <div class="flex flex-col leading-tight">
+        <span class="font-medium text-sm">Google Cybersecurity Certificate</span>
+        <span class="text-[var(--sub)] text-xs">Issued 2025</span>
+      </div>
+
+      <span class="text-[var(--accent)] text-sm ml-2">→</span>
+    </a>
   </div>
 </section>
 
@@ -302,3 +315,4 @@ A high-performance subnet scanner written in Go. Designed to explore low-level h
 
 </body>
 </html>
+
