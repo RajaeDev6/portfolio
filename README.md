@@ -10,9 +10,9 @@ Live Demo: [Rajae's portfolio](https://rajaedev.netlify.app)
 ## Tech Used
 
 - **HTML**
-- **TailwindCSS**
+- **CSS** (hand-written, no framework)
 - **JavaScript**
-- **FontAwesome Icons**
+- **Inline SVG icons** and Devicon badges
 
 No frameworks or build tools - the site is lightweight and loads quickly by design.
 
@@ -25,17 +25,23 @@ Works smoothly across desktop, tablet, and mobile.
 Includes a clean mobile hamburger menu with auto-close behavior.
 
 ### **2. Projects Section**
-Showcases software engineering work:
-- Public Eye JA (AI infrastructure reporting)
-- Assistia (AI learning assistant)
-- Lumos (curriculum intelligence engine)
-- PingSweeper (Go subnet scanner)
+Featured, with screenshots:
+- Shop Weh: grocery price comparison for Jamaica ([shopweh.store](https://shopweh.store))
+- Chichi Bus: crowdsourced JUTC bus tracker ([chichibus.vercel.app](https://chichibus.vercel.app))
 
-### **3. Cybersecurity Projects**
-Summaries of academic labs and research:
-- Penetration testing (Metasploitable2)
-- Anti-forensics research project
-- Nessus vulnerability analysis
+Also: Sequik, SOC Shift, Kaaty, The Forgotten Maze, Request Inspector, Due & ExpenseTrakr, plus earlier work (PingSweeper, CoreSight, Public Eye JA).
+
+### **3. Experience, Security Labs, Skills & Education**
+- Software Engineer Intern at the Jamaica Artificial Intelligence Association
+- Open-source contribution to Talawa API
+- Penetration test, vulnerability assessment and network security labs
+
+### **SEO**
+- Descriptive title, meta description and keywords
+- Open Graph and Twitter card tags with a social preview image (`assets/og-image.jpg`)
+- JSON-LD structured data (Person, WebSite and a list of projects)
+- Canonical URL, `robots.txt` and `sitemap.xml`
+- Semantic HTML, alt text on every screenshot, and no render-blocking CSS framework
 
 ### **4. Smooth Fade Animations**
 Sections fade in naturally as the user scrolls.
@@ -54,9 +60,8 @@ simple, functional, and intentional.
    Planned a clean layout with clear sections and consistent spacing.  
    Prioritized readability over decoration.
 
-2. **TailwindCSS**  
-   Used Tailwind for utility-based styling and fast iteration.  
-   Kept the design minimal - no custom components or heavy styling.
+2. **Plain CSS**  
+   Started with Tailwind's CDN, then moved to a small hand-written stylesheet so the page loads faster.
 
 3. **Mobile Experience**  
    Focused heavily on mobile:
@@ -85,7 +90,6 @@ simple, functional, and intentional.
 
 Some future enhancements I’m considering:
 
-- **Small project screenshots** to visually show each project  
 - **Dedicated project pages** for deeper breakdowns  
 - **Add a downloadable resume button**  
 - **Add a blog section** for technical writeups (Go, Linux, cyber labs, etc.)
