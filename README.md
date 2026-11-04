@@ -43,8 +43,11 @@ Also: SOC Shift, Kaaty, The Forgotten Maze, Request Inspector, Due & ExpenseTrak
 - Canonical URL, `robots.txt` and `sitemap.xml`
 - Semantic HTML, alt text on every screenshot, and no render-blocking CSS framework
 
-### **4. Smooth Fade Animations**
-Sections fade in naturally as the user scrolls.
+### **Security headers**
+`_headers` sets a strict Content-Security-Policy (no inline scripts or styles), HSTS, `nosniff`, a referrer policy, a permissions policy and frame blocking for Netlify.
+
+### **4. Restrained Motion**
+The hero rises slightly on load; everything else is static. Motion is turned off for visitors who prefer reduced motion.
 
 ### **5. Minimalist Aesthetic**
 Thin typography, soft grays, and subtle borders inspired by modern interface design.
