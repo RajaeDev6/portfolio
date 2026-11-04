@@ -1,7 +1,7 @@
 # Rajae - Personal Portfolio
 
 A clean and minimal portfolio website that highlights my software engineering and cybersecurity work.  
-The site focuses on clarity, structure, and simple navigation while showcasing both my engineering projects and academic cybersecurity labs.
+The site focuses on clarity, structure, and simple navigation while showcasing my software engineering projects and experience.
 
 Live Demo: [Rajae's portfolio](https://rajaedev.netlify.app)
 
