@@ -32,10 +32,9 @@ Featured, with screenshots:
 
 Also: SOC Shift, Kaaty, The Forgotten Maze, Request Inspector, Due & ExpenseTrakr, plus earlier work (PingSweeper, CoreSight, Public Eye JA).
 
-### **3. Experience, Security Labs, Skills & Education**
+### **3. Experience, Skills & Education**
 - Software Engineer Intern at the Jamaica Artificial Intelligence Association
 - Open-source contribution to Talawa API
-- Penetration test, vulnerability assessment and network security labs
 
 ### **SEO**
 - Descriptive title, meta description and keywords
