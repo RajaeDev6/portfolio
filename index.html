@@ -3,32 +3,147 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rajae | Portfolio</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+  <title>Rajae Givans | Software Developer &amp; Cybersecurity, Kingston, Jamaica</title>
+  <meta name="description" content="Rajae Givans is a software developer in Kingston, Jamaica with a cybersecurity background, building full-stack web apps, React Native mobile apps, APIs and security tools such as Shop Weh and Chichi Bus." />
+  <meta name="keywords" content="Rajae Givans, software developer Jamaica, full-stack developer Kingston, backend developer Jamaica, React Native developer Jamaica, Next.js developer, cybersecurity student Jamaica, Caribbean Maritime University cyber security, digital forensics, secure software development, Go developer, Python developer, TypeScript developer, Jamaican tech portfolio, grocery price comparison Jamaica, JUTC bus tracker, Shop Weh, Chichi Bus" />
+  <meta name="author" content="Rajae Givans" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="theme-color" content="#0c0c0c" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="canonical" href="https://rajaedev.netlify.app/" />
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="apple-touch-icon" href="/assets/favicon.png" />
+
+  <!-- Open Graph / social previews -->
+  <meta property="og:type" content="profile" />
+  <meta property="og:site_name" content="Rajae Givans" />
+  <meta property="og:title" content="Rajae Givans | Software Developer &amp; Cybersecurity" />
+  <meta property="og:description" content="Full-stack web and mobile apps, APIs and security tools, built in Kingston, Jamaica. Projects include Shop Weh, Chichi Bus, Sequik and SOC Shift." />
+  <meta property="og:url" content="https://rajaedev.netlify.app/" />
+  <meta property="og:image" content="https://rajaedev.netlify.app/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Rajae Givans, Software Developer and Cybersecurity, Kingston, Jamaica" />
+  <meta property="og:locale" content="en_JM" />
+  <meta property="profile:first_name" content="Rajae" />
+  <meta property="profile:last_name" content="Givans" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Rajae Givans | Software Developer &amp; Cybersecurity" />
+  <meta name="twitter:description" content="Full-stack web and mobile apps, APIs and security tools, built in Kingston, Jamaica." />
+  <meta name="twitter:image" content="https://rajaedev.netlify.app/assets/og-image.jpg" />
+
+  <!-- Structured data: tells search engines who this page is about and what he built -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://rajaedev.netlify.app/#person",
+        "name": "Rajae Givans",
+        "url": "https://rajaedev.netlify.app/",
+        "image": "https://rajaedev.netlify.app/assets/og-image.jpg",
+        "jobTitle": "Software Developer",
+        "description": "Software developer with a cybersecurity background, building full-stack web apps, mobile apps, APIs and security tools.",
+        "email": "mailto:rgivans9@gmail.com",
+        "address": { "@type": "PostalAddress", "addressLocality": "Kingston", "addressCountry": "JM" },
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "Caribbean Maritime University" },
+        "hasCredential": {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Google Cybersecurity Professional Certificate",
+          "recognizedBy": { "@type": "Organization", "name": "Google" }
+        },
+        "knowsAbout": ["Full-stack development", "Backend development", "React Native", "Next.js", "TypeScript", "Go", "Python", "Rust", "Firebase", "Supabase", "PostgreSQL", "Cybersecurity", "Digital forensics", "Vulnerability assessment", "Penetration testing", "Log analysis", "Secure software design"],
+        "sameAs": ["https://github.com/RajaeDev6", "https://linkedin.com/in/rajae-g"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://rajaedev.netlify.app/#website",
+        "url": "https://rajaedev.netlify.app/",
+        "name": "Rajae Givans",
+        "author": { "@id": "https://rajaedev.netlify.app/#person" }
+      },
+      {
+        "@type": "ItemList",
+        "name": "Projects by Rajae Givans",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "item": { "@type": "WebApplication", "name": "Shop Weh", "url": "https://shopweh.store", "applicationCategory": "ShoppingApplication", "operatingSystem": "Web, iOS, Android (PWA)", "description": "Grocery price comparison app for Jamaica that finds the cheapest store for a whole shopping list.", "creator": { "@id": "https://rajaedev.netlify.app/#person" } } },
+          { "@type": "ListItem", "position": 2, "item": { "@type": "WebApplication", "name": "Chichi Bus", "url": "https://chichibus.vercel.app", "applicationCategory": "TravelApplication", "operatingSystem": "Web, iOS, Android (PWA)", "description": "Crowdsourced JUTC bus tracker for Kingston, Jamaica, with all 159 routes mapped on real roads.", "creator": { "@id": "https://rajaedev.netlify.app/#person" } } },
+          { "@type": "ListItem", "position": 3, "item": { "@type": "SoftwareApplication", "name": "Sequik", "url": "https://sequik.netlify.app", "applicationCategory": "BusinessApplication", "operatingSystem": "iOS, Android", "description": "Rent tracker and rental property management app for landlords.", "creator": { "@id": "https://rajaedev.netlify.app/#person" } } },
+          { "@type": "ListItem", "position": 4, "item": { "@type": "WebApplication", "name": "SOC Shift", "url": "https://socshift.vercel.app", "applicationCategory": "EducationalApplication", "description": "SOC alert triage and phishing identification training game mapped to MITRE ATT&CK.", "creator": { "@id": "https://rajaedev.netlify.app/#person" } } }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <style>
     :root {
       --bg: #0c0c0c;
       --card: #141414;
+      --card-2: #1b1b1b;
       --border: #222222;
       --text: #e8e6e3;
       --sub: #b0aba2;
       --accent: #d2b48c;
     }
 
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 72px; }
     body {
-      font-family: 'Inter', sans-serif;
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    h1, h2, h3, p, ul { margin: 0; }
+    .icon { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .icon-fill { fill: currentColor; stroke: none; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; width: 100%; z-index: 50;
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      background: rgba(0,0,0,.55);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner { max-width: 1152px; margin: auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+    .brand { font-size: 1.125rem; font-weight: 500; }
+    .nav-links { display: flex; gap: 2rem; font-size: .875rem; color: var(--sub); align-items: center; }
+    .nav-links a:hover { color: var(--accent); }
+    .menu-btn { display: none; background: none; border: 0; color: var(--text); font-size: 1.5rem; padding: .25rem; cursor: pointer; }
+    @media (max-width: 767px) {
+      .menu-btn { display: inline-flex; }
+      .nav-links {
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; align-items: flex-start; gap: 0;
+        background: rgba(12,12,12,.97); border-bottom: 1px solid var(--border);
+        padding: .5rem 1.5rem 1rem;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: .75rem 0; width: 100%; font-size: 1rem; }
     }
 
-    .section {
-      padding: 6rem 1.5rem;
-      max-width: 1100px;
-      margin: auto;
+    /* LAYOUT */
+    .section { padding: 6rem 1.5rem; max-width: 1100px; margin: auto; }
+    .section-title { font-size: 1.875rem; font-weight: 600; margin-bottom: .75rem; }
+    .section-lead { color: var(--sub); max-width: 42rem; margin-bottom: 2.5rem; }
+    .grid-2 { display: grid; gap: 1.5rem; }
+    .grid-3 { display: grid; gap: 1rem; }
+    @media (min-width: 768px) {
+      .grid-2 { grid-template-columns: repeat(2, 1fr); }
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
     }
 
     .card {
@@ -36,282 +151,584 @@
       border: 1px solid var(--border);
       padding: 1.25rem;
       border-radius: 12px;
+      display: flex; flex-direction: column;
     }
+    .card h3 { font-size: 1.125rem; font-weight: 500; margin-bottom: .25rem; }
+    .meta { font-size: .8rem; color: var(--accent); margin-bottom: .75rem; }
+    .card p, .card li { color: var(--sub); font-size: .875rem; }
+    .card p { margin-bottom: .75rem; }
+    .card ul { padding-left: 1.25rem; margin-bottom: 1rem; }
+    .card li + li { margin-top: .25rem; }
+    .card .badges { margin-top: auto; }
 
-    .no-hover:hover {
-      transform: none !important;
-      border-color: var(--border) !important;
-    }
+    .links { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: .75rem; font-size: .875rem; }
+    .link { color: var(--accent); }
+    .link:hover { text-decoration: underline; }
+    .status { font-size: .8rem; color: var(--sub); }
 
-    .link-hover:hover {
-      text-decoration: underline;
-      color: var(--accent);
-    }
-
+    .badges { display: flex; flex-wrap: wrap; }
     .badge {
       border: 1px solid var(--border);
       padding: 3px 8px;
       border-radius: 8px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      display: inline-flex; align-items: center; gap: 6px;
       font-size: 12px;
-      margin-right: 6px;
-      margin-bottom: 6px;
-      background: #1b1b1b;
+      margin: 0 6px 6px 0;
+      background: var(--card-2);
+      color: var(--text);
     }
+    .badge img { width: 18px; height: 18px; }
 
-    .badge img {
-      width: 20px;
-      height: 20px;
+    /* HERO */
+    .hero { padding-top: 10rem; }
+    .hero-row { display: flex; flex-direction: column; justify-content: space-between; align-items: center; gap: 3rem; }
+    @media (min-width: 1024px) { .hero-row { flex-direction: row; } }
+    .hero-copy { max-width: 36rem; }
+    .hero h1 { font-size: 3rem; font-weight: 600; line-height: 1.1; margin-bottom: 1rem; }
+    .hero h1 span { color: var(--accent); }
+    .hero .role { font-size: 1.125rem; color: var(--text); margin-bottom: 1rem; }
+    .hero .bio { font-size: 1.05rem; color: var(--sub); line-height: 1.7; }
+    .hero .bio + .bio { margin-top: 1rem; }
+    .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: 2rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .6rem 1.1rem; border-radius: 10px; font-size: .9rem; font-weight: 500;
+      border: 1px solid var(--border); background: var(--card);
+      transition: border-color .2s, color .2s;
     }
+    .btn:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-primary { background: var(--accent); color: #0c0c0c; border-color: var(--accent); }
+    .btn-primary:hover { background: transparent; }
+    .socials { display: flex; gap: 1.25rem; font-size: 1.75rem; }
+    .socials a:hover { color: var(--accent); }
 
-    .fade { opacity: 0; transform: translateY(20px); transition: .6s; }
-    .fade.show { opacity: 1; transform: translateY(0); }
+    .focus-panel {
+      display: none; flex-direction: column; gap: 1rem;
+      padding: 1.5rem; background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; width: 380px; box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    @media (min-width: 1024px) { .focus-panel { display: flex; } }
+    .focus-panel h2 { font-size: 1.25rem; font-weight: 600; color: var(--accent); }
+    .focus-item { display: flex; align-items: center; gap: .75rem; color: var(--sub); }
+    .focus-item .icon { color: var(--accent); font-size: 1.1rem; }
+    .focus-foot { margin-top: .5rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: .875rem; color: var(--sub); }
 
+    /* EXPERIENCE */
+    .timeline { display: grid; gap: 1.5rem; }
+    .job-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1rem; align-items: baseline; }
+    .job-head .when { font-size: .8rem; color: var(--sub); }
 
+    /* FEATURED PROJECTS */
+    .featured { display: grid; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .feature { display: grid; gap: 1.5rem; align-items: center; padding: 1.5rem; }
+    @media (min-width: 860px) { .feature { grid-template-columns: 1fr auto; } }
+    .feature h3 { font-size: 1.375rem; }
+    .shots { display: flex; gap: .75rem; justify-content: center; }
+    .shots img {
+      width: 170px; height: auto; aspect-ratio: 420 / 909;
+      border-radius: 18px; border: 1px solid var(--border); background: var(--card-2);
+    }
+    @media (max-width: 420px) { .shots img { width: calc(50% - .375rem); } }
+
+    .subhead { font-size: 1.125rem; font-weight: 500; color: var(--sub); margin: 3rem 0 1.25rem; }
+
+    /* SKILLS */
+    .skill-groups { display: grid; gap: 1.5rem; }
+    @media (min-width: 768px) { .skill-groups { grid-template-columns: repeat(2, 1fr); } }
+    .skill-group h3 { font-size: .9rem; font-weight: 500; color: var(--accent); margin-bottom: .75rem; }
+
+    /* CERTS */
+    .cert {
+      display: flex; align-items: center; gap: .75rem;
+      background: var(--card); border: 1px solid var(--border);
+      padding: .9rem 1rem; border-radius: 12px; transition: border-color .2s;
+    }
+    a.cert:hover { border-color: var(--accent); }
+    .cert .icon { font-size: 2rem; color: var(--accent); }
+    .cert-text { display: flex; flex-direction: column; line-height: 1.3; }
+    .cert-text strong { font-weight: 500; font-size: .875rem; }
+    .cert-text span { color: var(--sub); font-size: .75rem; }
+
+    /* CONTACT */
+    .contact-row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+    footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; color: var(--sub); font-size: .8rem; }
+
+    /* Fade in on scroll (only hides content when JS is running) */
+    .js .fade { opacity: 0; transform: translateY(20px); transition: opacity .6s, transform .6s; }
+    .js .fade.show { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .js .fade { opacity: 1; transform: none; transition: none; }
+    }
   </style>
+  <script>document.documentElement.classList.add('js');</script>
 </head>
 
 <body>
 
+<!-- Icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-github" viewBox="0 0 24 24"><path class="icon-fill" d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path class="icon-fill" d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></symbol>
+  <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+</svg>
+
 <!-- NAV -->
-<nav class="fixed top-0 w-full backdrop-blur bg-black/40 border-b border-[var(--border)] z-50">
-  <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-    <span class="text-lg font-medium">Rajae</span>
-    <div class="hidden md:flex gap-8 text-sm text-[var(--sub)]">
-      <a href="#projects" class="hover:text-[var(--accent)]">Projects</a>
-      <a href="#skills" class="hover:text-[var(--accent)]">Skills</a>
-      <a href="#certs" class="hover:text-[var(--accent)]">Certifications</a>
-      <a href="#contact" class="hover:text-[var(--accent)]">Contact</a>
+<header class="nav">
+  <nav class="nav-inner" aria-label="Main">
+    <a href="#home" class="brand">Rajae</a>
+    <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+    <div class="nav-links" id="nav-links">
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#security">Security</a>
+      <a href="#skills">Skills</a>
+      <a href="#certs">Education</a>
+      <a href="#contact">Contact</a>
     </div>
-  </div>
-</nav>
+  </nav>
+</header>
+
+<main>
 
 <!-- HERO -->
-<section class="section pt-40 fade" id="home">
-  <div class="flex flex-col lg:flex-row justify-between items-center gap-12">
-
-    <!-- LEFT -->
-    <div class="max-w-xl">
-      <h1 class="text-5xl font-semibold mb-6">
-        Hi, I’m <span class="text-[var(--accent)]">Rajae</span>
-      </h1>
-
-      <p class="text-lg text-[var(--sub)] leading-relaxed">
-        I'm a Cybersecurity & Backend Engineering student based in Jamaica.
-        I study how systems, networks, and software behave, and I build tools
-        to understand these layers more deeply. I’m currently improving my
-        system-level engineering foundation and contributing to open-source security projects.
+<section class="section hero fade" id="home">
+  <div class="hero-row">
+    <div class="hero-copy">
+      <h1>Hi, I’m <span>Rajae</span></h1>
+      <p class="role">Software developer and cybersecurity student in Kingston, Jamaica.</p>
+      <p class="bio">
+        I build and ship full-stack web apps, mobile apps, APIs and tools, mostly in
+        TypeScript, Go and Python. Most of what I make solves a problem I see in Jamaica:
+        finding the cheapest grocery store, knowing when the JUTC bus is coming, or
+        helping landlords keep track of rent.
+      </p>
+      <p class="bio">
+        I’m studying Cyber Security &amp; Digital Forensics at Caribbean Maritime University,
+        so I care about how systems fail as much as how they work. I write row-level security rules,
+        keep scoring on the server, and test who can see what before I ship.
       </p>
 
-      <div class="flex gap-6 text-3xl mt-8">
-        <a href="https://github.com/RajaeDev6" class="hover:text-[var(--accent)]"><i class="fa-brands fa-github"></i></a>
-        <a href="https://linkedin.com/in/rajae-g" class="hover:text-[var(--accent)]"><i class="fa-brands fa-linkedin"></i></a>
+      <div class="cta">
+        <a href="#projects" class="btn btn-primary">See my projects</a>
+        <a href="mailto:rgivans9@gmail.com" class="btn"><svg class="icon"><use href="#i-mail"/></svg>Email me</a>
+        <div class="socials">
+          <a href="https://github.com/RajaeDev6" target="_blank" rel="noopener" aria-label="GitHub profile"><svg class="icon"><use href="#i-github"/></svg></a>
+          <a href="https://linkedin.com/in/rajae-g" target="_blank" rel="noopener" aria-label="LinkedIn profile"><svg class="icon"><use href="#i-linkedin"/></svg></a>
+        </div>
       </div>
     </div>
 
-    <!-- RIGHT PANEL -->
-    <div class="hidden lg:flex flex-col gap-4 p-6 bg-[var(--card)] border border-[var(--border)] rounded-xl w-[380px] shadow-lg">
-      <h3 class="text-xl font-semibold text-[var(--accent)]">Focus Areas</h3>
-
-      <div class="flex flex-col gap-3">
-        <div class="flex items-center gap-3">
-          <i class="fa-solid fa-lock text-[var(--accent)]"></i>
-          <span class="text-[var(--sub)]">Cybersecurity</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <i class="fa-solid fa-server text-[var(--accent)]"></i>
-          <span class="text-[var(--sub)]">Backend Engineering</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <i class="fa-solid fa-microchip text-[var(--accent)]"></i>
-          <span class="text-[var(--sub)]">Systems & Infrastructure</span>
-        </div>
+    <aside class="focus-panel" aria-label="Focus areas">
+      <h2>Focus Areas</h2>
+      <div class="focus-item"><svg class="icon"><use href="#i-server"/></svg>Full-Stack &amp; Backend Development</div>
+      <div class="focus-item"><svg class="icon"><use href="#i-phone"/></svg>Mobile Apps (React Native / Expo)</div>
+      <div class="focus-item"><svg class="icon"><use href="#i-lock"/></svg>Cybersecurity &amp; Secure Design</div>
+      <div class="focus-foot">
+        Exploring: Go • Rust &amp; WebAssembly • Real-time apps • Web scraping &amp; data pipelines
       </div>
+    </aside>
+  </div>
+</section>
 
-      <div class="mt-4 pt-4 border-t border-[var(--border)] text-sm text-[var(--sub)]">
-        Exploring: Go • Low-Level Networking • Log Pipelines • CLI Tools
+<!-- EXPERIENCE -->
+<section class="section fade" id="experience">
+  <h2 class="section-title">Experience</h2>
+  <p class="section-lead">An internship building real features for real users, plus open-source work.</p>
+
+  <div class="timeline">
+    <article class="card">
+      <div class="job-head">
+        <h3>Software Engineer Intern, Jamaica Artificial Intelligence Association</h3>
+        <span class="when">May 2026 – Aug 2026 · Remote</span>
       </div>
-    </div>
+      <p class="meta">React · TypeScript · Supabase</p>
+      <ul>
+        <li>Built features for the admin dashboard of the association’s membership web app and reworked the layout so staff find and manage member details faster.</li>
+        <li>Made a bulk-action tool that activates or deactivates many member accounts in one step, replacing one-by-one updates.</li>
+        <li>Added a CSV export that turns member data into a ready-to-use spreadsheet for reports.</li>
+        <li>Delivered group join requests with status tracking, and tested each feature across scenarios before handover.</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <div class="job-head">
+        <h3>Open-Source Contributor, Talawa API (Palisadoes Foundation)</h3>
+        <span class="when">Dec 2025</span>
+      </div>
+      <p class="meta">TypeScript · GraphQL · Testing</p>
+      <ul>
+        <li>Wrote automated tests for a GraphQL API that confirm only authorized users (admins, organization admins, members) can view protected data.</li>
+        <li>Revised the work based on maintainer review until it was merged.</li>
+      </ul>
+      <div class="links"><a class="link" href="https://github.com/RajaeDev6/talawa-api" target="_blank" rel="noopener">GitHub →</a></div>
+    </article>
   </div>
 </section>
 
 <!-- PROJECTS -->
 <section class="section fade" id="projects">
-  <h2 class="text-3xl font-semibold mb-10">Projects</h2>
+  <h2 class="section-title">Projects</h2>
+  <p class="section-lead">Apps I’ve designed, built and deployed: web, mobile, games and developer tools.</p>
 
-  <div class="grid md:grid-cols-2 gap-6">
-
-    <!-- PingSweeper -->
-    <div class="card no-hover">
-      <h3 class="text-lg font-medium mb-2">PingSweeper</h3>
-      <p class="text-[var(--sub)] text-sm mb-3">
-A high-performance subnet scanner written in Go. Designed to explore low-level host discovery techniques used in security and network diagnostic tools. It sends raw ICMP echo requests, parses responses, and measures round-trip latency across an entire subnet.
-      </p>
-      <ul class="list-disc ml-5 mb-4 text-[var(--sub)] text-sm">
-        <li>Raw socket ICMP probing</li>
-        <li>Concurrent host discovery</li>
-        <li>Latency measurement</li>
-      </ul>
-
-      <div class="flex flex-wrap">
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg">Go</span>
+  <div class="featured">
+    <!-- Shop Weh -->
+    <article class="card feature">
+      <div>
+        <h3>Shop Weh</h3>
+        <p class="meta">Grocery price comparison for Jamaica · Live</p>
+        <p>
+          Add your grocery list and Shop Weh ranks Jamaican stores by how much of the list they
+          carry and what it costs, then shows the cheapest store and how much you save compared with the average.
+          Installable as a PWA.
+        </p>
+        <ul>
+          <li>4,800+ real prices from 86 stores across all 11 parishes</li>
+          <li>Scrapers for Consumer Affairs Commission survey PDFs, WooCommerce and Shopify feeds that obey robots.txt</li>
+          <li>Daily price refresh with GitHub Actions, published to Firestore</li>
+          <li>User accounts, price checks and reports with Firebase Auth</li>
+        </ul>
+        <div class="badges">
+          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-line.svg" alt="" width="18" height="18" loading="lazy" style="filter:invert(1)">Next.js</span>
+          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="" width="18" height="18" loading="lazy">TypeScript</span>
+          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-original.svg" alt="" width="18" height="18" loading="lazy">Firebase</span>
+          <span class="badge">GitHub Actions</span>
+          <span class="badge">Vercel</span>
+        </div>
+        <div class="links"><a class="link" href="https://shopweh.store" target="_blank" rel="noopener">Visit shopweh.store →</a></div>
       </div>
-
-      <a href="https://github.com/RajaeDev6/PingSweeper" class="text-sm text-[var(--accent)] mt-3 inline-block link-hover">GitHub →</a>
-    </div>
-
-    <!-- CoreSight -->
-    <div class="card no-hover">
-      <h3 class="text-lg font-medium mb-2">CoreSight</h3>
-      <p class="text-[var(--sub)] text-sm mb-3">
-        A lightweight log-analysis engine to explore how logs move through systems, includes custom parsers, indexing, and filtering, useful for understanding how security logs are ingested and searched in monitoring tools.
-      </p>
-      <ul class="list-disc ml-5 mb-4 text-[var(--sub)] text-sm">
-        <li>Parses syslog, auth logs, access logs</li>
-        <li>Custom query operators and pattern detection</li>
-        <li>Built for understanding log ingestion pipelines</li>
-      </ul>
-
-      <div class="flex flex-wrap">
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg">Python</span>
+      <div class="shots">
+        <img src="assets/shopweh-list.webp" width="170" height="368" loading="lazy" alt="Shop Weh grocery list screen with rice, sugar, cornmeal and flour and a Find the cheapest store button">
+        <img src="assets/shopweh-cheapest.webp" width="170" height="368" loading="lazy" alt="Shop Weh cheapest store result showing the total in Jamaican dollars and the possible saving">
       </div>
+    </article>
 
-      <a href="https://github.com/RajaeDev6/CoreSight" class="text-sm text-[var(--accent)] mt-3 inline-block link-hover">GitHub →</a>
-    </div>
-
-    <!-- Bug Reporter -->
-    <div class="card no-hover">
-      <h3 class="text-lg font-medium mb-2">Bug Reporter API</h3>
-      <p class="text-[var(--sub)] text-sm mb-3">
-        A simple backend service for creating, updating, and tracking bug reports.
-        Built to practice REST principles and backend fundamentals.
-      </p>
-      <ul class="list-disc ml-5 mb-4 text-[var(--sub)] text-sm">
-        <li>Flask REST architecture</li>
-        <li>SQLite data layer</li>
-        <li>Includes automated tests</li>
-      </ul>
-
-      <div class="flex flex-wrap">
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg">Flask</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg">SQLite</span>
+    <!-- Chichi Bus -->
+    <article class="card feature">
+      <div>
+        <h3>Chichi Bus</h3>
+        <p class="meta">Crowdsourced JUTC bus tracker · Live</p>
+        <p>
+          JUTC doesn’t publish live bus locations, so riders tell each other. Ask riders on your route,
+          report “I see a bus”, and the app moves an estimated bus along the real road toward you with a live ETA.
+        </p>
+        <ul>
+          <li>All 159 JUTC routes and 208 stops, scraped from the official route guide</li>
+          <li>Routes snapped to real roads with OSRM, using a dynamic-programming pass to avoid U-turn loops</li>
+          <li>Location is only sent when you confirm; live sharing is a separate opt-in</li>
+          <li>Offline-ready PWA with precached route data</li>
+        </ul>
+        <div class="badges">
+          <span class="badge">Preact</span>
+          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-original.svg" alt="" width="18" height="18" loading="lazy">Firebase</span>
+          <span class="badge">Leaflet</span>
+          <span class="badge">OpenStreetMap</span>
+          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg" alt="" width="18" height="18" loading="lazy">Vite</span>
+        </div>
+        <div class="links"><a class="link" href="https://chichibus.vercel.app" target="_blank" rel="noopener">Open Chichi Bus →</a></div>
       </div>
-
-      <a href="https://github.com/RajaeDev6" class="text-sm text-[var(--accent)] mt-3 inline-block link-hover">GitHub →</a>
-    </div>
-
-    <!-- Public Eye JA -->
-    <div class="card no-hover">
-      <h3 class="text-lg font-medium mb-2">Public Eye JA</h3>
-      <p class="text-[var(--sub)] text-sm mb-3">
-        A mobile app that identifies infrastructure issues from a photo,
-        determines location, and sends automated reports to authorities.
-      </p>
-      <ul class="list-disc ml-5 mb-4 text-[var(--sub)] text-sm">
-        <li>Image classification</li>
-        <li>Location extraction</li>
-        <li>Report routing workflow</li>
-      </ul>
-
-      <div class="flex flex-wrap">
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg">React Native</span>
-        <span class="badge"><i class="fa-solid fa-brain text-pink-300"></i>AI</span>
-         <span class="badge"><i class="fa-solid fa-firebase text-pink-300"></i>Firebase</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg">Flask</span>
+      <div class="shots">
+        <img src="assets/chichibus-route.webp" width="170" height="368" loading="lazy" alt="Chichi Bus route 8 map from Naggo Head to downtown Kingston with timetable and I see a bus button">
+        <img src="assets/chichibus-my-routes.webp" width="170" height="368" loading="lazy" alt="Chichi Bus My routes screen with a map of nearby stops and followed routes">
       </div>
+    </article>
+  </div>
 
-      <a href="https://github.com/RajaeDev6/public-eye-ja" class="text-sm text-[var(--accent)] mt-3 inline-block link-hover">GitHub →</a>
-    </div>
+  <h3 class="subhead">More projects</h3>
+  <div class="grid-2">
 
-    <!-- Assistia -->
-    <div class="card no-hover">
-      <h3 class="text-lg font-medium mb-2">Assistia</h3>
-      <p class="text-[var(--sub)] text-sm mb-3">
-        A structured learning platform that teaches AI topics through guided lessons,
-        interactive chat, and auto-graded quizzes.
-      </p>
-      <ul class="list-disc ml-5 mb-4 text-[var(--sub)] text-sm">
-        <li>Topic-based AI lesson system</li>
-        <li>Interactive chatbot</li>
-        <li>Auto-grading engine</li>
+    <!-- Sequik -->
+    <article class="card">
+      <h3>Sequik</h3>
+      <p class="meta">Rent tracker for landlords · iOS &amp; Android</p>
+      <p>A rental property management app for tracking tenants, rent, receipts, leases and repairs from your phone.</p>
+      <ul>
+        <li>Rent ledger with collected vs expected, overdue alerts and 6-month history</li>
+        <li>Receipt and document uploads to a private bucket, read through short-lived signed URLs</li>
+        <li>Postgres row-level security so each account only sees its own data</li>
       </ul>
-
-      <div class="flex flex-wrap">
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg">Flask</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg">MongoDB</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg">JS</span>
+      <div class="badges">
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="" width="18" height="18" loading="lazy">React Native</span>
+        <span class="badge">Expo</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" alt="" width="18" height="18" loading="lazy">Supabase</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="" width="18" height="18" loading="lazy">PostgreSQL</span>
       </div>
+      <div class="links"><a class="link" href="https://sequik.netlify.app" target="_blank" rel="noopener">Join the waitlist →</a></div>
+    </article>
 
-      <a href="https://github.com/RajaeDev6/Assistia" class="text-sm text-[var(--accent)] mt-3 inline-block link-hover">GitHub →</a>
-    </div>
+    <!-- SOC Shift -->
+    <article class="card">
+      <h3>SOC Shift</h3>
+      <p class="meta">Cybersecurity training game · Live</p>
+      <p>Work a Security Operations Center alert queue: classify what happened, rank threats, map them to MITRE ATT&amp;CK, and spot phishing in a reported-email inbox.</p>
+      <ul>
+        <li>15 hand-written alert-triage and phishing scenarios with full debriefs</li>
+        <li>Server-side scoring, so answer keys never reach the browser</li>
+        <li>XP, ranks, unlocks and a leaderboard</li>
+      </ul>
+      <div class="badges">
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="" width="18" height="18" loading="lazy">JavaScript</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-original.svg" alt="" width="18" height="18" loading="lazy">Firebase</span>
+        <span class="badge">Vercel Functions</span>
+      </div>
+      <div class="links"><a class="link" href="https://socshift.vercel.app" target="_blank" rel="noopener">Play SOC Shift →</a></div>
+    </article>
 
+    <!-- Kaaty -->
+    <article class="card">
+      <h3>Kaaty</h3>
+      <p class="meta">3D browser kart racer · Rust → WebAssembly</p>
+      <p>A Jamaican hand-cart racing game: drift through Kingston, the Blue Mountains, Negril and Port Royal, and win “Cuss Clashes” against rivals.</p>
+      <ul>
+        <li>Physics, AI, rendering, netcode and server all written in Rust with zero dependencies</li>
+        <li>Online and LAN multiplayer for up to 8 racers with lobby codes</li>
+        <li>Fixed 60 Hz simulation that runs on modest laptops</li>
+      </ul>
+      <div class="badges">
+        <span class="badge">Rust</span>
+        <span class="badge">WebAssembly</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="" width="18" height="18" loading="lazy">Docker</span>
+      </div>
+      <p class="status links">In development</p>
+    </article>
+
+    <!-- The Forgotten Maze -->
+    <article class="card">
+      <h3>The Forgotten Maze</h3>
+      <p class="meta">Multiplayer horror maze game · iOS &amp; Android</p>
+      <p>Two to four players collect journal pages to find the hidden exit, or take them from rivals. Fallen players return as ghosts and set traps.</p>
+      <ul>
+        <li>Real-time online rooms with Supabase Realtime, plus offline bots</li>
+        <li>2D rendering with React Native Skia</li>
+        <li>Cloud saves and in-app purchases</li>
+      </ul>
+      <div class="badges">
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="" width="18" height="18" loading="lazy">React Native</span>
+        <span class="badge">Skia</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" alt="" width="18" height="18" loading="lazy">Supabase</span>
+      </div>
+      <p class="status links">In development</p>
+    </article>
+
+    <!-- Request Inspector -->
+    <article class="card">
+      <h3>Request Inspector</h3>
+      <p class="meta">Developer debugging tool</p>
+      <p>Captures incoming HTTP requests on temporary public links and shows them live, so developers can see exactly what their apps receive.</p>
+      <ul>
+        <li>Live view of headers, query parameters and bodies</li>
+        <li>Replay any request with changed headers or data</li>
+        <li>Starts with a single Docker command</li>
+      </ul>
+      <div class="badges">
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="" width="18" height="18" loading="lazy">Go</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="" width="18" height="18" loading="lazy">PostgreSQL</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="" width="18" height="18" loading="lazy">React</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="" width="18" height="18" loading="lazy">Docker</span>
+      </div>
+      <div class="links"><a class="link" href="https://github.com/RajaeDev6/request-inspector" target="_blank" rel="noopener">GitHub →</a></div>
+    </article>
+
+    <!-- Due + ExpenseTrakr -->
+    <article class="card">
+      <h3>Due &amp; ExpenseTrakr</h3>
+      <p class="meta">Personal finance mobile apps</p>
+      <p><strong style="color:var(--text);font-weight:500">Due</strong> splits household bills between housemates. <strong style="color:var(--text);font-weight:500">ExpenseTrakr</strong> tracks spending across wallets, with recurring transactions and budgets.</p>
+      <ul>
+        <li>Google and Apple sign-in, with Firestore security rules</li>
+        <li>ExpenseTrakr’s data layer can switch between Firebase and Supabase without touching the screens</li>
+      </ul>
+      <div class="badges">
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="" width="18" height="18" loading="lazy">React Native</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="" width="18" height="18" loading="lazy">TypeScript</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-original.svg" alt="" width="18" height="18" loading="lazy">Firebase</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" alt="" width="18" height="18" loading="lazy">Supabase</span>
+      </div>
+      <p class="status links">In development</p>
+    </article>
+  </div>
+
+  <h3 class="subhead">Earlier work</h3>
+  <div class="grid-3">
+    <article class="card">
+      <h3>PingSweeper</h3>
+      <p>Concurrent subnet scanner in Go that sends raw ICMP echo requests and measures latency across a network.</p>
+      <div class="badges"><span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="" width="18" height="18" loading="lazy">Go</span></div>
+      <div class="links"><a class="link" href="https://github.com/RajaeDev6/PingSweeper" target="_blank" rel="noopener">GitHub →</a></div>
+    </article>
+    <article class="card">
+      <h3>CoreSight</h3>
+      <p>Log analysis engine that parses syslog, auth and access logs, with indexing, custom query operators and pattern detection.</p>
+      <div class="badges"><span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="" width="18" height="18" loading="lazy">Python</span></div>
+      <div class="links"><a class="link" href="https://github.com/RajaeDev6/coresight" target="_blank" rel="noopener">GitHub →</a></div>
+    </article>
+    <article class="card">
+      <h3>Public Eye JA</h3>
+      <p>Mobile app that classifies infrastructure problems from a photo, gets the location and reports it to the authorities.</p>
+      <div class="badges"><span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="" width="18" height="18" loading="lazy">React Native</span><span class="badge">AI</span></div>
+      <div class="links"><a class="link" href="https://github.com/RajaeDev6/public-eye-ja" target="_blank" rel="noopener">GitHub →</a></div>
+    </article>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section class="section fade" id="security">
+  <h2 class="section-title">Security Labs</h2>
+  <p class="section-lead">Hands-on cybersecurity work from my degree: network analysis, vulnerability assessment and penetration testing.</p>
+
+  <div class="grid-3">
+    <article class="card">
+      <h3>Penetration Test</h3>
+      <p class="meta">GreenFields Financial Services · Team of 3</p>
+      <p>Scanned, exploited and reported on a deliberately vulnerable network, capturing unencrypted passwords and presenting a fix plan in an executive summary.</p>
+      <div class="badges"><span class="badge">Kali Linux</span><span class="badge">Wireshark</span></div>
+    </article>
+    <article class="card">
+      <h3>Vulnerability Assessment</h3>
+      <p class="meta">University lab</p>
+      <p>Inventoried services, ports and software versions on a Windows system, researched known CVEs in NVD and MITRE, and wrote up risks and fixes.</p>
+      <div class="badges"><span class="badge">Nmap</span><span class="badge">PowerShell</span><span class="badge">CVE research</span></div>
+    </article>
+    <article class="card">
+      <h3>Network Security Lab</h3>
+      <p class="meta">University lab</p>
+      <p>Analyzed DNS, web and ICMP traffic in Wireshark, scanned hosts for open ports and configured firewall rules to block unwanted connections.</p>
+      <div class="badges"><span class="badge">Wireshark</span><span class="badge">Nmap</span><span class="badge">Windows Firewall</span></div>
+    </article>
   </div>
 </section>
 
 <!-- SKILLS -->
 <section class="section fade" id="skills">
-  <h2 class="text-3xl font-semibold mb-6">Skills</h2>
+  <h2 class="section-title">Skills</h2>
+  <p class="section-lead">The languages, frameworks and tools I use to build and secure software.</p>
 
-  <div class="flex flex-wrap gap-4 text-sm">
-    <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg">Go</span>
-    <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg">Python</span>
-    <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg">JavaScript</span>
-    <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg">Bash</span>
-    <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg">React Native</span>
-    <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg">MongoDB</span>
-    <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg">Flask</span>
+  <div class="skill-groups">
+    <div class="skill-group">
+      <h3>Languages</h3>
+      <div class="badges">
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="" width="18" height="18" loading="lazy">TypeScript</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="" width="18" height="18" loading="lazy">JavaScript</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" alt="" width="18" height="18" loading="lazy">Go</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="" width="18" height="18" loading="lazy">Python</span>
+        <span class="badge">Rust</span>
+        <span class="badge">SQL</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="" width="18" height="18" loading="lazy">Bash</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h3>Frontend &amp; Mobile</h3>
+      <div class="badges">
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="" width="18" height="18" loading="lazy">React</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="" width="18" height="18" loading="lazy">React Native</span>
+        <span class="badge">Expo</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-line.svg" alt="" width="18" height="18" loading="lazy" style="filter:invert(1)">Next.js</span>
+        <span class="badge">PWAs</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h3>Backend &amp; Data</h3>
+      <div class="badges">
+        <span class="badge">FastAPI</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="" width="18" height="18" loading="lazy" style="filter:invert(1)">Flask</span>
+        <span class="badge">REST &amp; GraphQL APIs</span>
+        <span class="badge">WebSockets</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="" width="18" height="18" loading="lazy">PostgreSQL</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" alt="" width="18" height="18" loading="lazy">Supabase</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-original.svg" alt="" width="18" height="18" loading="lazy">Firebase</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="" width="18" height="18" loading="lazy">MongoDB</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h3>DevOps &amp; Security</h3>
+      <div class="badges">
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="" width="18" height="18" loading="lazy">Git</span>
+        <span class="badge">GitHub Actions</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="" width="18" height="18" loading="lazy">Docker</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="" width="18" height="18" loading="lazy">Linux</span>
+        <span class="badge">Vercel</span>
+        <span class="badge">Kali Linux</span>
+        <span class="badge">Wireshark</span>
+        <span class="badge">Nmap</span>
+        <span class="badge">Vulnerability assessment</span>
+        <span class="badge">Log analysis</span>
+      </div>
+    </div>
   </div>
 </section>
 
-
-<!-- CERTIFICATIONS -->
+<!-- EDUCATION & CERTIFICATIONS -->
 <section class="section fade" id="certs">
-  <h2 class="text-3xl font-semibold mb-6">Certifications</h2>
-
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-    
-    <!-- Example Cert Badge -->
-    <a 
-      href="https://www.coursera.org/account/accomplishments/specialization/CYH35LX5QN9V" 
-      target="_blank"
-      class="flex items-center gap-3 bg-[var(--card)] border border-[var(--border)] px-4 py-3 rounded-xl hover:border-[var(--accent)] transition"
-      style="width: fit-content;"
-    >
-
-      <i class="fa-brands fa-google text-[var(--accent)] text-4xl mb-2"></i>
-
-      <div class="flex flex-col leading-tight">
-        <span class="font-medium text-sm">Google Cybersecurity Certificate</span>
-        <span class="text-[var(--sub)] text-xs">Issued 2023</span>
+  <h2 class="section-title">Education &amp; Certifications</h2>
+  <div class="grid-3" style="margin-top:1.5rem">
+    <div class="cert">
+      <svg class="icon"><use href="#i-cap"/></svg>
+      <div class="cert-text">
+        <strong>BSc Cyber Security &amp; Digital Forensics</strong>
+        <span>Caribbean Maritime University · 2022 – present</span>
       </div>
-
-      <span class="text-[var(--accent)] text-sm ml-2">→</span>
+    </div>
+    <a class="cert" href="https://www.coursera.org/account/accomplishments/specialization/CYH35LX5QN9V" target="_blank" rel="noopener">
+      <svg class="icon"><use href="#i-award"/></svg>
+      <div class="cert-text">
+        <strong>Google Cybersecurity Professional Certificate</strong>
+        <span>Google · Issued 2023</span>
+      </div>
+      <span class="link" style="margin-left:auto">→</span>
     </a>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section class="section fade" id="contact">
-  <h2 class="text-3xl font-semibold mb-6">Contact</h2>
-  <p class="text-[var(--sub)] mb-6">Feel free to reach out.</p>
-
-  <div class="flex gap-6 text-3xl">
-    <a href="https://github.com/RajaeDev6" class="hover:text-[var(--accent)]"><i class="fa-brands fa-github"></i></a>
-    <a href="https://linkedin.com/in/rajae-g" class="hover:text-[var(--accent)]"><i class="fa-brands fa-linkedin"></i></a>
+  <h2 class="section-title">Contact</h2>
+  <p class="section-lead">Open to software engineering and security roles, internships and freelance work. Feel free to reach out.</p>
+  <div class="contact-row">
+    <a href="mailto:rgivans9@gmail.com" class="btn btn-primary"><svg class="icon"><use href="#i-mail"/></svg>rgivans9@gmail.com</a>
+    <a href="https://github.com/RajaeDev6" class="btn" target="_blank" rel="noopener"><svg class="icon"><use href="#i-github"/></svg>GitHub</a>
+    <a href="https://linkedin.com/in/rajae-g" class="btn" target="_blank" rel="noopener"><svg class="icon"><use href="#i-linkedin"/></svg>LinkedIn</a>
   </div>
 </section>
 
+</main>
+
+<footer>
+  © <span id="year">2026</span> Rajae Givans · Software developer in Kingston, Jamaica
+</footer>
+
 <script>
+  // Mobile menu
+  const btn = document.getElementById('menu-btn');
+  const links = document.getElementById('nav-links');
+  const setMenu = (open) => {
+    links.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    btn.querySelector('use').setAttribute('href', open ? '#i-x' : '#i-menu');
+  };
+  btn.addEventListener('click', () => setMenu(!links.classList.contains('open')));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+
+  // Fade sections in as they scroll into view
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
-      if (e.isIntersecting) e.target.classList.add("show");
+      if (e.isIntersecting) { e.target.classList.add('show'); observer.unobserve(e.target); }
     });
-  });
-  document.querySelectorAll(".fade").forEach(el => observer.observe(el));
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade').forEach(el => observer.observe(el));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
 </body>
 </html>
-
