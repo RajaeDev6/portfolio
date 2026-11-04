@@ -28,8 +28,9 @@ Includes a clean mobile hamburger menu with auto-close behavior.
 Featured, with screenshots:
 - Shop Weh: grocery price comparison for Jamaica ([shopweh.store](https://shopweh.store))
 - Chichi Bus: crowdsourced JUTC bus tracker ([chichibus.vercel.app](https://chichibus.vercel.app))
+- Sequik: rent tracker for landlords ([sequik.netlify.app](https://sequik.netlify.app))
 
-Also: Sequik, SOC Shift, Kaaty, The Forgotten Maze, Request Inspector, Due & ExpenseTrakr, plus earlier work (PingSweeper, CoreSight, Public Eye JA).
+Also: SOC Shift, Kaaty, The Forgotten Maze, Request Inspector, Due & ExpenseTrakr, plus earlier work (PingSweeper, CoreSight, Public Eye JA).
 
 ### **3. Experience, Security Labs, Skills & Education**
 - Software Engineer Intern at the Jamaica Artificial Intelligence Association
