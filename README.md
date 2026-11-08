@@ -3,19 +3,21 @@
 A clean and minimal portfolio website that highlights my software engineering and cybersecurity work.  
 The site focuses on clarity, structure, and simple navigation while showcasing my software engineering projects and experience.
 
-Live Demo: [Rajae's portfolio](https://rajaedev.netlify.app)
+Live Demo: [Rajae's portfolio](https://rajaedev.space)
 
 ---
 
 ## Tech Used
 
 - **HTML**
-- **CSS** (hand-written, no framework)
+- **CSS** (hand-written, no framework), inlined into the page so nothing blocks the first render
 - **JavaScript**
-- **Inter** and **Source Serif 4** (Google Fonts)
+- **Inter** and **Source Serif 4**, self-hosted Latin subsets with preload
 - **Phosphor icons** as an inline SVG sprite, plus Devicon badges
 
 No frameworks or build tools - the site is lightweight and loads quickly by design.
+
+Styles live in `assets/styles.css`. After editing it, run `python3 tools/inline-css.py` to copy it into `index.html` and update the CSP hash in `_headers`.
 
 ---
 
