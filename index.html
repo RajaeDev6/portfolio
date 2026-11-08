@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>Rajae Givans | Software Developer &amp; Cybersecurity, Kingston, Jamaica</title>
-  <meta name="description" content="Rajae Givans is a software developer in Kingston, Jamaica with a cybersecurity background, building full-stack web apps, React Native mobile apps, APIs and security tools such as Shop Weh and Chichi Bus." />
+  <meta name="description" content="Rajae Givans is a software developer in Kingston, Jamaica with a cybersecurity background, building full-stack web apps, React Native mobile apps, APIs and security tools such as Shop Weh, Chichi Bus and EStore Trust." />
   <meta name="keywords" content="Rajae Givans, software developer Jamaica, full-stack developer Kingston, backend developer Jamaica, React Native developer Jamaica, Next.js developer, cybersecurity student Jamaica, Caribbean Maritime University cyber security, digital forensics, secure software development, Go developer, Python developer, TypeScript developer, Jamaican tech portfolio, grocery price comparison Jamaica, JUTC bus tracker, rent tracker app for landlords, Shop Weh, Chichi Bus" />
   <meta name="author" content="Rajae Givans" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -71,7 +71,8 @@
           { "@type": "ListItem", "position": 1, "item": { "@type": "WebApplication", "name": "Shop Weh", "url": "https://shopweh.store", "applicationCategory": "ShoppingApplication", "operatingSystem": "Web, iOS, Android (PWA)", "description": "Grocery price comparison app for Jamaica that finds the cheapest store for a whole shopping list.", "creator": { "@id": "https://rajaedev.netlify.app/#person" } } },
           { "@type": "ListItem", "position": 2, "item": { "@type": "WebApplication", "name": "Chichi Bus", "url": "https://chichibus.vercel.app", "applicationCategory": "TravelApplication", "operatingSystem": "Web, iOS, Android (PWA)", "description": "Crowdsourced JUTC bus tracker for Kingston, Jamaica, with all 159 routes mapped on real roads.", "creator": { "@id": "https://rajaedev.netlify.app/#person" } } },
           { "@type": "ListItem", "position": 3, "item": { "@type": "SoftwareApplication", "name": "Sequik", "url": "https://sequik.netlify.app", "applicationCategory": "BusinessApplication", "operatingSystem": "iOS, Android", "description": "Rent tracker and rental property management app for landlords.", "creator": { "@id": "https://rajaedev.netlify.app/#person" } } },
-          { "@type": "ListItem", "position": 4, "item": { "@type": "WebApplication", "name": "SOC Shift", "url": "https://socshift.vercel.app", "applicationCategory": "EducationalApplication", "description": "SOC alert triage and phishing identification training game mapped to MITRE ATT&CK.", "creator": { "@id": "https://rajaedev.netlify.app/#person" } } }
+          { "@type": "ListItem", "position": 4, "item": { "@type": "WebApplication", "name": "SOC Shift", "url": "https://socshift.vercel.app", "applicationCategory": "EducationalApplication", "description": "SOC alert triage and phishing identification training game mapped to MITRE ATT&CK.", "creator": { "@id": "https://rajaedev.netlify.app/#person" } } },
+          { "@type": "ListItem", "position": 5, "item": { "@type": "WebApplication", "name": "EStore Trust", "url": "https://estoretrust.vercel.app", "applicationCategory": "UtilitiesApplication", "description": "Checks Jamaican Instagram businesses for trust and scam reports before you send money.", "creator": { "@id": "https://rajaedev.netlify.app/#person" } } }
         ]
       }
     ]
@@ -206,7 +207,7 @@
           Installable as a PWA.
         </p>
         <ul>
-          <li>4,800+ real prices from 86 stores in 12 of Jamaica’s 14 parishes</li>
+          <li>Real grocery prices from stores across Jamaica</li>
           <li>Scrapers for Consumer Affairs Commission survey PDFs, WooCommerce and Shopify feeds that obey robots.txt</li>
           <li>Daily price refresh with GitHub Actions, published to Firestore</li>
           <li>User accounts, price checks and reports with Firebase Auth</li>
@@ -290,6 +291,27 @@
 
   <h3 class="subhead">More projects</h3>
   <div class="grid-2">
+
+    <!-- EStore Trust -->
+    <article class="card">
+      <h3>EStore Trust</h3>
+      <p class="meta">Scam checker for Jamaican Instagram shops · Live</p>
+      <p>Look up an Instagram business before you send it money: see its trust score, buyer reviews and any confirmed scam reports.</p>
+      <ul>
+        <li>Rule-based and AI page scans that score each business, with every check shown</li>
+        <li>Four-tier trust ladder, from scanned to verified owner via a bio code and admin interview</li>
+        <li>Order proof checked by AI, with addresses blurred and stored in a private bucket</li>
+        <li>Phone-verified accounts and Postgres row-level security</li>
+      </ul>
+      <div class="badges">
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/nextjs/nextjs-line.svg" alt="" width="16" height="16" loading="lazy" class="invert">Next.js</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="" width="16" height="16" loading="lazy">TypeScript</span>
+        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/supabase/supabase-original.svg" alt="" width="16" height="16" loading="lazy">Supabase</span>
+        <span class="badge">OpenAI</span>
+        <span class="badge">Tailwind CSS</span>
+      </div>
+      <div class="links"><a class="link" href="https://estoretrust.vercel.app" target="_blank" rel="noopener">Open EStore Trust<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+    </article>
 
     <!-- SOC Shift -->
     <article class="card">

@@ -106,6 +106,7 @@ h1, h2, h3, p, ul { margin: 0; }
 .card .badges { margin-top: auto; }
 .card strong { color: var(--ink); font-weight: 600; }
 .card > :last-child { margin-bottom: 0; }
+.card h3 + p { margin-top: 8px; }
 
 .links { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; font-size: 15px; }
 .link { display: inline-flex; align-items: center; gap: 4px; font-weight: 600; color: var(--accent); text-underline-offset: 4px; }

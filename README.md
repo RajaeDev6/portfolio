@@ -31,7 +31,7 @@ Featured, with screenshots:
 - Chichi Bus: crowdsourced JUTC bus tracker ([chichibus.vercel.app](https://chichibus.vercel.app))
 - Sequik: rent tracker for landlords ([sequik.netlify.app](https://sequik.netlify.app))
 
-Also: SOC Shift, Kaaty, The Forgotten Maze, Request Inspector, Due & ExpenseTrakr, plus earlier work (PingSweeper, CoreSight, Public Eye JA).
+Also: EStore Trust (scam checker for Jamaican Instagram shops, [estoretrust.vercel.app](https://estoretrust.vercel.app)), SOC Shift, Kaaty, The Forgotten Maze, Request Inspector, Due & ExpenseTrakr, plus earlier work (PingSweeper, CoreSight, Public Eye JA).
 
 ### **3. Experience, Skills & Education**
 - Software Engineer Intern at the Jamaica Artificial Intelligence Association
