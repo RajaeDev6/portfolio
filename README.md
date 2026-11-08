@@ -12,7 +12,8 @@ Live Demo: [Rajae's portfolio](https://rajaedev.netlify.app)
 - **HTML**
 - **CSS** (hand-written, no framework)
 - **JavaScript**
-- **Inline SVG icons** and Devicon badges
+- **Inter** and **Source Serif 4** (Google Fonts)
+- **Phosphor icons** as an inline SVG sprite, plus Devicon badges
 
 No frameworks or build tools - the site is lightweight and loads quickly by design.
 
@@ -50,7 +51,7 @@ Also: SOC Shift, Kaaty, The Forgotten Maze, Request Inspector, Due & ExpenseTrak
 The hero rises slightly on load; everything else is static. Motion is turned off for visitors who prefer reduced motion.
 
 ### **5. Minimalist Aesthetic**
-Thin typography, soft grays, and subtle borders inspired by modern interface design.
+Shares the design language of my apps (Shop Weh, Chichi Bus): a light grey ground, white cards, black type and actions, and yellow as the one accent. Cards use a 20px radius, inner tiles 10px, and every button and chip is a pill.
 
 ---
 
