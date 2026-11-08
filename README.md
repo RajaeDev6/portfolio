@@ -51,7 +51,7 @@ Also: SOC Shift, Kaaty, The Forgotten Maze, Request Inspector, Due & ExpenseTrak
 The hero rises slightly on load; everything else is static. Motion is turned off for visitors who prefer reduced motion.
 
 ### **5. Minimalist Aesthetic**
-Shares the design language of my apps (Shop Weh, Chichi Bus): a light grey ground, white cards, black type and actions, and yellow as the one accent. Cards use a 20px radius, inner tiles 10px, and every button and chip is a pill.
+Dark theme with soft grays and a tan accent. Type, icons, corners and spacing follow my apps (Shop Weh): Inter with Source Serif 4 titles, Phosphor icons, 20px cards with 10px inner tiles, and pill-shaped buttons and chips.
 
 ---
 
