@@ -101,6 +101,7 @@
   <symbol id="i-award" viewBox="0 0 256 256"><path d="M128,136a8,8,0,0,1-8,8H72a8,8,0,0,1,0-16h48A8,8,0,0,1,128,136Zm-8-40H72a8,8,0,0,0,0,16h48a8,8,0,0,0,0-16Zm112,65.47V224A8,8,0,0,1,220,231l-24-13.74L172,231A8,8,0,0,1,160,224V200H40a16,16,0,0,1-16-16V56A16,16,0,0,1,40,40H216a16,16,0,0,1,16,16V86.53a51.88,51.88,0,0,1,0,74.94ZM160,184V161.47A52,52,0,0,1,216,76V56H40V184Zm56-12a51.88,51.88,0,0,1-40,0v38.22l16-9.16a8,8,0,0,1,7.94,0l16,9.16Zm16-48a36,36,0,1,0-36,36A36,36,0,0,0,232,124Z"/></symbol>
   <symbol id="i-menu" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></symbol>
   <symbol id="i-x" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></symbol>
+  <symbol id="i-caret" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></symbol>
   <symbol id="i-arrow" viewBox="0 0 256 256"><path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"/></symbol>
 </svg>
 
@@ -290,141 +291,186 @@
   </div>
 
   <h3 class="subhead">More projects</h3>
-  <div class="grid-2">
+  <div class="project-list">
 
-    <!-- EStore Trust -->
-    <article class="card">
-      <h3>EStore Trust</h3>
-      <p class="meta">Scam checker for Jamaican Instagram shops · Live</p>
-      <p>Look up an Instagram business before you send it money: see its trust score, buyer reviews and any confirmed scam reports.</p>
-      <ul>
+    <details class="project">
+      <summary>
+        <div class="project-head">
+          <div class="project-title"><h4>EStore Trust</h4><span class="chip chip-live">Live</span></div>
+          <p class="project-meta">Scam checker for Jamaican Instagram shops</p>
+        </div>
+        <span class="project-stack">Next.js · TypeScript · Supabase</span>
+        <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
+      </summary>
+      <div class="project-body">
+        <p>Look up an Instagram business before you send it money: see its trust score, buyer reviews and any confirmed scam reports.</p>
+        <ul>
         <li>Rule-based and AI page scans that score each business, with every check shown</li>
         <li>Four-tier trust ladder, from scanned to verified owner via a bio code and admin interview</li>
         <li>Order proof checked by AI, with addresses blurred and stored in a private bucket</li>
         <li>Phone-verified accounts and Postgres row-level security</li>
       </ul>
-      <div class="badges">
+        <div class="badges">
         <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/nextjs/nextjs-line.svg" alt="" width="16" height="16" loading="lazy" class="invert">Next.js</span>
         <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="" width="16" height="16" loading="lazy">TypeScript</span>
         <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/supabase/supabase-original.svg" alt="" width="16" height="16" loading="lazy">Supabase</span>
         <span class="badge">OpenAI</span>
         <span class="badge">Tailwind CSS</span>
       </div>
-      <div class="links"><a class="link" href="https://estoretrust.vercel.app" target="_blank" rel="noopener">Open EStore Trust<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-    </article>
+        <div class="links"><a class="link" href="https://estoretrust.vercel.app" target="_blank" rel="noopener">Open EStore Trust<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      </div>
+    </details>
 
-    <!-- SOC Shift -->
-    <article class="card">
-      <h3>SOC Shift</h3>
-      <p class="meta">Cybersecurity training game · Live</p>
-      <p>Work a Security Operations Center alert queue: classify what happened, rank threats, map them to MITRE ATT&amp;CK, and spot phishing in a reported-email inbox.</p>
-      <ul>
+    <details class="project">
+      <summary>
+        <div class="project-head">
+          <div class="project-title"><h4>SOC Shift</h4><span class="chip chip-live">Live</span></div>
+          <p class="project-meta">Cybersecurity training game</p>
+        </div>
+        <span class="project-stack">JavaScript · Firebase · Vercel Functions</span>
+        <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
+      </summary>
+      <div class="project-body">
+        <p>Work a Security Operations Center alert queue: classify what happened, rank threats, map them to MITRE ATT&amp;CK, and spot phishing in a reported-email inbox.</p>
+        <ul>
         <li>15 hand-written alert-triage and phishing scenarios with full debriefs</li>
         <li>Server-side scoring, so answer keys never reach the browser</li>
         <li>XP, ranks, unlocks and a leaderboard</li>
       </ul>
-      <div class="badges">
+        <div class="badges">
         <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/javascript/javascript-original.svg" alt="" width="16" height="16" loading="lazy">JavaScript</span>
         <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/firebase/firebase-original.svg" alt="" width="16" height="16" loading="lazy">Firebase</span>
         <span class="badge">Vercel Functions</span>
       </div>
-      <div class="links"><a class="link" href="https://socshift.vercel.app" target="_blank" rel="noopener">Play SOC Shift<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-    </article>
+        <div class="links"><a class="link" href="https://socshift.vercel.app" target="_blank" rel="noopener">Play SOC Shift<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      </div>
+    </details>
 
-    <!-- Kaaty -->
-    <article class="card">
-      <h3>Kaaty</h3>
-      <p class="meta">3D browser kart racer · Rust → WebAssembly</p>
-      <p>A Jamaican hand-cart racing game: drift through Kingston, the Blue Mountains, Negril and Port Royal, and win “Cuss Clashes” against rivals.</p>
-      <ul>
+    <details class="project">
+      <summary>
+        <div class="project-head">
+          <div class="project-title"><h4>Kaaty</h4><span class="chip">In development</span></div>
+          <p class="project-meta">3D browser kart racer · Rust → WebAssembly</p>
+        </div>
+        <span class="project-stack">Rust · WebAssembly · Docker</span>
+        <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
+      </summary>
+      <div class="project-body">
+        <p>A Jamaican hand-cart racing game: drift through Kingston, the Blue Mountains, Negril and Port Royal, and win “Cuss Clashes” against rivals.</p>
+        <ul>
         <li>Physics, AI, rendering, netcode and server all written in Rust with zero dependencies</li>
         <li>Online and LAN multiplayer for up to 8 racers with lobby codes</li>
         <li>Fixed 60 Hz simulation that runs on modest laptops</li>
       </ul>
-      <div class="badges">
+        <div class="badges">
         <span class="badge">Rust</span>
         <span class="badge">WebAssembly</span>
         <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-original.svg" alt="" width="16" height="16" loading="lazy">Docker</span>
       </div>
-      <p class="status">In development</p>
-    </article>
+        
+      </div>
+    </details>
 
-    <!-- The Forgotten Maze -->
-    <article class="card">
-      <h3>The Forgotten Maze</h3>
-      <p class="meta">Multiplayer horror maze game · iOS &amp; Android</p>
-      <p>Two to four players collect journal pages to find the hidden exit, or take them from rivals. Fallen players return as ghosts and set traps.</p>
-      <ul>
+    <details class="project">
+      <summary>
+        <div class="project-head">
+          <div class="project-title"><h4>The Forgotten Maze</h4><span class="chip">In development</span></div>
+          <p class="project-meta">Multiplayer horror maze game · iOS &amp; Android</p>
+        </div>
+        <span class="project-stack">React Native · Skia · Supabase</span>
+        <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
+      </summary>
+      <div class="project-body">
+        <p>Two to four players collect journal pages to find the hidden exit, or take them from rivals. Fallen players return as ghosts and set traps.</p>
+        <ul>
         <li>Real-time online rooms with Supabase Realtime, plus offline bots</li>
         <li>2D rendering with React Native Skia</li>
         <li>Cloud saves and in-app purchases</li>
       </ul>
-      <div class="badges">
+        <div class="badges">
         <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" width="16" height="16" loading="lazy">React Native</span>
         <span class="badge">Skia</span>
         <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/supabase/supabase-original.svg" alt="" width="16" height="16" loading="lazy">Supabase</span>
       </div>
-      <p class="status">In development</p>
-    </article>
+        
+      </div>
+    </details>
 
-    <!-- Request Inspector -->
-    <article class="card">
-      <h3>Request Inspector</h3>
-      <p class="meta">Developer debugging tool</p>
-      <p>Captures incoming HTTP requests on temporary public links and shows them live, so developers can see exactly what their apps receive.</p>
-      <ul>
+    <details class="project">
+      <summary>
+        <div class="project-head">
+          <div class="project-title"><h4>Request Inspector</h4></div>
+          <p class="project-meta">Developer debugging tool</p>
+        </div>
+        <span class="project-stack">Go · PostgreSQL · React</span>
+        <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
+      </summary>
+      <div class="project-body">
+        <p>Captures incoming HTTP requests on temporary public links and shows them live, so developers can see exactly what their apps receive.</p>
+        <ul>
         <li>Live view of headers, query parameters and bodies</li>
         <li>Replay any request with changed headers or data</li>
         <li>Starts with a single Docker command</li>
       </ul>
-      <div class="badges">
+        <div class="badges">
         <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/go/go-original.svg" alt="" width="16" height="16" loading="lazy">Go</span>
         <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg" alt="" width="16" height="16" loading="lazy">PostgreSQL</span>
         <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" width="16" height="16" loading="lazy">React</span>
         <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-original.svg" alt="" width="16" height="16" loading="lazy">Docker</span>
       </div>
-      <div class="links"><a class="link" href="https://github.com/RajaeDev6/request-inspector" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-    </article>
+        <div class="links"><a class="link" href="https://github.com/RajaeDev6/request-inspector" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      </div>
+    </details>
 
-    <!-- Due + ExpenseTrakr -->
-    <article class="card">
-      <h3>Due &amp; ExpenseTrakr</h3>
-      <p class="meta">Personal finance mobile apps</p>
-      <p><strong>Due</strong> splits household bills between housemates. <strong>ExpenseTrakr</strong> tracks spending across wallets, with recurring transactions and budgets.</p>
-      <ul>
+    <details class="project">
+      <summary>
+        <div class="project-head">
+          <div class="project-title"><h4>Due &amp; ExpenseTrakr</h4><span class="chip">In development</span></div>
+          <p class="project-meta">Personal finance mobile apps</p>
+        </div>
+        <span class="project-stack">React Native · TypeScript · Firebase</span>
+        <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
+      </summary>
+      <div class="project-body">
+        <p><strong>Due</strong> splits household bills between housemates. <strong>ExpenseTrakr</strong> tracks spending across wallets, with recurring transactions and budgets.</p>
+        <ul>
         <li>Google and Apple sign-in, with Firestore security rules</li>
         <li>ExpenseTrakr’s data layer can switch between Firebase and Supabase without touching the screens</li>
       </ul>
-      <div class="badges">
+        <div class="badges">
         <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" width="16" height="16" loading="lazy">React Native</span>
         <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="" width="16" height="16" loading="lazy">TypeScript</span>
         <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/firebase/firebase-original.svg" alt="" width="16" height="16" loading="lazy">Firebase</span>
         <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/supabase/supabase-original.svg" alt="" width="16" height="16" loading="lazy">Supabase</span>
       </div>
-      <p class="status">In development</p>
-    </article>
+        
+      </div>
+    </details>
   </div>
 
   <h3 class="subhead">Earlier work</h3>
-  <div class="grid-3">
-    <article class="card">
-      <h3>PingSweeper</h3>
-      <p>Concurrent subnet scanner in Go that sends raw ICMP echo requests and measures latency across a network.</p>
-      <div class="badges"><span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/go/go-original.svg" alt="" width="16" height="16" loading="lazy">Go</span></div>
-      <div class="links"><a class="link" href="https://github.com/RajaeDev6/PingSweeper" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-    </article>
-    <article class="card">
-      <h3>CoreSight</h3>
-      <p>Log analysis engine that parses syslog, auth and access logs, with indexing, custom query operators and pattern detection.</p>
-      <div class="badges"><span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" alt="" width="16" height="16" loading="lazy">Python</span></div>
-      <div class="links"><a class="link" href="https://github.com/RajaeDev6/coresight" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-    </article>
-    <article class="card">
-      <h3>Public Eye JA</h3>
-      <p>Mobile app that classifies infrastructure problems from a photo, gets the location and reports it to the authorities.</p>
-      <div class="badges"><span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" width="16" height="16" loading="lazy">React Native</span><span class="badge">AI</span></div>
-      <div class="links"><a class="link" href="https://github.com/RajaeDev6/public-eye-ja" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-    </article>
+  <div class="project-list">
+    <a class="project-row" href="https://github.com/RajaeDev6/PingSweeper" target="_blank" rel="noopener">
+      <div class="project-head">
+        <div class="project-title"><h4>PingSweeper</h4><span class="project-stack">Go</span></div>
+        <p class="project-meta">Concurrent subnet scanner in Go that sends raw ICMP echo requests and measures latency across a network.</p>
+      </div>
+      <span class="row-link">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+    </a>
+    <a class="project-row" href="https://github.com/RajaeDev6/coresight" target="_blank" rel="noopener">
+      <div class="project-head">
+        <div class="project-title"><h4>CoreSight</h4><span class="project-stack">Python</span></div>
+        <p class="project-meta">Log analysis engine that parses syslog, auth and access logs, with indexing, custom query operators and pattern detection.</p>
+      </div>
+      <span class="row-link">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+    </a>
+    <a class="project-row" href="https://github.com/RajaeDev6/public-eye-ja" target="_blank" rel="noopener">
+      <div class="project-head">
+        <div class="project-title"><h4>Public Eye JA</h4><span class="project-stack">React Native · AI</span></div>
+        <p class="project-meta">Mobile app that classifies infrastructure problems from a photo, gets the location and reports it to the authorities.</p>
+      </div>
+      <span class="row-link">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+    </a>
   </div>
 </section>
 
