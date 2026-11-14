@@ -12,8 +12,8 @@ Live Demo: [Rajae's portfolio](https://rajaedev.space)
 - **HTML**
 - **CSS** (hand-written, no framework), inlined into the page so nothing blocks the first render
 - **JavaScript**
-- **Inter** and **Source Serif 4**, self-hosted Latin subsets with preload
-- **Phosphor icons** as an inline SVG sprite, plus Devicon badges
+- **Nunito Sans**, a self-hosted Latin subset with preload
+- **Hugeicons** as an inline SVG sprite, plus Devicon badges
 
 No frameworks or build tools - the site is lightweight and loads quickly by design.
 
@@ -30,14 +30,15 @@ Includes a clean mobile hamburger menu with auto-close behavior.
 ### **2. Projects Section**
 Featured, with screenshots:
 - Shop Weh: grocery price comparison for Jamaica ([shopweh.store](https://shopweh.store))
-- Chichi Bus: crowdsourced JUTC bus tracker ([chichibus.vercel.app](https://chichibus.vercel.app))
+- EStore Trust: scam checker for Jamaican Instagram shops ([estoretrust.vercel.app](https://estoretrust.vercel.app))
 - Sequik: rent tracker for landlords ([sequik.netlify.app](https://sequik.netlify.app))
+- Chichi Bus: crowdsourced JUTC bus tracker ([chichibus.vercel.app](https://chichibus.vercel.app))
 
-The rest sit in a compact list: one row per project, which opens to show the details. Also: EStore Trust (scam checker for Jamaican Instagram shops, [estoretrust.vercel.app](https://estoretrust.vercel.app)), SOC Shift, Kaaty, The Forgotten Maze, Request Inspector, Due & ExpenseTrakr, plus earlier work (PingSweeper, CoreSight, Public Eye JA).
+The rest sit in a compact list: one row per project, which opens to show the details. These include SOC Shift, Kaaty, The Forgotten Maze, Request Inspector, Due & ExpenseTrakr, plus earlier work (PingSweeper, CoreSight, Public Eye JA).
 
 ### **3. Experience, Skills & Education**
 - Software Engineer Intern at the Jamaica Artificial Intelligence Association
-- Open-source contribution to Talawa API
+- Contributed to open source (Talawa API)
 
 ### **SEO**
 - Descriptive title, meta description and keywords
@@ -53,7 +54,7 @@ The rest sit in a compact list: one row per project, which opens to show the det
 The hero rises slightly on load; everything else is static. Motion is turned off for visitors who prefer reduced motion.
 
 ### **5. Minimalist Aesthetic**
-Dark theme with soft grays and a tan accent. Type, icons, corners and spacing follow my apps (Shop Weh): Inter with Source Serif 4 titles, Phosphor icons, 20px cards with 10px inner tiles, and pill-shaped buttons and chips.
+Dark theme with cool grays and a teal accent. Type and icons follow EStore Trust (Nunito Sans, Hugeicons), with 20px cards, 10px inner tiles, and pill-shaped buttons and chips.
 
 ---
 

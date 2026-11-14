@@ -3,12 +3,14 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://rajaedev.space/</loc>
-    <lastmod>2026-11-08</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image><image:loc>https://rajaedev.space/assets/og-image.jpg</image:loc></image:image>
     <image:image><image:loc>https://rajaedev.space/assets/shopweh-list.webp</image:loc></image:image>
     <image:image><image:loc>https://rajaedev.space/assets/shopweh-cheapest.webp</image:loc></image:image>
+    <image:image><image:loc>https://rajaedev.space/assets/estoretrust-home.webp</image:loc></image:image>
+    <image:image><image:loc>https://rajaedev.space/assets/estoretrust-store.webp</image:loc></image:image>
     <image:image><image:loc>https://rajaedev.space/assets/chichibus-route.webp</image:loc></image:image>
     <image:image><image:loc>https://rajaedev.space/assets/chichibus-my-routes.webp</image:loc></image:image>
     <image:image><image:loc>https://rajaedev.space/assets/sequik-overview.webp</image:loc></image:image>
