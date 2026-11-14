@@ -13,7 +13,7 @@ Live Demo: [Rajae's portfolio](https://rajaedev.space)
 - **CSS** (hand-written, no framework), inlined into the page so nothing blocks the first render
 - **JavaScript**
 - **Nunito Sans**, a self-hosted Latin subset with preload
-- **Hugeicons** as an inline SVG sprite, plus Devicon badges
+- **Hugeicons** as an inline SVG sprite
 
 No frameworks or build tools - the site is lightweight and loads quickly by design.
 
@@ -34,7 +34,7 @@ Featured, with screenshots:
 - Sequik: rent tracker for landlords ([sequik.netlify.app](https://sequik.netlify.app))
 - Chichi Bus: crowdsourced JUTC bus tracker ([chichibus.vercel.app](https://chichibus.vercel.app))
 
-The rest sit in a compact list: one row per project, which opens to show the details. These include SOC Shift, Kaaty, The Forgotten Maze, Request Inspector, Due & ExpenseTrakr, plus earlier work (PingSweeper, CoreSight, Public Eye JA).
+The rest sit in a plain list: one row per project, which opens to show the details. These include SOC Shift, Kaaty, The Forgotten Maze, Request Inspector, Due & ExpenseTrakr, plus earlier work (PingSweeper, CoreSight, Public Eye JA).
 
 ### **3. Experience, Skills & Education**
 - Software Engineer Intern at the Jamaica Artificial Intelligence Association
@@ -54,7 +54,7 @@ The rest sit in a compact list: one row per project, which opens to show the det
 The hero rises slightly on load; everything else is static. Motion is turned off for visitors who prefer reduced motion.
 
 ### **5. Minimalist Aesthetic**
-Dark theme with cool grays and a teal accent. Type and icons follow EStore Trust (Nunito Sans, Hugeicons), with 20px cards, 10px inner tiles, and pill-shaped buttons and chips.
+Dark theme with cool grays and a teal accent, set in Nunito Sans with Hugeicons. No cards, badges or shadows: structure comes from type, spacing and alignment. Text lines stay around 60-68 characters, related lines sit close together and unrelated blocks get more space. On desktop, section labels sit in a narrow left column so all content starts on one vertical line.
 
 ---
 

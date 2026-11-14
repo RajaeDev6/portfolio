@@ -88,35 +88,36 @@
   <!-- Inlined from assets/styles.css by tools/inline-css.py: edit that file, then run the script -->
   <style>
 /*
- * Dark theme with cool greys and a teal accent. Type and icons follow EStore Trust:
- * Nunito Sans for everything, Hugeicons (stroke, rounded).
+ * Dark, type-led layout with a teal accent. No cards, badges or shadows:
+ * structure comes from type size, weight, colour and spacing.
  *
- * Radius scale, outer to inner: cards 20px > tiles inside cards 10px.
- * Every standalone control (button, chip, nav link) is a pill.
- * Spacing runs on 4px steps: 4, 8, 12, 16, 24, 32, 48, 64.
+ * Measure: running text is capped at 32rem, about 60-68 characters a line.
+ * Spacing by relationship (4px steps):
+ *   2-6px   lines that belong together (title + meta, list items)
+ *   12-16px parts of one item (meta > text > list > stack)
+ *   56px    one item to the next
+ *   96px    one section to the next
+ * Desktop puts section labels in a narrow left column so every section's
+ * content starts on the same vertical line.
  */
 /* Self-hosted Latin subset of Nunito Sans (variable weight) */
 @font-face { font-family: 'Nunito Sans'; font-style: normal; font-weight: 200 1000; font-display: swap; src: url(/assets/fonts/nunito-sans-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 
+
 :root {
   --bg: #0c0c0c;
-  --surface: #141414;
-  --surface-alt: #1b1b1b;
   --line: #222222;
   --ink: #e6e8eb;
-  --sub: #a9afb6;
+  --sub: #b4b9bf;
   --muted: #8a9199;
   --faint: #5a6068;
   --accent: #6fd3c1;
-  --accent-hover: #98e2d4;
-  --hover: rgb(255 255 255 / 0.06);
-  --font-ui: 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
-  --font-title: 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
+  --font: 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
   --gutter: 20px;
-  --r-card: 20px;
-  --r-inner: 10px;
-  --r-pill: 999px;
-  --bar-bg: rgb(12 12 12 / 0.72);
+  --measure: 32rem;
+  --label-col: 9rem;
+  --page: calc(var(--label-col) + 48px + var(--measure));
+  --bar-bg: rgb(12 12 12 / 0.8);
   --ease: cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
@@ -126,216 +127,126 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-ui);
+  font-family: var(--font);
   font-size: 16px;
-  line-height: 24px;
+  line-height: 26px;
   -webkit-font-smoothing: antialiased;
 }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
-h1, h2, h3, p, ul { margin: 0; }
+h1, h2, h3, p, ul, dl, dd { margin: 0; }
 .icon { width: 1em; height: 1em; fill: none; stroke-width: 1.5; flex-shrink: 0; }
 .sprite { position: absolute; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--r-pill); }
-
-/* Motion: one curve, colour and transform only */
-.btn, .nav-links a, .socials a, .link, a.cert { transition: color .16s var(--ease), background-color .16s var(--ease), border-color .16s var(--ease), transform 90ms var(--ease); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
 /* NAV */
 .nav {
   position: fixed; top: 0; width: 100%; z-index: 50;
-  backdrop-filter: saturate(1.8) blur(16px); -webkit-backdrop-filter: saturate(1.8) blur(16px);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   background: var(--bar-bg);
   border-bottom: 1px solid var(--line);
 }
-.nav-inner { max-width: 1040px; margin: auto; padding: 12px var(--gutter); display: flex; justify-content: space-between; align-items: center; }
-.brand { font-family: var(--font-title); font-size: 20px; line-height: 28px; font-weight: 700; }
-.nav-links { display: flex; gap: 4px; font-size: 14px; font-weight: 500; color: var(--muted); align-items: center; }
-.nav-links a { padding: 6px 12px; border-radius: var(--r-pill); }
-.nav-links a:hover { color: var(--accent); background: var(--hover); }
-.menu-btn { display: none; place-items: center; width: 40px; height: 40px; background: var(--surface); border: 1px solid var(--line); border-radius: 50%; color: var(--ink); font-size: 20px; cursor: pointer; }
+.nav-inner { max-width: calc(var(--page) + 2 * var(--gutter)); margin: auto; padding: 14px var(--gutter); display: flex; justify-content: space-between; align-items: center; }
+.brand { font-size: 15px; line-height: 24px; font-weight: 700; }
+.nav-links { display: flex; gap: 24px; font-size: 14px; line-height: 24px; color: var(--muted); }
+.nav-links a { transition: color .16s var(--ease); }
+.nav-links a:hover { color: var(--ink); }
+.menu-btn { display: none; place-items: center; width: 40px; height: 40px; margin: -8px -10px -8px 0; background: none; border: 0; color: var(--ink); font-size: 20px; cursor: pointer; }
 @media (max-width: 767px) {
   .menu-btn { display: inline-grid; }
   .nav-links {
-    display: none; position: absolute; top: calc(100% + 8px); left: var(--gutter); right: var(--gutter);
-    flex-direction: column; align-items: stretch; gap: 0;
-    background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card);
-    padding: 8px;
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; gap: 0;
+    background: var(--bg); border-bottom: 1px solid var(--line);
+    padding: 8px var(--gutter) 16px;
   }
   .nav-links.open { display: flex; }
-  .nav-links a { padding: 12px 16px; font-size: 16px; color: var(--ink); border-radius: var(--r-inner); }
+  .nav-links a { padding: 10px 0; font-size: 16px; color: var(--ink); }
 }
 
-/* LAYOUT */
-.section { padding: 48px var(--gutter); max-width: 1040px; margin: auto; }
-@media (min-width: 768px) { .section { padding: 64px var(--gutter); } }
-.section-title { font-family: var(--font-title); font-size: 28px; line-height: 36px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 24px; }
-.section-lead { color: var(--muted); max-width: 40rem; margin: -12px 0 24px; }
-.grid-2 { display: grid; gap: 16px; }
-.grid-3 { display: grid; gap: 16px; }
+/* PAGE */
+.page { max-width: calc(var(--page) + 2 * var(--gutter)); margin: auto; padding: 0 var(--gutter); }
+.section { margin-top: 72px; }
 @media (min-width: 768px) {
-  .grid-2 { grid-template-columns: repeat(2, 1fr); }
-  .grid-3 { grid-template-columns: repeat(3, 1fr); }
-  .grid-2 > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .section { margin-top: 96px; display: grid; grid-template-columns: var(--label-col) minmax(0, var(--measure)); column-gap: 48px; }
 }
+.label { font-size: 13px; line-height: 20px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; }
+@media (min-width: 768px) { .label { margin: 0; padding-top: 4px; } }
+.content { max-width: var(--measure); }
 
-.card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--r-card);
-  padding: 24px;
-  display: flex; flex-direction: column;
-}
-@media (max-width: 420px) { .card { padding: 20px; } }
-.card h3 { font-size: 17px; line-height: 24px; font-weight: 600; letter-spacing: -0.01em; }
-.meta { font-size: 14px; line-height: 20px; color: var(--accent); margin: 4px 0 16px; }
-.card p, .card li { color: var(--sub); font-size: 15px; line-height: 22px; }
-.card p { margin-bottom: 16px; }
-.card ul { padding-left: 18px; margin-bottom: 20px; }
-.card li + li { margin-top: 6px; }
-.card li::marker { color: var(--faint); }
-.card .badges { margin-top: auto; }
-.card strong { color: var(--ink); font-weight: 600; }
-.card > :last-child { margin-bottom: 0; }
-.card h3 + p { margin-top: 8px; }
+/* Text inside an item */
+.item + .item { margin-top: 56px; }
+.item h3, .entry h3 { font-size: 18px; line-height: 28px; font-weight: 700; letter-spacing: -0.005em; }
+.meta { margin-top: 2px; font-size: 14px; line-height: 22px; color: var(--muted); }
+.content p, .content li { color: var(--sub); }
+.content p.meta, .content p.stack { color: var(--muted); }
+.item > p:not(.meta), .row-body > p:not(.stack, .actions) { margin-top: 12px; }
+.content ul { margin-top: 12px; padding-left: 18px; }
+.content li + li { margin-top: 6px; }
+.content li::marker { color: var(--faint); }
+.content strong { color: var(--ink); font-weight: 600; }
+.stack { font-size: 14px; line-height: 22px; }
+.item > .stack, .row-body > .stack { margin-top: 16px; }
+.item > .stack + .actions, .row-body > .stack + .actions { margin-top: 4px; }
 
-.links { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; font-size: 15px; }
-.link { display: inline-flex; align-items: center; gap: 4px; font-weight: 600; color: var(--accent); text-underline-offset: 4px; }
-.link .icon { font-size: 14px; }
+/* Links */
+.actions { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.link { display: inline-flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 600; color: var(--accent); text-underline-offset: 4px; }
+.link .icon { font-size: 15px; }
 .link:hover { text-decoration: underline; }
+.plain { display: inline; transition: color .16s var(--ease); }
+.plain .icon { font-size: 14px; margin-left: 6px; vertical-align: -1px; color: var(--muted); }
+.plain:hover { color: var(--accent); }
 
-.badges { display: flex; flex-wrap: wrap; gap: 6px; }
-.badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  height: 28px; padding: 0 12px;
-  border-radius: var(--r-pill);
-  background: var(--surface-alt);
-  border: 1px solid var(--line);
-  font-size: 13px; font-weight: 500; color: var(--ink);
-}
-.badge img { width: 14px; height: 14px; }
-.invert { filter: invert(1); }
-
-/* Round icon tile, as on Shop Weh's list rows */
-.tile-icon { display: inline-grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--surface-alt); border: 1px solid var(--line); color: var(--accent); font-size: 18px; }
+/* Screenshots: small reference thumbnails, not a showcase */
+.shots { display: flex; gap: 8px; margin-top: 20px; }
+.shots img { width: 112px; height: auto; aspect-ratio: 420 / 909; border-radius: 8px; border: 1px solid var(--line); }
 
 /* HERO */
-.hero { padding-top: 120px; animation: rise .4s var(--ease) both; }
-@media (min-width: 768px) { .hero { padding-top: 168px; padding-bottom: 80px; } }
-.hero-row { display: flex; flex-direction: column; justify-content: space-between; align-items: center; gap: 48px; }
-@media (min-width: 1024px) { .hero-row { flex-direction: row; } }
-.hero-copy { max-width: 36rem; }
-.hero h1 span { color: var(--accent); }
-.hero h1 { font-family: var(--font-title); font-size: 44px; font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 16px; }
-@media (min-width: 768px) { .hero h1 { font-size: 60px; } }
-.hero .role { font-size: 19px; line-height: 28px; font-weight: 500; margin-bottom: 12px; text-wrap: balance; }
-.hero .bio { color: var(--muted); line-height: 26px; }
-.cta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 32px; }
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  min-height: 48px; padding: 0 22px; border-radius: var(--r-pill);
-  font-size: 15px; font-weight: 600;
-  background: var(--surface); color: var(--ink); border: 1px solid var(--line);
-}
-.btn .icon { font-size: 18px; }
-.btn:hover { border-color: var(--accent); color: var(--accent); }
-.btn:active { transform: scale(.97); }
-.btn-primary { background: var(--accent); color: #0c0c0c; border-color: var(--accent); }
-.btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: #0c0c0c; }
-.socials { display: flex; gap: 4px; }
-.socials a { display: inline-grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; font-size: 22px; color: var(--muted); }
-.socials a:hover { color: var(--accent); background: var(--hover); }
+.hero { padding-top: 128px; max-width: var(--measure); animation: rise .4s var(--ease) both; }
+@media (min-width: 768px) { .hero { padding-top: 168px; } }
+.hero h1 { font-size: 40px; line-height: 48px; font-weight: 700; letter-spacing: -0.02em; }
+@media (min-width: 768px) { .hero h1 { font-size: 48px; line-height: 56px; } }
+.hero .role { margin-top: 12px; font-size: 20px; line-height: 30px; font-weight: 500; text-wrap: balance; }
+.hero .bio { margin-top: 16px; color: var(--sub); }
+.hero .note { margin-top: 12px; font-size: 14px; line-height: 22px; color: var(--muted); }
+.hero .actions { margin-top: 32px; }
 
-.focus-panel {
-  display: none; flex-direction: column; gap: 16px;
-  padding: 24px; background: var(--surface); border: 1px solid var(--line);
-  border-radius: var(--r-card); width: 380px;
-}
-@media (min-width: 1024px) { .focus-panel { display: flex; } }
-.focus-panel h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--accent); }
-.focus-item { display: flex; align-items: center; gap: 12px; font-size: 15px; line-height: 22px; font-weight: 500; }
-.focus-foot { margin-top: 4px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14px; line-height: 20px; color: var(--muted); }
-
-/* EXPERIENCE */
-.timeline { display: grid; gap: 16px; }
-.job-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; align-items: baseline; }
-.job-head .when { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
-
-/* FEATURED PROJECTS */
-.featured { display: grid; gap: 16px; }
-.feature { display: grid; gap: 32px; align-items: center; padding: 32px; }
-@media (max-width: 420px) { .feature { padding: 20px; gap: 24px; } }
-@media (min-width: 860px) { .feature { grid-template-columns: 1fr auto; } }
-.feature h3 { font-family: var(--font-title); font-size: 24px; line-height: 32px; letter-spacing: -0.01em; }
-.shots { display: flex; gap: 12px; justify-content: center; padding: 16px; background: var(--surface-alt); border-radius: var(--r-inner); }
-.shots img {
-  width: 160px; height: auto; aspect-ratio: 420 / 909;
-  border-radius: var(--r-inner); background: var(--surface); border: 1px solid var(--line);
-}
-@media (max-width: 420px) { .shots { padding: 12px; gap: 8px; } .shots img { width: calc(50% - 4px); } }
-
-/* OTHER PROJECTS: one list, a row per project, open a row for details */
-.project-list { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card); overflow: hidden; }
-.project + .project, .project-row + .project-row { border-top: 1px solid var(--line); }
-.project summary, .project-row {
+/* PROJECT LISTS: plain rows split by hairlines */
+.group { margin-top: 72px; }
+.group-title { font-size: 15px; line-height: 24px; font-weight: 700; margin-bottom: 8px; }
+.rows { border-top: 1px solid var(--line); }
+.row { display: block; border-bottom: 1px solid var(--line); }
+.row summary, .row-link {
   display: flex; align-items: center; gap: 16px;
-  padding: 18px 24px; cursor: pointer; list-style: none;
-  transition: background-color .16s var(--ease);
+  padding: 14px 0; cursor: pointer; list-style: none;
 }
-.project summary::-webkit-details-marker { display: none; }
-.project summary:hover, .project-row:hover { background: var(--hover); }
-.project summary:focus-visible, .project-row:focus-visible { outline-offset: -2px; border-radius: 0; }
-.project-head { flex: 1; min-width: 0; }
-.project-title { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
-.project-title h4 { margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; }
-.project-meta { margin-top: 2px; font-size: 14px; line-height: 20px; color: var(--muted); }
-.project-stack { font-size: 13px; line-height: 20px; color: var(--muted); white-space: nowrap; }
-summary > .project-stack { flex: none; }
-@media (max-width: 767px) { summary > .project-stack { display: none; } }
-.chip {
-  display: inline-flex; align-items: center; height: 22px; padding: 0 9px;
-  border-radius: var(--r-pill); border: 1px solid var(--line); background: var(--surface-alt);
-  font-size: 12px; font-weight: 600; color: var(--muted);
-}
-.chip-live { color: var(--accent); border-color: rgb(111 211 193 / 0.3); }
-.caret { flex: none; font-size: 18px; color: var(--muted); transition: transform .2s var(--ease); }
-.project[open] .caret { transform: rotate(180deg); }
-.project-body { padding: 0 24px 24px; max-width: 46rem; }
-.project-body p, .project-body li { color: var(--sub); font-size: 15px; line-height: 22px; }
-.project-body p { margin-bottom: 12px; }
-.project-body strong { color: var(--ink); font-weight: 600; }
-.project-body ul { padding-left: 18px; margin-bottom: 16px; }
-.project-body li + li { margin-top: 6px; }
-.project-body li::marker { color: var(--faint); }
-.row-link { flex: none; display: inline-flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 600; color: var(--accent); }
-.row-link .icon { font-size: 13px; }
-@media (max-width: 420px) {
-  .project summary, .project-row { padding: 16px 20px; }
-  .project-body { padding: 0 20px 20px; }
-}
-
-.subhead { font-family: var(--font-title); font-size: 20px; line-height: 28px; font-weight: 600; margin: 48px 0 16px; }
+.row summary::-webkit-details-marker { display: none; }
+.row-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.row-name { font-size: 16px; line-height: 24px; font-weight: 600; transition: color .16s var(--ease); }
+.row-meta { font-size: 14px; line-height: 22px; color: var(--muted); }
+.row summary:hover .row-name, .row-link:hover .row-name { color: var(--accent); }
+.caret { flex: none; font-size: 16px; color: var(--muted); transition: transform .2s var(--ease); }
+.row[open] .caret { transform: rotate(180deg); }
+.row-body { padding: 0 0 20px; }
+.row-body > p:first-child { margin-top: 0; }
 
 /* SKILLS */
-.skill-groups { display: grid; gap: 16px; }
-@media (min-width: 768px) { .skill-groups { grid-template-columns: repeat(2, 1fr); } }
-.skill-group { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card); padding: 24px; }
-.skill-group h3 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--accent); margin-bottom: 12px; }
+.facts > div + div { margin-top: 20px; }
+.facts dt { font-size: 15px; line-height: 24px; font-weight: 700; }
+.facts dd { margin-top: 2px; color: var(--sub); }
 
 /* EDUCATION */
-.cert {
-  display: flex; align-items: center; gap: 16px;
-  background: var(--surface); border: 1px solid var(--line);
-  padding: 20px; border-radius: var(--r-card);
-}
-a.cert:hover { border-color: var(--accent); }
-.cert-text { display: flex; flex-direction: column; gap: 2px; }
-.cert-text strong { font-weight: 600; font-size: 15px; line-height: 22px; }
-.cert-text span { color: var(--muted); font-size: 13px; line-height: 18px; }
+.entry + .entry { margin-top: 24px; }
 
 /* CONTACT */
-.contact-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-footer { border-top: 1px solid var(--line); margin-top: 32px; padding: 32px var(--gutter); text-align: center; color: var(--muted); font-size: 13px; }
+#contact .actions { margin-top: 20px; }
+
+.footer {
+  max-width: calc(var(--page) + 2 * var(--gutter)); margin: 96px auto 0;
+  padding: 24px var(--gutter) 48px;
+  color: var(--faint); font-size: 13px; line-height: 20px;
+}
 
 @keyframes rise { from { transform: translateY(8px); } to { transform: none; } }
 @media (prefers-reduced-motion: reduce) {
@@ -353,11 +264,6 @@ footer { border-top: 1px solid var(--line); margin-top: 32px; padding: 32px var(
   <symbol id="i-github" viewBox="0 0 24 24"><path d="M10 20.5675C6.57143 21.7248 3.71429 20.5675 2 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 22V18.7579C10 18.1596 10.1839 17.6396 10.4804 17.1699C10.6838 16.8476 10.5445 16.3904 10.1771 16.2894C7.13394 15.4528 5 14.1077 5 9.64606C5 8.48611 5.38005 7.39556 6.04811 6.4464C6.21437 6.21018 6.29749 6.09208 6.31748 5.9851C6.33746 5.87813 6.30272 5.73852 6.23322 5.45932C5.95038 4.32292 5.96871 3.11619 6.39322 2.02823C6.39322 2.02823 7.27042 1.74242 9.26698 2.98969C9.72282 3.27447 9.95075 3.41686 10.1515 3.44871C10.3522 3.48056 10.6206 3.41384 11.1573 3.28041C11.8913 3.09795 12.6476 3 13.5 3C14.3524 3 15.1087 3.09795 15.8427 3.28041C16.3794 3.41384 16.6478 3.48056 16.8485 3.44871C17.0493 3.41686 17.2772 3.27447 17.733 2.98969C19.7296 1.74242 20.6068 2.02823 20.6068 2.02823C21.0313 3.11619 21.0496 4.32292 20.7668 5.45932C20.6973 5.73852 20.6625 5.87813 20.6825 5.9851C20.7025 6.09207 20.7856 6.21019 20.9519 6.4464C21.6199 7.39556 22 8.48611 22 9.64606C22 14.1077 19.8661 15.4528 16.8229 16.2894C16.4555 16.3904 16.3162 16.8476 16.5196 17.1699C16.8161 17.6396 17 18.1596 17 18.7579V22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M7 10V17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 13V17M11 13C11 11.3431 12.3431 10 14 10C15.6569 10 17 11.3431 17 13V17M11 13V10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.125 6.75H7M7.25 6.75C7.25 6.88807 7.13807 7 7 7C6.86193 7 6.75 6.88807 6.75 6.75C6.75 6.61193 6.86193 6.5 7 6.5C7.13807 6.5 7.25 6.61193 7.25 6.75Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 12C3 7.75736 3 5.63604 4.31802 4.31802C5.63604 3 7.75736 3 12 3C16.2426 3 18.364 3 19.682 4.31802C21 5.63604 21 7.75736 21 12C21 16.2426 21 18.364 19.682 19.682C18.364 21 16.2426 21 12 21C7.75736 21 5.63604 21 4.31802 19.682C3 18.364 3 16.2426 3 12Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-mail" viewBox="0 0 24 24"><path d="M2 6L8.91302 9.91697C11.4616 11.361 12.5384 11.361 15.087 9.91697L22 6" stroke="currentColor" stroke-linejoin="round"/><path d="M2.01577 13.4756C2.08114 16.5412 2.11383 18.0739 3.24496 19.2094C4.37608 20.3448 5.95033 20.3843 9.09883 20.4634C11.0393 20.5122 12.9607 20.5122 14.9012 20.4634C18.0497 20.3843 19.6239 20.3448 20.7551 19.2094C21.8862 18.0739 21.9189 16.5412 21.9842 13.4756C22.0053 12.4899 22.0053 11.5101 21.9842 10.5244C21.9189 7.45886 21.8862 5.92609 20.7551 4.79066C19.6239 3.65523 18.0497 3.61568 14.9012 3.53657C12.9607 3.48781 11.0393 3.48781 9.09882 3.53656C5.95033 3.61566 4.37608 3.65521 3.24495 4.79065C2.11382 5.92608 2.08114 7.45885 2.01576 10.5244C1.99474 11.5101 1.99475 12.4899 2.01577 13.4756Z" stroke="currentColor" stroke-linejoin="round"/></symbol>
-  <symbol id="i-server" viewBox="0 0 24 24"><path d="M19 4H5C4.06812 4 3.60218 4 3.23463 4.15224C2.74458 4.35523 2.35523 4.74458 2.15224 5.23463C2 5.60218 2 6.06812 2 7C2 7.93188 2 8.39782 2.15224 8.76537C2.35523 9.25542 2.74458 9.64477 3.23463 9.84776C3.60218 10 4.06812 10 5 10H19C19.9319 10 20.3978 10 20.7654 9.84776C21.2554 9.64477 21.6448 9.25542 21.8478 8.76537C22 8.39782 22 7.93188 22 7C22 6.06812 22 5.60218 21.8478 5.23463C21.6448 4.74458 21.2554 4.35523 20.7654 4.15224C20.3978 4 19.9319 4 19 4Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 14H5C4.06812 14 3.60218 14 3.23463 14.1522C2.74458 14.3552 2.35523 14.7446 2.15224 15.2346C2 15.6022 2 16.0681 2 17C2 17.9319 2 18.3978 2.15224 18.7654C2.35523 19.2554 2.74458 19.6448 3.23463 19.8478C3.60218 20 4.06812 20 5 20H19C19.9319 20 20.3978 20 20.7654 19.8478C21.2554 19.6448 21.6448 19.2554 21.8478 18.7654C22 18.3978 22 17.9319 22 17C22 16.0681 22 15.6022 21.8478 15.2346C21.6448 14.7446 21.2554 14.3552 20.7654 14.1522C20.3978 14 19.9319 14 19 14Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.125 7H6M6.25 7C6.25 7.13807 6.13807 7.25 6 7.25C5.86193 7.25 5.75 7.13807 5.75 7C5.75 6.86193 5.86193 6.75 6 6.75C6.13807 6.75 6.25 6.86193 6.25 7Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.125 7H10M10.25 7C10.25 7.13807 10.1381 7.25 10 7.25C9.86193 7.25 9.75 7.13807 9.75 7C9.75 6.86193 9.86193 6.75 10 6.75C10.1381 6.75 10.25 6.86193 10.25 7Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.125 17H6M6.25 17C6.25 17.1381 6.13807 17.25 6 17.25C5.86193 17.25 5.75 17.1381 5.75 17C5.75 16.8619 5.86193 16.75 6 16.75C6.13807 16.75 6.25 16.8619 6.25 17Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.125 17H10M10.25 17C10.25 17.1381 10.1381 17.25 10 17.25C9.86193 17.25 9.75 17.1381 9.75 17C9.75 16.8619 9.86193 16.75 10 16.75C10.1381 16.75 10.25 16.8619 10.25 17Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M13.5 2H10.5C8.14298 2 6.96447 2 6.23223 2.73223C5.5 3.46447 5.5 4.64298 5.5 7V17C5.5 19.357 5.5 20.5355 6.23223 21.2678C6.96447 22 8.14298 22 10.5 22H13.5C15.857 22 17.0355 22 17.7678 21.2678C18.5 20.5355 18.5 19.357 18.5 17V7C18.5 4.64298 18.5 3.46447 17.7678 2.73223C17.0355 2 15.857 2 13.5 2Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M12.125 19H12M12.25 19C12.25 19.1381 12.1381 19.25 12 19.25C11.8619 19.25 11.75 19.1381 11.75 19C11.75 18.8619 11.8619 18.75 12 18.75C12.1381 18.75 12.25 18.8619 12.25 19Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-  <symbol id="i-lock" viewBox="0 0 24 24"><path d="M18.7088 3.49534C16.8165 2.55382 14.5009 2 12 2C9.4991 2 7.1835 2.55382 5.29116 3.49534C4.36318 3.95706 3.89919 4.18792 3.4496 4.91378C3 5.63965 3 6.34248 3 7.74814V11.2371C3 16.9205 7.54236 20.0804 10.173 21.4338C10.9067 21.8113 11.2735 22 12 22C12.7265 22 13.0933 21.8113 13.8269 21.4338C16.4576 20.0804 21 16.9205 21 11.2371L21 7.74814C21 6.34249 21 5.63966 20.5504 4.91378C20.1008 4.18791 19.6368 3.95706 18.7088 3.49534Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 11.5C9 11.5 10.4079 11.7519 11 13.5C11 13.5 12.5 10.5 15 9.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M1.99805 7.99928C1.99805 9.34126 10.0943 13 11.9857 13C13.8772 13 21.9734 9.34126 21.9734 7.99928C21.9734 6.6573 13.8772 2.99854 11.9857 2.99854C10.0943 2.99854 1.99805 6.6573 1.99805 7.99928Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.99219 11L7.24348 16.8002C7.32919 17.1975 7.52703 17.5687 7.85696 17.8054C10.0787 19.3998 13.8908 19.3998 16.1126 17.8054C16.4426 17.5687 16.6404 17.1975 16.7261 16.8002L17.9774 11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.4774 9.49951V16.5006M20.4774 16.5006C19.6864 17.9471 19.3366 18.7221 18.9813 20.0011C18.9042 20.4562 18.9654 20.6855 19.2786 20.8891C19.4059 20.9718 19.5588 21.0012 19.7104 21.0012H21.229C21.3904 21.0012 21.5533 20.9675 21.6863 20.8757C21.9774 20.6747 22.0523 20.4541 21.9734 20.0011C21.662 18.8135 21.2653 18.0016 20.4774 16.5006Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-  <symbol id="i-award" viewBox="0 0 24 24"><path d="M11.5 22C7.49306 22 5.48959 22 4.2448 20.5355C3 19.0711 3 16.714 3 12C3 7.28596 3 4.92893 4.2448 3.46447C5.48959 2 7.49306 2 11.5 2C15.5069 2 17.5104 2 18.7552 3.46447C19.7572 4.64332 19.9527 6.40054 19.9908 9.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 8H15M8 13H11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M19.6092 18.1054C20.4521 17.4918 21 16.4974 21 15.375C21 13.511 19.489 12 17.625 12H17.375C15.511 12 14 13.511 14 15.375C14 16.4974 14.5479 17.4918 15.3908 18.1054M19.6092 18.1054C19.0523 18.5108 18.3666 18.75 17.625 18.75H17.375C16.6334 18.75 15.9477 18.5108 15.3908 18.1054M19.6092 18.1054L20.192 19.9404C20.4143 20.6403 20.5255 20.9903 20.4951 21.2082C20.4318 21.6617 20.0619 21.9984 19.6252 22C19.4154 22.0008 19.101 21.8358 18.4723 21.5059C18.2027 21.3644 18.0679 21.2936 17.93 21.252C17.649 21.1673 17.351 21.1673 17.07 21.252C16.9321 21.2936 16.7973 21.3644 16.5277 21.5059C15.899 21.8358 15.5846 22.0008 15.3748 22C14.9381 21.9984 14.5682 21.6617 14.5049 21.2082C14.4745 20.9903 14.5857 20.6403 14.808 19.9404L15.3908 18.1054" stroke="currentColor"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 5L20 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 12L20 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19L20 19" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M18.9991 19L5 5.00098" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 5L5.00092 18.999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-caret" viewBox="0 0 24 24"><path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -367,7 +273,7 @@ footer { border-top: 1px solid var(--line); margin-top: 32px; padding: 32px var(
 <!-- NAV -->
 <header class="nav">
   <nav class="nav-inner" aria-label="Main">
-    <a href="#home" class="brand">Rajae</a>
+    <a href="#home" class="brand">Rajae Givans</a>
     <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
       <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
     </button>
@@ -381,464 +287,314 @@ footer { border-top: 1px solid var(--line); margin-top: 32px; padding: 32px var(
   </nav>
 </header>
 
-<main>
+<main class="page">
 
 <!-- HERO -->
-<section class="section hero" id="home">
-  <div class="hero-row">
-    <div class="hero-copy">
-      <h1><span>Rajae</span> Givans</h1>
-      <p class="role">Software engineer with a cybersecurity background, based in Kingston, Jamaica.</p>
-      <p class="bio">
-        I build and deploy full-stack web apps, mobile apps and APIs in TypeScript, Go and Python,
-        with a focus on backend development, secure design and AI features built on LLM APIs. I’ve shipped production features as a
-        software engineer intern on a remote team, contributed to open source,
-        and I’m finishing a BSc in Cyber Security &amp; Digital Forensics.
-      </p>
-
-      <div class="cta">
-        <a href="#projects" class="btn btn-primary">See my projects</a>
-        <a href="mailto:rgivans9@gmail.com" class="btn"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Email me</a>
-        <div class="socials">
-          <a href="https://github.com/RajaeDev6" target="_blank" rel="noopener" aria-label="GitHub profile"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
-          <a href="https://linkedin.com/in/rajae-g" target="_blank" rel="noopener" aria-label="LinkedIn profile"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
-        </div>
-      </div>
-    </div>
-
-    <aside class="focus-panel" aria-label="Focus areas">
-      <h2>Focus areas</h2>
-      <div class="focus-item"><span class="tile-icon"><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg></span>Full-stack and backend development</div>
-      <div class="focus-item"><span class="tile-icon"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg></span>Mobile apps with React Native and Expo</div>
-      <div class="focus-item"><span class="tile-icon"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg></span>Security: alert triage, log analysis and secure design</div>
-      <div class="focus-foot">
-        Currently exploring Go, Rust and WebAssembly, real-time multiplayer and data pipelines
-      </div>
-    </aside>
-  </div>
+<section class="hero" id="home">
+  <h1>Rajae Givans</h1>
+  <p class="role">Software engineer with a cybersecurity background, based in Kingston, Jamaica.</p>
+  <p class="bio">
+    I build and deploy full-stack web apps, mobile apps and APIs in TypeScript, Go and Python,
+    with a focus on backend development, secure design and AI features built on LLM APIs.
+    I’ve shipped production features as a software engineer intern on a remote team,
+    contributed to open source, and I’m finishing a BSc in Cyber Security &amp; Digital Forensics.
+  </p>
+  <p class="note">Currently exploring Go, Rust and WebAssembly, real-time multiplayer and data pipelines.</p>
+  <p class="actions">
+    <a class="link" href="mailto:rgivans9@gmail.com"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Email me</a>
+    <a class="link" href="https://github.com/RajaeDev6" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a>
+    <a class="link" href="https://linkedin.com/in/rajae-g" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</a>
+  </p>
 </section>
 
 <!-- EXPERIENCE -->
 <section class="section" id="experience">
-  <h2 class="section-title">Experience</h2>
-
-  <div class="timeline">
-    <article class="card">
-      <div class="job-head">
-        <h3>Software Engineer Intern, Jamaica Artificial Intelligence Association</h3>
-        <span class="when">May 2026 – Aug 2026 · Remote</span>
-      </div>
-      <p class="meta">React · TypeScript · Supabase</p>
+  <h2 class="label">Experience</h2>
+  <div class="content">
+    <article class="item">
+      <h3>Software Engineer Intern</h3>
+      <p class="meta">Jamaica Artificial Intelligence Association · May – Aug 2026 · Remote</p>
       <ul>
         <li>Built features for the admin dashboard of the association’s membership web app and reworked the layout so staff find and manage member details faster.</li>
         <li>Made a bulk-action tool that activates or deactivates many member accounts in one step, replacing one-by-one updates.</li>
         <li>Added a CSV export that turns member data into a ready-to-use spreadsheet for reports.</li>
         <li>Delivered group join requests with status tracking, and tested each feature across scenarios before handover.</li>
       </ul>
+      <p class="stack">React, TypeScript, Supabase</p>
     </article>
 
-    <article class="card">
-      <div class="job-head">
-        <h3>Open-Source Contributor, Talawa API (Palisadoes Foundation)</h3>
-        <span class="when">Dec 2025</span>
-      </div>
-      <p class="meta">TypeScript · GraphQL · Testing</p>
+    <article class="item">
+      <h3>Open-Source Contributor</h3>
+      <p class="meta">Talawa API, Palisadoes Foundation · Dec 2025</p>
       <ul>
         <li>Wrote automated tests for a GraphQL API that confirm only authorized users (admins, organization admins, members) can view protected data.</li>
         <li>Worked through code review with the maintainers on GitHub and revised the tests based on their feedback.</li>
       </ul>
-      <div class="links"><a class="link" href="https://github.com/RajaeDev6/talawa-api" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <p class="stack">TypeScript, GraphQL, testing</p>
+      <p class="actions"><a class="link" href="https://github.com/RajaeDev6/talawa-api" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
     </article>
   </div>
 </section>
 
 <!-- PROJECTS -->
 <section class="section" id="projects">
-  <h2 class="section-title">Projects</h2>
+  <h2 class="label">Projects</h2>
+  <div class="content">
 
-  <div class="featured">
-    <!-- Shop Weh -->
-    <article class="card feature">
-      <div>
-        <h3>Shop Weh</h3>
-        <p class="meta">Grocery price comparison for Jamaica · Live</p>
-        <p>
-          Add your grocery list and Shop Weh ranks Jamaican stores by how much of the list they
-          carry and what it costs, then shows the cheapest store and how much you save compared with the average.
-          Installable as a PWA.
-        </p>
-        <ul>
-          <li>Real grocery prices from stores across Jamaica</li>
-          <li>Scrapers for Consumer Affairs Commission survey PDFs, WooCommerce and Shopify feeds that obey robots.txt</li>
-          <li>Daily price refresh through a GitHub Actions pipeline, published to Firestore</li>
-          <li>User accounts, price checks and reports with Firebase Auth</li>
-        </ul>
-        <div class="badges">
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/nextjs/nextjs-line.svg" alt="" width="16" height="16" loading="lazy" class="invert">Next.js</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="" width="16" height="16" loading="lazy">TypeScript</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/firebase/firebase-original.svg" alt="" width="16" height="16" loading="lazy">Firebase</span>
-          <span class="badge">GitHub Actions</span>
-          <span class="badge">Vercel</span>
-        </div>
-        <div class="links"><a class="link" href="https://shopweh.store" target="_blank" rel="noopener">Visit shopweh.store<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-      </div>
+    <article class="item">
+      <h3>Shop Weh</h3>
+      <p class="meta">Grocery price comparison for Jamaica · Live</p>
+      <p>
+        Add your grocery list and Shop Weh ranks Jamaican stores by how much of the list they
+        carry and what it costs, then shows the cheapest store and how much you save compared
+        with the average. Installable as a PWA.
+      </p>
+      <ul>
+        <li>Real grocery prices from stores across Jamaica</li>
+        <li>Scrapers for Consumer Affairs Commission survey PDFs, WooCommerce and Shopify feeds that obey robots.txt</li>
+        <li>Daily price refresh through a GitHub Actions pipeline, published to Firestore</li>
+        <li>User accounts, price checks and reports with Firebase Auth</li>
+      </ul>
+      <p class="stack">Next.js, TypeScript, Firebase, GitHub Actions, Vercel</p>
+      <p class="actions"><a class="link" href="https://shopweh.store" target="_blank" rel="noopener">shopweh.store<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
       <div class="shots">
-        <img src="assets/shopweh-list-280.webp" srcset="assets/shopweh-list-200.webp 200w, assets/shopweh-list-280.webp 280w, assets/shopweh-list.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Shop Weh grocery list screen with rice, sugar, cornmeal and flour and a Find the cheapest store button">
-        <img src="assets/shopweh-cheapest-280.webp" srcset="assets/shopweh-cheapest-200.webp 200w, assets/shopweh-cheapest-280.webp 280w, assets/shopweh-cheapest.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Shop Weh cheapest store result showing the total in Jamaican dollars and the possible saving">
+        <img src="assets/shopweh-list-280.webp" srcset="assets/shopweh-list-200.webp 200w, assets/shopweh-list-280.webp 280w, assets/shopweh-list.webp 420w" sizes="112px" width="112" height="242" loading="lazy" alt="Shop Weh grocery list screen with rice, sugar, cornmeal and flour and a Find the cheapest store button">
+        <img src="assets/shopweh-cheapest-280.webp" srcset="assets/shopweh-cheapest-200.webp 200w, assets/shopweh-cheapest-280.webp 280w, assets/shopweh-cheapest.webp 420w" sizes="112px" width="112" height="242" loading="lazy" alt="Shop Weh cheapest store result showing the total in Jamaican dollars and the possible saving">
       </div>
     </article>
 
-
-    <!-- EStore Trust -->
-    <article class="card feature">
-      <div>
-        <h3>EStore Trust</h3>
-        <p class="meta">Scam checker for Jamaican Instagram shops · Live</p>
-        <p>
-          Look up an Instagram business before you send it money. EStore Trust shows a trust score,
-          the checks behind it, buyer reviews and any confirmed scam reports.
-        </p>
-        <ul>
-          <li>Rule-based checks plus LLM page scans through the OpenAI API that score each business, with every check shown</li>
-          <li>Four-tier trust ladder, from scanned to verified owner via a bio code and admin interview</li>
-          <li>Order proof checked by AI, with addresses blurred and stored in a private bucket</li>
-          <li>Phone-verified accounts and Postgres row-level security</li>
-        </ul>
-        <div class="badges">
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/nextjs/nextjs-line.svg" alt="" width="16" height="16" loading="lazy" class="invert">Next.js</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="" width="16" height="16" loading="lazy">TypeScript</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/supabase/supabase-original.svg" alt="" width="16" height="16" loading="lazy">Supabase</span>
-          <span class="badge">OpenAI</span>
-          <span class="badge">Tailwind CSS</span>
-        </div>
-        <div class="links"><a class="link" href="https://estoretrust.vercel.app" target="_blank" rel="noopener">Open EStore Trust<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-      </div>
+    <article class="item">
+      <h3>EStore Trust</h3>
+      <p class="meta">Scam checker for Jamaican Instagram shops · Live</p>
+      <p>
+        Look up an Instagram business before you send it money. EStore Trust shows a trust score,
+        the checks behind it, buyer reviews and any confirmed scam reports.
+      </p>
+      <ul>
+        <li>Rule-based checks plus LLM page scans through the OpenAI API that score each business, with every check shown</li>
+        <li>Four-tier trust ladder, from scanned to verified owner via a bio code and admin interview</li>
+        <li>Order proof checked by AI, with addresses blurred and stored in a private bucket</li>
+        <li>Phone-verified accounts and Postgres row-level security</li>
+      </ul>
+      <p class="stack">Next.js, TypeScript, Supabase, OpenAI, Tailwind CSS</p>
+      <p class="actions"><a class="link" href="https://estoretrust.vercel.app" target="_blank" rel="noopener">estoretrust.vercel.app<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
       <div class="shots">
-        <img src="assets/estoretrust-home-280.webp" srcset="assets/estoretrust-home-200.webp 200w, assets/estoretrust-home-280.webp 280w, assets/estoretrust-home.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="EStore Trust home screen with a search bar for Instagram profiles, most popular shops and a list of scanned businesses">
-        <img src="assets/estoretrust-store-280.webp" srcset="assets/estoretrust-store-200.webp 200w, assets/estoretrust-store-280.webp 280w, assets/estoretrust-store.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="EStore Trust business page for BYCHARI showing a trust score of 78 out of 100 and the checks behind it">
+        <img src="assets/estoretrust-home-280.webp" srcset="assets/estoretrust-home-200.webp 200w, assets/estoretrust-home-280.webp 280w, assets/estoretrust-home.webp 420w" sizes="112px" width="112" height="242" loading="lazy" alt="EStore Trust home screen with a search bar for Instagram profiles, most popular shops and a list of scanned businesses">
+        <img src="assets/estoretrust-store-280.webp" srcset="assets/estoretrust-store-200.webp 200w, assets/estoretrust-store-280.webp 280w, assets/estoretrust-store.webp 420w" sizes="112px" width="112" height="242" loading="lazy" alt="EStore Trust business page for BYCHARI showing a trust score of 78 out of 100 and the checks behind it">
       </div>
     </article>
 
-    <!-- Sequik -->
-    <article class="card feature">
-      <div>
-        <h3>Sequik</h3>
-        <p class="meta">Rent tracker for landlords · iOS &amp; Android · Waitlist open</p>
-        <p>
-          A rental property management app for small landlords. See what’s been collected this month,
-          who owes what, and which leases are expiring, then record payments with receipts, store documents
-          and track repairs from your phone.
-        </p>
-        <ul>
-          <li>Rent ledger with collected vs expected, overdue alerts and 6-month history</li>
-          <li>Tenants, properties, units, documents and maintenance in one place</li>
-          <li>Receipt and document uploads to a private bucket, read through short-lived signed URLs</li>
-          <li>Postgres row-level security so each account only sees its own data</li>
-        </ul>
-        <div class="badges">
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" width="16" height="16" loading="lazy">React Native</span>
-          <span class="badge">Expo</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="" width="16" height="16" loading="lazy">TypeScript</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/supabase/supabase-original.svg" alt="" width="16" height="16" loading="lazy">Supabase</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg" alt="" width="16" height="16" loading="lazy">PostgreSQL</span>
-        </div>
-        <div class="links"><a class="link" href="https://sequik.netlify.app" target="_blank" rel="noopener">Join the Sequik waitlist<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-      </div>
+    <article class="item">
+      <h3>Sequik</h3>
+      <p class="meta">Rent tracker for landlords · iOS &amp; Android · Waitlist open</p>
+      <p>
+        A rental property management app for small landlords. See what’s been collected this
+        month, who owes what, and which leases are expiring, then record payments with receipts,
+        store documents and track repairs from your phone.
+      </p>
+      <ul>
+        <li>Rent ledger with collected vs expected, overdue alerts and 6-month history</li>
+        <li>Tenants, properties, units, documents and maintenance in one place</li>
+        <li>Receipt and document uploads to a private bucket, read through short-lived signed URLs</li>
+        <li>Postgres row-level security so each account only sees its own data</li>
+      </ul>
+      <p class="stack">React Native, Expo, TypeScript, Supabase, PostgreSQL</p>
+      <p class="actions"><a class="link" href="https://sequik.netlify.app" target="_blank" rel="noopener">Join the waitlist<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
       <div class="shots">
-        <img src="assets/sequik-overview-280.webp" srcset="assets/sequik-overview-200.webp 200w, assets/sequik-overview-280.webp 280w, assets/sequik-overview.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Sequik rent tracker overview showing rent collected this month, outstanding balance and overdue tenants">
-        <img src="assets/sequik-tenants-280.webp" srcset="assets/sequik-tenants-200.webp 200w, assets/sequik-tenants-280.webp 280w, assets/sequik-tenants.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Sequik tenants screen listing overdue and due tenants with amounts owed">
+        <img src="assets/sequik-overview-280.webp" srcset="assets/sequik-overview-200.webp 200w, assets/sequik-overview-280.webp 280w, assets/sequik-overview.webp 420w" sizes="112px" width="112" height="242" loading="lazy" alt="Sequik rent tracker overview showing rent collected this month, outstanding balance and overdue tenants">
+        <img src="assets/sequik-tenants-280.webp" srcset="assets/sequik-tenants-200.webp 200w, assets/sequik-tenants-280.webp 280w, assets/sequik-tenants.webp 420w" sizes="112px" width="112" height="242" loading="lazy" alt="Sequik tenants screen listing overdue and due tenants with amounts owed">
       </div>
     </article>
 
-    <!-- Chichi Bus -->
-    <article class="card feature">
-      <div>
-        <h3>Chichi Bus</h3>
-        <p class="meta">Crowdsourced JUTC bus tracker · Live</p>
-        <p>
-          JUTC doesn’t publish live bus locations, so riders tell each other. Ask riders on your route,
-          report “I see a bus”, and the app moves an estimated bus along the real road toward you with a live ETA.
-        </p>
-        <ul>
-          <li>All 159 JUTC routes and 208 stops, scraped from the official route guide</li>
-          <li>Routes snapped to real roads with OSRM, using a dynamic-programming pass to avoid U-turn loops</li>
-          <li>Location is only sent when you confirm; live sharing is a separate opt-in</li>
-          <li>Offline-ready PWA with precached route data</li>
-        </ul>
-        <div class="badges">
-          <span class="badge">Preact</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/firebase/firebase-original.svg" alt="" width="16" height="16" loading="lazy">Firebase</span>
-          <span class="badge">Leaflet</span>
-          <span class="badge">OpenStreetMap</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/vitejs/vitejs-original.svg" alt="" width="16" height="16" loading="lazy">Vite</span>
-        </div>
-        <div class="links"><a class="link" href="https://chichibus.vercel.app" target="_blank" rel="noopener">Open Chichi Bus<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-      </div>
+    <article class="item">
+      <h3>Chichi Bus</h3>
+      <p class="meta">Crowdsourced JUTC bus tracker · Live</p>
+      <p>
+        JUTC doesn’t publish live bus locations, so riders tell each other. Ask riders on your
+        route, report “I see a bus”, and the app moves an estimated bus along the real road
+        toward you with a live ETA.
+      </p>
+      <ul>
+        <li>All 159 JUTC routes and 208 stops, scraped from the official route guide</li>
+        <li>Routes snapped to real roads with OSRM, using a dynamic-programming pass to avoid U-turn loops</li>
+        <li>Location is only sent when you confirm; live sharing is a separate opt-in</li>
+        <li>Offline-ready PWA with precached route data</li>
+      </ul>
+      <p class="stack">Preact, Firebase, Leaflet, OpenStreetMap, Vite</p>
+      <p class="actions"><a class="link" href="https://chichibus.vercel.app" target="_blank" rel="noopener">chichibus.vercel.app<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
       <div class="shots">
-        <img src="assets/chichibus-route-280.webp" srcset="assets/chichibus-route-200.webp 200w, assets/chichibus-route-280.webp 280w, assets/chichibus-route.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Chichi Bus route 8 map from Naggo Head to downtown Kingston with timetable and I see a bus button">
-        <img src="assets/chichibus-my-routes-280.webp" srcset="assets/chichibus-my-routes-200.webp 200w, assets/chichibus-my-routes-280.webp 280w, assets/chichibus-my-routes.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Chichi Bus My routes screen with a map of nearby stops and followed routes">
+        <img src="assets/chichibus-route-280.webp" srcset="assets/chichibus-route-200.webp 200w, assets/chichibus-route-280.webp 280w, assets/chichibus-route.webp 420w" sizes="112px" width="112" height="242" loading="lazy" alt="Chichi Bus route 8 map from Naggo Head to downtown Kingston with timetable and I see a bus button">
+        <img src="assets/chichibus-my-routes-280.webp" srcset="assets/chichibus-my-routes-200.webp 200w, assets/chichibus-my-routes-280.webp 280w, assets/chichibus-my-routes.webp 420w" sizes="112px" width="112" height="242" loading="lazy" alt="Chichi Bus My routes screen with a map of nearby stops and followed routes">
       </div>
     </article>
-  </div>
 
-  <h3 class="subhead">More projects</h3>
-  <div class="project-list">
+    <div class="group">
+      <h3 class="group-title">More projects</h3>
+      <div class="rows">
+        <details class="row">
+          <summary>
+            <span class="row-text"><span class="row-name">SOC Shift</span><span class="row-meta">Cybersecurity training game · Live</span></span>
+            <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
+          </summary>
+          <div class="row-body">
+            <p>Work a Security Operations Center alert queue: classify what happened, rank threats, map them to MITRE ATT&amp;CK, and spot phishing in a reported-email inbox.</p>
+            <ul>
+              <li>15 hand-written alert-triage and phishing scenarios with full debriefs</li>
+              <li>Server-side scoring, so answer keys never reach the browser</li>
+              <li>XP, ranks, unlocks and a leaderboard</li>
+            </ul>
+            <p class="stack">JavaScript, Firebase, Vercel Functions</p>
+            <p class="actions"><a class="link" href="https://socshift.vercel.app" target="_blank" rel="noopener">Play SOC Shift<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+          </div>
+        </details>
 
-    <details class="project">
-      <summary>
-        <div class="project-head">
-          <div class="project-title"><h4>SOC Shift</h4><span class="chip chip-live">Live</span></div>
-          <p class="project-meta">Cybersecurity training game</p>
-        </div>
-        <span class="project-stack">JavaScript · Firebase · Vercel Functions</span>
-        <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
-      </summary>
-      <div class="project-body">
-        <p>Work a Security Operations Center alert queue: classify what happened, rank threats, map them to MITRE ATT&amp;CK, and spot phishing in a reported-email inbox.</p>
-        <ul>
-        <li>15 hand-written alert-triage and phishing scenarios with full debriefs</li>
-        <li>Server-side scoring, so answer keys never reach the browser</li>
-        <li>XP, ranks, unlocks and a leaderboard</li>
-      </ul>
-        <div class="badges">
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/javascript/javascript-original.svg" alt="" width="16" height="16" loading="lazy">JavaScript</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/firebase/firebase-original.svg" alt="" width="16" height="16" loading="lazy">Firebase</span>
-        <span class="badge">Vercel Functions</span>
-      </div>
-        <div class="links"><a class="link" href="https://socshift.vercel.app" target="_blank" rel="noopener">Play SOC Shift<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-      </div>
-    </details>
+        <details class="row">
+          <summary>
+            <span class="row-text"><span class="row-name">Kaaty</span><span class="row-meta">3D browser kart racer · In development</span></span>
+            <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
+          </summary>
+          <div class="row-body">
+            <p>A Jamaican hand-cart racing game: drift through Kingston, the Blue Mountains, Negril and Port Royal, and win “Cuss Clashes” against rivals.</p>
+            <ul>
+              <li>Physics, AI, rendering, netcode and server all written in Rust with zero dependencies</li>
+              <li>Online and LAN multiplayer for up to 8 racers with lobby codes</li>
+              <li>Fixed 60 Hz simulation that runs on modest laptops</li>
+            </ul>
+            <p class="stack">Rust, WebAssembly, Docker</p>
+          </div>
+        </details>
 
-    <details class="project">
-      <summary>
-        <div class="project-head">
-          <div class="project-title"><h4>Kaaty</h4><span class="chip">In development</span></div>
-          <p class="project-meta">3D browser kart racer · Rust → WebAssembly</p>
-        </div>
-        <span class="project-stack">Rust · WebAssembly · Docker</span>
-        <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
-      </summary>
-      <div class="project-body">
-        <p>A Jamaican hand-cart racing game: drift through Kingston, the Blue Mountains, Negril and Port Royal, and win “Cuss Clashes” against rivals.</p>
-        <ul>
-        <li>Physics, AI, rendering, netcode and server all written in Rust with zero dependencies</li>
-        <li>Online and LAN multiplayer for up to 8 racers with lobby codes</li>
-        <li>Fixed 60 Hz simulation that runs on modest laptops</li>
-      </ul>
-        <div class="badges">
-        <span class="badge">Rust</span>
-        <span class="badge">WebAssembly</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-original.svg" alt="" width="16" height="16" loading="lazy">Docker</span>
-      </div>
-        
-      </div>
-    </details>
+        <details class="row">
+          <summary>
+            <span class="row-text"><span class="row-name">The Forgotten Maze</span><span class="row-meta">Multiplayer horror maze game · In development</span></span>
+            <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
+          </summary>
+          <div class="row-body">
+            <p>Two to four players collect journal pages to find the hidden exit, or take them from rivals. Fallen players return as ghosts and set traps. For iOS and Android.</p>
+            <ul>
+              <li>Real-time online rooms with Supabase Realtime, plus offline bots</li>
+              <li>2D rendering with React Native Skia</li>
+              <li>Cloud saves and in-app purchases</li>
+            </ul>
+            <p class="stack">React Native, Skia, Supabase</p>
+          </div>
+        </details>
 
-    <details class="project">
-      <summary>
-        <div class="project-head">
-          <div class="project-title"><h4>The Forgotten Maze</h4><span class="chip">In development</span></div>
-          <p class="project-meta">Multiplayer horror maze game · iOS &amp; Android</p>
-        </div>
-        <span class="project-stack">React Native · Skia · Supabase</span>
-        <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
-      </summary>
-      <div class="project-body">
-        <p>Two to four players collect journal pages to find the hidden exit, or take them from rivals. Fallen players return as ghosts and set traps.</p>
-        <ul>
-        <li>Real-time online rooms with Supabase Realtime, plus offline bots</li>
-        <li>2D rendering with React Native Skia</li>
-        <li>Cloud saves and in-app purchases</li>
-      </ul>
-        <div class="badges">
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" width="16" height="16" loading="lazy">React Native</span>
-        <span class="badge">Skia</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/supabase/supabase-original.svg" alt="" width="16" height="16" loading="lazy">Supabase</span>
-      </div>
-        
-      </div>
-    </details>
+        <details class="row">
+          <summary>
+            <span class="row-text"><span class="row-name">Request Inspector</span><span class="row-meta">Developer debugging tool</span></span>
+            <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
+          </summary>
+          <div class="row-body">
+            <p>Captures incoming HTTP requests on temporary public links and shows them live, so developers can see exactly what their apps receive.</p>
+            <ul>
+              <li>Live view of headers, query parameters and bodies</li>
+              <li>Replay any request with changed headers or data</li>
+              <li>Starts with a single Docker command</li>
+            </ul>
+            <p class="stack">Go, PostgreSQL, React, Docker</p>
+            <p class="actions"><a class="link" href="https://github.com/RajaeDev6/request-inspector" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+          </div>
+        </details>
 
-    <details class="project">
-      <summary>
-        <div class="project-head">
-          <div class="project-title"><h4>Request Inspector</h4></div>
-          <p class="project-meta">Developer debugging tool</p>
-        </div>
-        <span class="project-stack">Go · PostgreSQL · React</span>
-        <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
-      </summary>
-      <div class="project-body">
-        <p>Captures incoming HTTP requests on temporary public links and shows them live, so developers can see exactly what their apps receive.</p>
-        <ul>
-        <li>Live view of headers, query parameters and bodies</li>
-        <li>Replay any request with changed headers or data</li>
-        <li>Starts with a single Docker command</li>
-      </ul>
-        <div class="badges">
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/go/go-original.svg" alt="" width="16" height="16" loading="lazy">Go</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg" alt="" width="16" height="16" loading="lazy">PostgreSQL</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" width="16" height="16" loading="lazy">React</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-original.svg" alt="" width="16" height="16" loading="lazy">Docker</span>
+        <details class="row">
+          <summary>
+            <span class="row-text"><span class="row-name">Due &amp; ExpenseTrakr</span><span class="row-meta">Personal finance mobile apps · In development</span></span>
+            <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
+          </summary>
+          <div class="row-body">
+            <p><strong>Due</strong> splits household bills between housemates. <strong>ExpenseTrakr</strong> tracks spending across wallets, with recurring transactions and budgets.</p>
+            <ul>
+              <li>Google and Apple sign-in, with Firestore security rules</li>
+              <li>ExpenseTrakr’s data layer can switch between Firebase and Supabase without touching the screens</li>
+            </ul>
+            <p class="stack">React Native, TypeScript, Firebase, Supabase</p>
+          </div>
+        </details>
       </div>
-        <div class="links"><a class="link" href="https://github.com/RajaeDev6/request-inspector" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-      </div>
-    </details>
+    </div>
 
-    <details class="project">
-      <summary>
-        <div class="project-head">
-          <div class="project-title"><h4>Due &amp; ExpenseTrakr</h4><span class="chip">In development</span></div>
-          <p class="project-meta">Personal finance mobile apps</p>
-        </div>
-        <span class="project-stack">React Native · TypeScript · Firebase</span>
-        <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
-      </summary>
-      <div class="project-body">
-        <p><strong>Due</strong> splits household bills between housemates. <strong>ExpenseTrakr</strong> tracks spending across wallets, with recurring transactions and budgets.</p>
-        <ul>
-        <li>Google and Apple sign-in, with Firestore security rules</li>
-        <li>ExpenseTrakr’s data layer can switch between Firebase and Supabase without touching the screens</li>
-      </ul>
-        <div class="badges">
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" width="16" height="16" loading="lazy">React Native</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="" width="16" height="16" loading="lazy">TypeScript</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/firebase/firebase-original.svg" alt="" width="16" height="16" loading="lazy">Firebase</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/supabase/supabase-original.svg" alt="" width="16" height="16" loading="lazy">Supabase</span>
+    <div class="group">
+      <h3 class="group-title">Earlier work</h3>
+      <div class="rows">
+        <a class="row row-link" href="https://github.com/RajaeDev6/PingSweeper" target="_blank" rel="noopener">
+          <span class="row-text"><span class="row-name">PingSweeper</span><span class="row-meta">Concurrent subnet scanner that sends raw ICMP echo requests and measures latency. Go.</span></span>
+          <svg class="icon caret" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+        <a class="row row-link" href="https://github.com/RajaeDev6/coresight" target="_blank" rel="noopener">
+          <span class="row-text"><span class="row-name">CoreSight</span><span class="row-meta">Log analysis engine for syslog, auth and access logs, with indexing, query operators and pattern detection. Python.</span></span>
+          <svg class="icon caret" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+        <a class="row row-link" href="https://github.com/RajaeDev6/public-eye-ja" target="_blank" rel="noopener">
+          <span class="row-text"><span class="row-name">Public Eye JA</span><span class="row-meta">Mobile app that classifies infrastructure problems from a photo and reports them with the location. React Native.</span></span>
+          <svg class="icon caret" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
       </div>
-        
-      </div>
-    </details>
-  </div>
+    </div>
 
-  <h3 class="subhead">Earlier work</h3>
-  <div class="project-list">
-    <a class="project-row" href="https://github.com/RajaeDev6/PingSweeper" target="_blank" rel="noopener">
-      <div class="project-head">
-        <div class="project-title"><h4>PingSweeper</h4><span class="project-stack">Go</span></div>
-        <p class="project-meta">Concurrent subnet scanner in Go that sends raw ICMP echo requests and measures latency across a network.</p>
-      </div>
-      <span class="row-link">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
-    </a>
-    <a class="project-row" href="https://github.com/RajaeDev6/coresight" target="_blank" rel="noopener">
-      <div class="project-head">
-        <div class="project-title"><h4>CoreSight</h4><span class="project-stack">Python</span></div>
-        <p class="project-meta">Log analysis engine that parses syslog, auth and access logs, with indexing, custom query operators and pattern detection.</p>
-      </div>
-      <span class="row-link">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
-    </a>
-    <a class="project-row" href="https://github.com/RajaeDev6/public-eye-ja" target="_blank" rel="noopener">
-      <div class="project-head">
-        <div class="project-title"><h4>Public Eye JA</h4><span class="project-stack">React Native · AI</span></div>
-        <p class="project-meta">Mobile app that classifies infrastructure problems from a photo, gets the location and reports it to the authorities.</p>
-      </div>
-      <span class="row-link">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
-    </a>
   </div>
 </section>
 
 <!-- SKILLS -->
 <section class="section" id="skills">
-  <h2 class="section-title">Skills</h2>
-
-  <div class="skill-groups">
-    <div class="skill-group">
-      <h3>Languages</h3>
-      <div class="badges">
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="" width="16" height="16" loading="lazy">TypeScript</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/javascript/javascript-original.svg" alt="" width="16" height="16" loading="lazy">JavaScript</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/go/go-original.svg" alt="" width="16" height="16" loading="lazy">Go</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" alt="" width="16" height="16" loading="lazy">Python</span>
-        <span class="badge">Rust</span>
-        <span class="badge">SQL</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/bash/bash-original.svg" alt="" width="16" height="16" loading="lazy">Bash</span>
-      </div>
+  <h2 class="label">Skills</h2>
+  <dl class="content facts">
+    <div>
+      <dt>Languages</dt>
+      <dd>TypeScript, JavaScript, Go, Python, Rust, SQL, Bash</dd>
     </div>
-    <div class="skill-group">
-      <h3>Frontend &amp; Mobile</h3>
-      <div class="badges">
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" width="16" height="16" loading="lazy">React</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" width="16" height="16" loading="lazy">React Native</span>
-        <span class="badge">Expo</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/nextjs/nextjs-line.svg" alt="" width="16" height="16" loading="lazy" class="invert">Next.js</span>
-        <span class="badge">PWAs</span>
-      </div>
+    <div>
+      <dt>Frontend &amp; mobile</dt>
+      <dd>React, React Native, Expo, Next.js, PWAs</dd>
     </div>
-    <div class="skill-group">
-      <h3>Backend &amp; Data</h3>
-      <div class="badges">
-        <span class="badge">FastAPI</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/flask/flask-original.svg" alt="" width="16" height="16" loading="lazy" class="invert">Flask</span>
-        <span class="badge">REST &amp; GraphQL APIs</span>
-        <span class="badge">LLM APIs (OpenAI)</span>
-        <span class="badge">Automated testing</span>
-        <span class="badge">WebSockets</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg" alt="" width="16" height="16" loading="lazy">PostgreSQL</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/supabase/supabase-original.svg" alt="" width="16" height="16" loading="lazy">Supabase</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/firebase/firebase-original.svg" alt="" width="16" height="16" loading="lazy">Firebase</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/mongodb/mongodb-original.svg" alt="" width="16" height="16" loading="lazy">MongoDB</span>
-      </div>
+    <div>
+      <dt>Backend &amp; data</dt>
+      <dd>FastAPI, Flask, REST and GraphQL APIs, LLM APIs (OpenAI), WebSockets, automated testing, PostgreSQL, Supabase, Firebase, MongoDB</dd>
     </div>
-    <div class="skill-group">
-      <h3>DevOps &amp; Security</h3>
-      <div class="badges">
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/git/git-original.svg" alt="" width="16" height="16" loading="lazy">Git</span>
-        <span class="badge">GitHub Actions CI/CD</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-original.svg" alt="" width="16" height="16" loading="lazy">Docker</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/linux/linux-original.svg" alt="" width="16" height="16" loading="lazy">Linux</span>
-        <span class="badge">Vercel</span>
-        <span class="badge">Serverless functions</span>
-        <span class="badge">Kali Linux</span>
-        <span class="badge">Wireshark</span>
-        <span class="badge">Nmap</span>
-        <span class="badge">Vulnerability assessment</span>
-        <span class="badge">Log analysis</span>
-        <span class="badge">Alert triage</span>
-        <span class="badge">MITRE ATT&amp;CK</span>
-      </div>
+    <div>
+      <dt>DevOps</dt>
+      <dd>Git, GitHub Actions CI/CD, Docker, Linux, Vercel, serverless functions</dd>
     </div>
-  </div>
+    <div>
+      <dt>Security</dt>
+      <dd>Kali Linux, Wireshark, Nmap, vulnerability assessment, log analysis, alert triage, MITRE ATT&amp;CK</dd>
+    </div>
+  </dl>
 </section>
 
 <!-- EDUCATION & CERTIFICATIONS -->
 <section class="section" id="certs">
-  <h2 class="section-title">Education &amp; certifications</h2>
-  <div class="grid-3">
-    <div class="cert">
-      <span class="tile-icon"><svg class="icon" aria-hidden="true"><use href="#i-cap"/></svg></span>
-      <div class="cert-text">
-        <strong>BSc Cyber Security &amp; Digital Forensics</strong>
-        <span>Caribbean Maritime University · 2022 – present</span>
-      </div>
+  <h2 class="label">Education</h2>
+  <div class="content">
+    <div class="entry">
+      <h3>BSc Cyber Security &amp; Digital Forensics</h3>
+      <p class="meta">Caribbean Maritime University · 2022 – present</p>
     </div>
-    <a class="cert" href="https://www.coursera.org/account/accomplishments/specialization/CYH35LX5QN9V" target="_blank" rel="noopener">
-      <span class="tile-icon"><svg class="icon" aria-hidden="true"><use href="#i-award"/></svg></span>
-      <div class="cert-text">
-        <strong>Google Cybersecurity Professional Certificate</strong>
-        <span>Google · Issued 2023</span>
-      </div>
-    </a>
+    <div class="entry">
+      <h3><a class="plain" href="https://www.coursera.org/account/accomplishments/specialization/CYH35LX5QN9V" target="_blank" rel="noopener">Google Cybersecurity Professional Certificate<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></h3>
+      <p class="meta">Google · Issued 2023</p>
+    </div>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section class="section" id="contact">
-  <h2 class="section-title">Contact</h2>
-  <p class="section-lead">Open to software engineer and security analyst roles, internships, graduate programmes and freelance work, in Kingston or remote across the Caribbean and internationally. I’m on UTC−5, which lines up with US Eastern business hours. Feel free to reach out.</p>
-  <div class="contact-row">
-    <a href="mailto:rgivans9@gmail.com" class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Email me</a>
-    <a href="https://github.com/RajaeDev6" class="btn" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a>
-    <a href="https://linkedin.com/in/rajae-g" class="btn" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</a>
+  <h2 class="label">Contact</h2>
+  <div class="content">
+    <p>Open to software engineer and security analyst roles, internships, graduate programmes and freelance work, in Kingston or remote across the Caribbean and internationally. I’m on UTC−5, which lines up with US Eastern business hours.</p>
+    <p class="actions">
+      <a class="link" href="mailto:rgivans9@gmail.com"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>rgivans9@gmail.com</a>
+      <a class="link" href="https://github.com/RajaeDev6" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a>
+      <a class="link" href="https://linkedin.com/in/rajae-g" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</a>
+    </p>
   </div>
 </section>
 
 </main>
 
-<footer>
+<footer class="footer">
   © <span id="year">2026</span> Rajae Givans · Software engineer in Kingston, Jamaica
 </footer>
-
-
 
 </body>
 </html>
