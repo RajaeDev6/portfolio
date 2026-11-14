@@ -64,9 +64,16 @@ h1, h2, h3, p, ul { margin: 0; }
 .nav-links { display: flex; gap: 4px; font-size: 14px; font-weight: 500; color: var(--muted); align-items: center; }
 .nav-links a { padding: 6px 12px; border-radius: var(--r-pill); }
 .nav-links a:hover { color: var(--accent); background: var(--hover); }
-.menu-btn { display: none; place-items: center; width: 40px; height: 40px; background: var(--surface); border: 1px solid var(--line); border-radius: 50%; color: var(--ink); font-size: 20px; cursor: pointer; }
+.menu-btn {
+  display: none; align-items: center; justify-content: center; flex: none;
+  width: 40px; height: 40px; padding: 0; margin: 0;
+  -webkit-appearance: none; appearance: none; line-height: 0;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 50%;
+  color: var(--ink); cursor: pointer;
+}
+.menu-btn .icon { display: block; width: 20px; height: 20px; }
 @media (max-width: 767px) {
-  .menu-btn { display: inline-grid; }
+  .menu-btn { display: inline-flex; }
   .nav-links {
     display: none; position: absolute; top: calc(100% + 8px); left: var(--gutter); right: var(--gutter);
     flex-direction: column; align-items: stretch; gap: 0;
