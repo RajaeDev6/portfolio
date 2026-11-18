@@ -17,7 +17,7 @@ Live Demo: [Rajae's portfolio](https://rajaedev.space)
 
 No frameworks or build tools - the site is lightweight and loads quickly by design.
 
-Styles live in `assets/styles.css`. After editing it, run `python3 tools/inline-css.py` to copy it into `index.html` and `projects.html` and update the CSP hash in `_headers`.
+Styles live in `assets/styles.css`. After editing it, run `python3 tools/inline-css.py` to copy it into `index.html`, `projects.html` and `os.html` and update the CSP hash in `_headers`.
 
 ---
 
@@ -36,6 +36,9 @@ SOC Shift (security analyst training), CoreSight (log search) and PingSweeper (n
 ### **4. Experience, Skills & Education**
 - Software Engineer Intern at the Jamaica Artificial Intelligence Association
 - Contributed to open source (Talawa API)
+
+### **Access page (`/os`)**
+An interactive version of the portfolio. Each section is a file you open from a list; opening one prints a short access log, then shows the section, with progress tracked in the top bar. Every section can be opened in any order or linked directly (`/os#projects`), and a link goes back to the normal site. Not indexed by search engines.
 
 ### **SEO**
 - Descriptive title, meta description and keywords

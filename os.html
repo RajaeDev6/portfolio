@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Access | Rajae Givans</title>
+  <meta name="description" content="Rajae Givans, cybersecurity and software engineering student in Kingston, Jamaica. An interactive version of the portfolio." />
+  <meta name="author" content="Rajae Givans" />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#101012" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="canonical" href="https://rajaedev.space/" />
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+
+  <!-- Open Graph / social previews -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Rajae Givans" />
+  <meta property="og:title" content="Access | Rajae Givans" />
+  <meta property="og:description" content="Software engineer in Kingston, Jamaica building full-stack web and mobile apps, APIs and security tools. Projects include Shop Weh, EStore Trust, Sequik and Chichi Bus." />
+  <meta property="og:url" content="https://rajaedev.space/os" />
+  <meta property="og:image" content="https://rajaedev.space/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Rajae Givans, Software Engineer and Cybersecurity, Kingston, Jamaica" />
+  <meta property="og:locale" content="en_JM" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Access | Rajae Givans" />
+  <meta name="twitter:description" content="Software engineer in Kingston, Jamaica building full-stack web and mobile apps, APIs and security tools." />
+  <meta name="twitter:image" content="https://rajaedev.space/assets/og-image.jpg" />
+
+  <link rel="preload" href="/assets/fonts/nunito-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+  <!-- Inlined from assets/styles.css by tools/inline-css.py: edit that file, then run the script -->
+  <style>
+/*
+ * Dark and plain. Nunito Sans throughout, one blue accent.
+ * Spacing runs on 4px steps: 4, 8, 12, 16, 24, 32, 48, 64, 96.
+ */
+@font-face { font-family: 'Nunito Sans'; font-style: normal; font-weight: 200 1000; font-display: swap; src: url(/assets/fonts/nunito-sans-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+:root {
+  --bg: #101114;
+  --surface: #16181c;
+  --surface-2: #1d2025;
+  --line: #282c33;
+  --ink: #eceef1;
+  --sub: #b0b6bd;
+  --muted: #8a9199;
+  --accent: #1793d1;
+  --accent-text: #4fb0e3;
+  --accent-ink: #ffffff;
+  --font: 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
+  --gutter: 20px;
+  --width: 960px;
+  --r: 14px;
+  --ease: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 17px; line-height: 28px; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+h1, h2, h3, p, ul, dl, dd { margin: 0; }
+.icon { width: 1em; height: 1em; fill: none; stroke-width: 1.5; flex-shrink: 0; }
+.sprite { position: absolute; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+/* NAV */
+.nav { position: fixed; top: 0; width: 100%; z-index: 50; background: rgb(16 17 20 / 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color .2s var(--ease); }
+.nav.scrolled { border-bottom-color: var(--line); }
+.nav-inner { max-width: var(--width); margin: auto; padding: 14px var(--gutter); display: flex; justify-content: space-between; align-items: center; }
+.brand { font-size: 17px; font-weight: 800; }
+.nav-links { display: flex; gap: 4px; font-size: 15px; font-weight: 600; color: var(--muted); }
+.nav-links a { padding: 6px 12px; border-radius: 999px; transition: color .15s var(--ease), background-color .15s var(--ease); }
+.nav-links a:hover { color: var(--ink); }
+.nav-links a.active, .nav-links a[aria-current="page"] { color: var(--ink); background: var(--surface-2); }
+.menu-btn { display: none; align-items: center; justify-content: center; width: 40px; height: 40px; padding: 0; background: none; border: 1px solid var(--line); border-radius: 50%; color: var(--ink); cursor: pointer; }
+.menu-btn .icon { width: 20px; height: 20px; }
+@media (max-width: 720px) {
+  .menu-btn { display: inline-flex; }
+  .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px var(--gutter) 16px; }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 12px; font-size: 17px; color: var(--ink); border-radius: 10px; }
+}
+
+/* LAYOUT */
+.section { max-width: var(--width); margin: auto; padding: 56px var(--gutter); }
+@media (min-width: 720px) { .section { padding: 72px var(--gutter); } }
+.section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 24px; }
+.section-title { font-size: 30px; line-height: 36px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 24px; }
+.section-head .section-title { margin-bottom: 0; }
+.lead { font-size: 20px; line-height: 32px; color: var(--sub); max-width: 40rem; }
+.lead a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.lead a:hover { color: var(--accent-text); }
+
+.link { display: inline-flex; align-items: center; gap: 4px; font-size: 15px; font-weight: 700; color: var(--accent-text); white-space: nowrap; }
+.link .icon { font-size: 15px; transition: transform .15s var(--ease); }
+.link:hover .icon { transform: translate(2px, -2px); }
+
+/* HERO */
+.hero { padding-top: 136px; padding-bottom: 48px; }
+@media (min-width: 720px) { .hero { padding-top: 184px; padding-bottom: 72px; } }
+.eyebrow { font-size: 15px; font-weight: 700; color: var(--accent-text); margin-bottom: 12px; }
+.hero h1 { font-size: 48px; line-height: 1.05; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 24px; }
+@media (min-width: 720px) { .hero h1 { font-size: 72px; } }
+.hero .lead { font-size: 22px; line-height: 34px; color: var(--ink); max-width: 38rem; }
+@media (max-width: 480px) { .hero .lead { font-size: 19px; line-height: 30px; } }
+.hero-copy { max-width: 42rem; }
+.hero h1 span { color: var(--accent-text); }
+.hero .role { font-size: 21px; line-height: 30px; font-weight: 700; margin-bottom: 12px; text-wrap: balance; }
+.hero .bio { color: var(--sub); }
+.socials { display: flex; gap: 4px; }
+.socials a { display: inline-grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; font-size: 21px; color: var(--muted); transition: color .15s var(--ease), background-color .15s var(--ease); }
+.socials a:hover { color: var(--ink); background: var(--surface-2); }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border-radius: 999px; font-size: 15px; font-weight: 700; border: 1px solid var(--line); background: var(--surface); transition: border-color .15s var(--ease), background-color .15s var(--ease); }
+.btn .icon { font-size: 18px; }
+.btn:hover { border-color: var(--muted); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { background: #2aa3e0; border-color: #2aa3e0; }
+
+/* WORK (home) */
+.picks { display: grid; gap: 16px; }
+@media (min-width: 720px) { .picks { grid-template-columns: repeat(2, 1fr); } }
+.pick { display: flex; gap: 20px; align-items: center; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); transition: border-color .15s var(--ease), transform .15s var(--ease); }
+.pick:hover { border-color: #3a3a40; transform: translateY(-2px); }
+.pick img { width: 96px; height: auto; aspect-ratio: 420 / 909; border-radius: 10px; flex: none; background: var(--surface-2); }
+.pick-text { display: flex; flex-direction: column; gap: 6px; }
+.pick-name { font-size: 19px; line-height: 26px; font-weight: 800; }
+.pick:hover .pick-name { color: var(--accent-text); }
+.pick-line { font-size: 15px; line-height: 23px; color: var(--sub); }
+.pick-stack { font-size: 13px; line-height: 20px; color: var(--muted); }
+
+/* SECURITY (home) */
+.rows { border-top: 1px solid var(--line); }
+.row { display: grid; gap: 4px 24px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+@media (min-width: 720px) { .row { grid-template-columns: 180px 1fr; } }
+.row-name { font-weight: 800; }
+.row-line { color: var(--sub); }
+.row:hover .row-name { color: var(--accent-text); }
+
+/* EXPERIENCE */
+.jobs { display: grid; gap: 40px; }
+.job-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 16px; }
+.job h3 { font-size: 20px; line-height: 28px; font-weight: 800; }
+.when { font-size: 15px; color: var(--muted); }
+.org { color: var(--accent-text); font-weight: 600; margin: 2px 0 12px; }
+.job ul { padding-left: 20px; color: var(--sub); margin-bottom: 12px; }
+.job li + li { margin-top: 6px; }
+.job li::marker { color: var(--muted); }
+
+/* SKILLS */
+.skills { display: grid; gap: 12px 32px; }
+@media (min-width: 720px) { .skills { grid-template-columns: 160px 1fr; } }
+.skills dt { font-weight: 800; }
+.skills dd { color: var(--sub); margin-bottom: 8px; }
+@media (min-width: 720px) { .skills dd { margin-bottom: 0; } }
+
+/* EDUCATION */
+.edu { display: grid; gap: 16px; }
+@media (min-width: 720px) { .edu { grid-template-columns: repeat(2, 1fr); } }
+.edu-item { display: flex; gap: 16px; align-items: center; padding: 20px; border: 1px solid var(--line); border-radius: var(--r); }
+.edu-item > .icon { font-size: 26px; color: var(--accent-text); }
+.edu-item div { display: flex; flex-direction: column; }
+.edu-item strong { font-weight: 800; line-height: 24px; }
+.edu-item span { font-size: 15px; color: var(--muted); }
+a.edu-item { transition: border-color .15s var(--ease); }
+a.edu-item:hover { border-color: #3a3a40; }
+
+/* CONTACT */
+.contact { padding-bottom: 96px; }
+.contact .section-title { font-size: 40px; line-height: 46px; margin-bottom: 12px; }
+
+/* PROJECTS PAGE */
+.page-head { padding-top: 120px; padding-bottom: 8px; }
+@media (min-width: 720px) { .page-head { padding-top: 144px; } }
+.back { display: inline-flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 700; color: var(--muted); margin-bottom: 20px; }
+.back:hover { color: var(--ink); }
+.page-head h1 { font-size: 48px; line-height: 1.1; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 12px; }
+
+.features { display: grid; gap: 24px; padding-top: 24px; }
+.feature { display: grid; gap: 32px; align-items: center; padding: 32px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); scroll-margin-top: 88px; }
+@media (min-width: 820px) { .feature { grid-template-columns: 1fr auto; padding: 40px; } }
+@media (max-width: 480px) { .feature { padding: 20px; } }
+.feature h2 { font-size: 26px; line-height: 32px; font-weight: 900; }
+.tag { color: var(--accent-text); font-weight: 700; font-size: 15px; margin: 2px 0 12px; }
+.feature p { color: var(--sub); }
+.feature ul { padding-left: 20px; color: var(--sub); margin: 12px 0 16px; }
+.feature li + li { margin-top: 4px; }
+.feature li::marker { color: var(--muted); }
+.feature .pick-stack { margin-bottom: 12px; }
+.shots { display: flex; gap: 12px; justify-content: center; }
+.shots img { width: 150px; height: auto; aspect-ratio: 420 / 909; border-radius: 12px; background: var(--surface-2); }
+@media (max-width: 480px) { .shots img { width: calc(50% - 6px); } }
+
+.items { display: grid; gap: 16px; }
+@media (min-width: 720px) { .items { grid-template-columns: repeat(3, 1fr); } }
+.item { display: flex; flex-direction: column; padding: 24px; border: 1px solid var(--line); border-radius: var(--r); scroll-margin-top: 88px; }
+.item h3 { font-size: 19px; line-height: 26px; font-weight: 800; }
+.item p { color: var(--sub); font-size: 15px; line-height: 24px; }
+.item .tag { font-size: 14px; margin: 0 0 8px; color: var(--accent-text); }
+.item .pick-stack { margin: auto 0 0; padding-top: 12px; color: var(--muted); font-size: 13px; }
+.item .link { margin-top: 12px; }
+.minor { font-size: 19px; font-weight: 800; margin: 48px 0 16px; }
+
+/* FOOTER */
+footer { border-top: 1px solid var(--line); }
+.footer-inner { max-width: var(--width); margin: auto; padding: 24px var(--gutter); display: flex; justify-content: space-between; gap: 16px; font-size: 15px; color: var(--muted); }
+.footer-inner a:hover { color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .pick, .link .icon { transition: none; }
+  .pick:hover { transform: none; }
+}
+
+/* ACCESS PAGE (/os): pick a file on the left, it opens on the right after a short access log */
+.os-body { --mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace; --granted: #7fbf7f; }
+.os-bar { position: sticky; top: 0; z-index: 50; background: var(--bg); border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 13px; }
+.os-bar-inner { max-width: 1160px; margin: auto; padding: 12px var(--gutter); display: flex; align-items: center; gap: 16px; }
+.os-target { color: var(--muted); }
+.os-target b, .os-progress b { color: var(--ink); font-weight: 600; }
+.os-progress { color: var(--muted); margin-left: auto; }
+.os-exit { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); font-family: var(--font); font-weight: 700; font-size: 14px; }
+.os-exit:hover { border-color: var(--muted); }
+@media (max-width: 560px) { .os-target { display: none; } .os-progress { margin-left: 0; } .os-exit { margin-left: auto; } }
+
+.os { max-width: 1160px; margin: auto; padding: 24px var(--gutter) 64px; display: grid; gap: 24px; }
+@media (min-width: 900px) { .os { grid-template-columns: 300px 1fr; gap: 40px; padding-top: 40px; } }
+
+.os-nodes { font-family: var(--mono); font-size: 14px; }
+@media (min-width: 900px) { .os-nodes { position: sticky; top: 88px; align-self: start; } }
+.os-hint { color: var(--muted); font-size: 13px; margin-bottom: 12px; }
+.os-nodes ul { list-style: none; padding: 0; border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.os-nodes li + li { border-top: 1px solid var(--line); }
+.node { width: 100%; display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: "mark name state" ". file file"; gap: 0 10px; align-items: baseline; padding: 12px 16px; background: var(--surface); border: 0; color: var(--sub); font: inherit; text-align: left; cursor: pointer; transition: background-color .15s var(--ease), color .15s var(--ease); }
+.node:hover { background: var(--surface-2); color: var(--ink); }
+.node-mark { grid-area: mark; color: var(--faint, #5d646d); }
+.node-name { grid-area: name; font-weight: 600; color: var(--ink); }
+.node-file { grid-area: file; font-size: 12px; color: var(--muted); }
+.node-state { grid-area: state; font-size: 12px; color: var(--muted); }
+.node.done .node-mark, .node.done .node-state { color: var(--granted); }
+.node[aria-current="true"] { background: var(--surface-2); box-shadow: inset 2px 0 0 var(--accent); }
+@media (max-width: 899px) {
+  .os-nodes ul { display: grid; grid-template-columns: repeat(2, 1fr); }
+  .os-nodes li + li { border-top: 0; }
+  .os-nodes li { border-top: 1px solid var(--line); }
+  .os-nodes li:nth-child(-n+2) { border-top: 0; }
+  .os-nodes li:nth-child(even) { border-left: 1px solid var(--line); }
+  .node { grid-template-areas: "mark name" ". state"; grid-template-columns: auto 1fr; }
+  .node-file { display: none; }
+}
+
+.os-view { min-width: 0; }
+.os-log { font-family: var(--mono); font-size: 13px; line-height: 22px; color: var(--muted); min-height: 0; }
+.os-log:not(:empty) { margin-bottom: 20px; padding: 12px 16px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+.os-log .ok { color: var(--granted); }
+.os-panel:focus { outline: none; }
+.os-ready .os-panel { display: none; }
+.os-ready .os-panel.open { display: block; }
+.os-panel .hero-copy h1 { font-size: 44px; line-height: 1.05; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 16px; }
+@media (min-width: 720px) { .os-panel .hero-copy h1 { font-size: 60px; } }
+.os-panel + .os-panel { margin-top: 56px; }
+.os-ready .os-panel + .os-panel { margin-top: 0; }
+  </style>
+  <script src="/assets/os.js" defer></script>
+</head>
+
+<body class="os-body">
+
+<svg width="0" height="0" class="sprite" aria-hidden="true">
+  <symbol id="i-github" viewBox="0 0 24 24"><path d="M10 20.5675C6.57143 21.7248 3.71429 20.5675 2 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 22V18.7579C10 18.1596 10.1839 17.6396 10.4804 17.1699C10.6838 16.8476 10.5445 16.3904 10.1771 16.2894C7.13394 15.4528 5 14.1077 5 9.64606C5 8.48611 5.38005 7.39556 6.04811 6.4464C6.21437 6.21018 6.29749 6.09208 6.31748 5.9851C6.33746 5.87813 6.30272 5.73852 6.23322 5.45932C5.95038 4.32292 5.96871 3.11619 6.39322 2.02823C6.39322 2.02823 7.27042 1.74242 9.26698 2.98969C9.72282 3.27447 9.95075 3.41686 10.1515 3.44871C10.3522 3.48056 10.6206 3.41384 11.1573 3.28041C11.8913 3.09795 12.6476 3 13.5 3C14.3524 3 15.1087 3.09795 15.8427 3.28041C16.3794 3.41384 16.6478 3.48056 16.8485 3.44871C17.0493 3.41686 17.2772 3.27447 17.733 2.98969C19.7296 1.74242 20.6068 2.02823 20.6068 2.02823C21.0313 3.11619 21.0496 4.32292 20.7668 5.45932C20.6973 5.73852 20.6625 5.87813 20.6825 5.9851C20.7025 6.09207 20.7856 6.21019 20.9519 6.4464C21.6199 7.39556 22 8.48611 22 9.64606C22 14.1077 19.8661 15.4528 16.8229 16.2894C16.4555 16.3904 16.3162 16.8476 16.5196 17.1699C16.8161 17.6396 17 18.1596 17 18.7579V22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M7 10V17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 13V17M11 13C11 11.3431 12.3431 10 14 10C15.6569 10 17 11.3431 17 13V17M11 13V10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.125 6.75H7M7.25 6.75C7.25 6.88807 7.13807 7 7 7C6.86193 7 6.75 6.88807 6.75 6.75C6.75 6.61193 6.86193 6.5 7 6.5C7.13807 6.5 7.25 6.61193 7.25 6.75Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 12C3 7.75736 3 5.63604 4.31802 4.31802C5.63604 3 7.75736 3 12 3C16.2426 3 18.364 3 19.682 4.31802C21 5.63604 21 7.75736 21 12C21 16.2426 21 18.364 19.682 19.682C18.364 21 16.2426 21 12 21C7.75736 21 5.63604 21 4.31802 19.682C3 18.364 3 16.2426 3 12Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M2 6L8.91302 9.91697C11.4616 11.361 12.5384 11.361 15.087 9.91697L22 6" stroke="currentColor" stroke-linejoin="round"/><path d="M2.01577 13.4756C2.08114 16.5412 2.11383 18.0739 3.24496 19.2094C4.37608 20.3448 5.95033 20.3843 9.09883 20.4634C11.0393 20.5122 12.9607 20.5122 14.9012 20.4634C18.0497 20.3843 19.6239 20.3448 20.7551 19.2094C21.8862 18.0739 21.9189 16.5412 21.9842 13.4756C22.0053 12.4899 22.0053 11.5101 21.9842 10.5244C21.9189 7.45886 21.8862 5.92609 20.7551 4.79066C19.6239 3.65523 18.0497 3.61568 14.9012 3.53657C12.9607 3.48781 11.0393 3.48781 9.09882 3.53656C5.95033 3.61566 4.37608 3.65521 3.24495 4.79065C2.11382 5.92608 2.08114 7.45885 2.01576 10.5244C1.99474 11.5101 1.99475 12.4899 2.01577 13.4756Z" stroke="currentColor" stroke-linejoin="round"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M1.99805 7.99928C1.99805 9.34126 10.0943 13 11.9857 13C13.8772 13 21.9734 9.34126 21.9734 7.99928C21.9734 6.6573 13.8772 2.99854 11.9857 2.99854C10.0943 2.99854 1.99805 6.6573 1.99805 7.99928Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.99219 11L7.24348 16.8002C7.32919 17.1975 7.52703 17.5687 7.85696 17.8054C10.0787 19.3998 13.8908 19.3998 16.1126 17.8054C16.4426 17.5687 16.6404 17.1975 16.7261 16.8002L17.9774 11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.4774 9.49951V16.5006M20.4774 16.5006C19.6864 17.9471 19.3366 18.7221 18.9813 20.0011C18.9042 20.4562 18.9654 20.6855 19.2786 20.8891C19.4059 20.9718 19.5588 21.0012 19.7104 21.0012H21.229C21.3904 21.0012 21.5533 20.9675 21.6863 20.8757C21.9774 20.6747 22.0523 20.4541 21.9734 20.0011C21.662 18.8135 21.2653 18.0016 20.4774 16.5006Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-award" viewBox="0 0 24 24"><path d="M11.5 22C7.49306 22 5.48959 22 4.2448 20.5355C3 19.0711 3 16.714 3 12C3 7.28596 3 4.92893 4.2448 3.46447C5.48959 2 7.49306 2 11.5 2C15.5069 2 17.5104 2 18.7552 3.46447C19.7572 4.64332 19.9527 6.40054 19.9908 9.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 8H15M8 13H11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M19.6092 18.1054C20.4521 17.4918 21 16.4974 21 15.375C21 13.511 19.489 12 17.625 12H17.375C15.511 12 14 13.511 14 15.375C14 16.4974 14.5479 17.4918 15.3908 18.1054M19.6092 18.1054C19.0523 18.5108 18.3666 18.75 17.625 18.75H17.375C16.6334 18.75 15.9477 18.5108 15.3908 18.1054M19.6092 18.1054L20.192 19.9404C20.4143 20.6403 20.5255 20.9903 20.4951 21.2082C20.4318 21.6617 20.0619 21.9984 19.6252 22C19.4154 22.0008 19.101 21.8358 18.4723 21.5059C18.2027 21.3644 18.0679 21.2936 17.93 21.252C17.649 21.1673 17.351 21.1673 17.07 21.252C16.9321 21.2936 16.7973 21.3644 16.5277 21.5059C15.899 21.8358 15.5846 22.0008 15.3748 22C14.9381 21.9984 14.5682 21.6617 14.5049 21.2082C14.4745 20.9903 14.5857 20.6403 14.808 19.9404L15.3908 18.1054" stroke="currentColor"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 5L20 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 12L20 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19L20 19" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M9 6.65032C9 6.65032 15.9383 6.10759 16.9154 7.08463C17.8924 8.06167 17.3496 15 17.3496 15M16.5 7.5L6.5 17.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18.9991 19L5 5.00098" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 5L5.00092 18.999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path d="M4 12H20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.99996 17C8.99996 17 4.00001 13.3176 4 12C3.99999 10.6824 9 7 9 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="os-bar">
+  <div class="os-bar-inner">
+    <span class="os-target">target: <b>rajae.givans</b></span>
+    <span class="os-progress" aria-live="polite">access <b id="os-count">0</b>/7</span>
+    <a class="os-exit" href="/"><svg class="icon" aria-hidden="true"><use href="#i-back"/></svg>Normal site</a>
+  </div>
+</header>
+
+<main class="os">
+  <nav class="os-nodes" aria-label="Sections">
+    <p class="os-hint">Pick a file to open.</p>
+    <ul>
+      <li><button type="button" class="node" data-node="about" aria-controls="p-about">
+        <span class="node-mark" aria-hidden="true">[ ]</span>
+        <span class="node-name">About</span>
+        <span class="node-file">whoami</span>
+        <span class="node-state">locked</span>
+      </button></li>
+      <li><button type="button" class="node" data-node="experience" aria-controls="p-experience">
+        <span class="node-mark" aria-hidden="true">[ ]</span>
+        <span class="node-name">Experience</span>
+        <span class="node-file">experience.log</span>
+        <span class="node-state">locked</span>
+      </button></li>
+      <li><button type="button" class="node" data-node="projects" aria-controls="p-projects">
+        <span class="node-mark" aria-hidden="true">[ ]</span>
+        <span class="node-name">Projects</span>
+        <span class="node-file">projects/</span>
+        <span class="node-state">locked</span>
+      </button></li>
+      <li><button type="button" class="node" data-node="security" aria-controls="p-security">
+        <span class="node-mark" aria-hidden="true">[ ]</span>
+        <span class="node-name">Security Projects</span>
+        <span class="node-file">security/</span>
+        <span class="node-state">locked</span>
+      </button></li>
+      <li><button type="button" class="node" data-node="skills" aria-controls="p-skills">
+        <span class="node-mark" aria-hidden="true">[ ]</span>
+        <span class="node-name">Skills</span>
+        <span class="node-file">skills.txt</span>
+        <span class="node-state">locked</span>
+      </button></li>
+      <li><button type="button" class="node" data-node="education" aria-controls="p-education">
+        <span class="node-mark" aria-hidden="true">[ ]</span>
+        <span class="node-name">Education</span>
+        <span class="node-file">education.txt</span>
+        <span class="node-state">locked</span>
+      </button></li>
+      <li><button type="button" class="node" data-node="contact" aria-controls="p-contact">
+        <span class="node-mark" aria-hidden="true">[ ]</span>
+        <span class="node-name">Contact</span>
+        <span class="node-file">contact.vcf</span>
+        <span class="node-state">locked</span>
+      </button></li>
+    </ul>
+  </nav>
+
+  <div class="os-view">
+    <div class="os-log" id="os-log" aria-hidden="true"></div>
+
+    <section class="os-panel" id="p-about" aria-label="About" tabindex="-1">
+      <div class="hero-copy">
+        <h1><span>Rajae</span> Givans</h1>
+        <p class="role">Cybersecurity and software engineering student, based in Kingston, Jamaica.</p>
+        <p class="bio">
+          I build and deploy full-stack web apps, mobile apps and APIs in TypeScript, Go and Python,
+          with a focus on backend development, secure design and AI features built on LLM APIs. I’ve shipped production features as a
+          software engineer intern and contributed to open source.
+        </p>
+
+        <div class="cta">
+          <a href="#projects" class="btn btn-primary" data-open="projects">See my projects</a>
+          <a href="#contact" data-email="rgivans9|gmail.com" class="btn"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Email me</a>
+          <div class="socials">
+            <a href="https://github.com/RajaeDev6" target="_blank" rel="noopener" aria-label="GitHub profile"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+            <a href="https://linkedin.com/in/rajae-g" target="_blank" rel="noopener" aria-label="LinkedIn profile"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="os-panel" id="p-experience" aria-label="Experience" tabindex="-1">
+      <h2 class="section-title">Experience</h2>
+
+      <div class="jobs">
+        <article class="job">
+          <div class="job-head">
+            <h3>Software Engineer Intern</h3>
+            <span class="when">May – Aug 2026</span>
+          </div>
+          <p class="org">Jamaica Artificial Intelligence Association</p>
+          <ul>
+            <li>Built features for the admin dashboard of the association’s membership app.</li>
+            <li>Added bulk account activation and a CSV export of member data.</li>
+            <li>Built group join requests with status tracking.</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <div class="job-head">
+            <h3>Open-source contributor</h3>
+            <span class="when">Dec 2025</span>
+          </div>
+          <p class="org">Talawa API, Palisadoes Foundation</p>
+          <ul>
+            <li>Wrote automated tests for a GraphQL API that confirm only authorized users (admins, organization admins, members) can view protected data.</li>
+            <li>Worked through code review with the maintainers on GitHub and revised the tests based on their feedback.</li>
+          </ul>
+          <a class="link" href="https://github.com/RajaeDev6/talawa-api" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </article>
+      </div>
+    </section>
+
+    <section class="os-panel" id="p-projects" aria-label="Projects" tabindex="-1">
+      <div class="section-head">
+        <h2 class="section-title">Projects</h2>
+        <a class="link" href="/projects">All projects<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+
+      <div class="picks">
+        <a class="pick" href="/projects#shop-weh">
+          <img src="assets/shopweh-cheapest-280.webp" width="120" height="260" loading="lazy" alt="Shop Weh showing the cheapest store for a grocery list">
+          <span class="pick-text">
+            <span class="pick-name">Shop Weh</span>
+            <span class="pick-line">Add your grocery list and it compares prices across Jamaican stores, shows which store is cheapest for the whole list, and how much you save. Prices refresh every day.</span>
+            <span class="pick-stack">Next.js · Firebase</span>
+          </span>
+        </a>
+        <a class="pick" href="/projects#estore-trust">
+          <img src="assets/estoretrust-store-280.webp" width="120" height="260" loading="lazy" alt="EStore Trust page showing a shop’s trust score">
+          <span class="pick-text">
+            <span class="pick-name">EStore Trust</span>
+            <span class="pick-line">Look up an Instagram shop before you send money. It scores each shop with automatic checks and shows buyer reviews and any confirmed scam reports.</span>
+            <span class="pick-stack">Next.js · Supabase · OpenAI</span>
+          </span>
+        </a>
+        <a class="pick" href="/projects#chichi-bus">
+          <img src="assets/chichibus-route-280.webp" width="120" height="260" loading="lazy" alt="Chichi Bus map of a JUTC route">
+          <span class="pick-text">
+            <span class="pick-name">Chichi Bus</span>
+            <span class="pick-line">JUTC doesn’t share live bus locations, so riders do. Tap “I see a bus” and everyone on that route gets an estimate of when it will reach them. All 159 routes are mapped.</span>
+            <span class="pick-stack">Preact · Firebase · Leaflet</span>
+          </span>
+        </a>
+        <a class="pick" href="/projects#sequik">
+          <img src="assets/sequik-overview-280.webp" width="120" height="260" loading="lazy" alt="Sequik overview of rent collected this month">
+          <span class="pick-text">
+            <span class="pick-name">Sequik</span>
+            <span class="pick-line">A rent tracker for small landlords: see who has paid and who owes, record payments with receipts, store documents and track repairs from your phone.</span>
+            <span class="pick-stack">React Native · Supabase</span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <section class="os-panel" id="p-security" aria-label="Security Projects" tabindex="-1">
+      <div class="section-head">
+        <h2 class="section-title">Security Projects</h2>
+        <a class="link" href="/projects#security">Tools and labs<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+
+      <div class="rows">
+        <a class="row" href="/projects#soc-shift">
+          <span class="row-name">SOC Shift</span>
+          <span class="row-line">A training platform for security analysts. Sort real threats from false alarms in an alert queue, rank them, map them to MITRE ATT&amp;CK and spot phishing emails, with a scored debrief after each shift.</span>
+        </a>
+        <a class="row" href="/projects#coresight">
+          <span class="row-name">CoreSight</span>
+          <span class="row-line">A log analysis engine that parses server, login and web access logs, indexes them for fast search, and flags patterns like repeated failed logins.</span>
+        </a>
+        <a class="row" href="/projects#pingsweeper">
+          <span class="row-name">PingSweeper</span>
+          <span class="row-line">A network scanner written in Go that pings every address in a subnet at the same time, reports which devices are online and measures how fast they respond.</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="os-panel" id="p-skills" aria-label="Skills" tabindex="-1">
+      <h2 class="section-title">Skills</h2>
+      <dl class="skills">
+        <dt>Languages</dt><dd>TypeScript, JavaScript, Go, Python, Rust, SQL, Bash</dd>
+        <dt>Web &amp; mobile</dt><dd>React, React Native, Expo, Next.js</dd>
+        <dt>Backend</dt><dd>FastAPI, Flask, PostgreSQL, Supabase, Firebase, MongoDB</dd>
+        <dt>Security</dt><dd>Wireshark, Nmap, Kali Linux, log analysis, alert triage, MITRE ATT&amp;CK</dd>
+        <dt>Tools</dt><dd>Git, GitHub Actions, Docker, Linux, Vercel</dd>
+      </dl>
+    </section>
+
+    <section class="os-panel" id="p-education" aria-label="Education" tabindex="-1">
+      <h2 class="section-title">Education</h2>
+      <div class="edu">
+        <div class="edu-item">
+          <svg class="icon" aria-hidden="true"><use href="#i-cap"/></svg>
+          <div><strong>BSc Cyber Security &amp; Digital Forensics</strong><span>Caribbean Maritime University · Present</span></div>
+        </div>
+        <a class="edu-item" href="https://www.coursera.org/account/accomplishments/specialization/CYH35LX5QN9V" target="_blank" rel="noopener">
+          <svg class="icon" aria-hidden="true"><use href="#i-award"/></svg>
+          <div><strong>Google Cybersecurity Certificate</strong><span>Google · 2023</span></div>
+        </a>
+      </div>
+    </section>
+
+    <section class="os-panel" id="p-contact" aria-label="Contact" tabindex="-1">
+      <h2 class="section-title">Contact</h2>
+      <p class="lead">Open to software engineer and security analyst roles, internships and freelance work. Feel free to reach out.</p>
+      <div class="cta">
+        <a href="#contact" data-email="rgivans9|gmail.com" class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Email me</a>
+        <a href="https://github.com/RajaeDev6" class="btn" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a>
+        <a href="https://linkedin.com/in/rajae-g" class="btn" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+</body>
+</html>

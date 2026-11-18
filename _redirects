@@ -3,3 +3,4 @@ https://rajaedev.netlify.app/* https://rajaedev.space/:splat 301!
 
 # Serve the projects page at a clean URL
 /projects  /projects.html  200
+/os  /os.html  200
