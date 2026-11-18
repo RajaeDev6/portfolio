@@ -31,6 +31,7 @@ app.innerHTML = `
       ${BUFFERS.map((b, i) => `<button class="tab" role="tab" type="button" data-buf="${b}" aria-selected="false"><span class="tab-n">${i + 1}</span>${b}.rg</button>`).join('')}
     </div>
     <button type="button" class="code-toggle" id="code-toggle"></button>
+    <button type="button" class="ctf-btn" id="ctf-btn" aria-label="Capture the flag progress">CTF 0/3</button>
     <a class="site-link" href="/site/">Normal site</a>
     <div class="view-toggle" role="group" aria-label="View">
       <button type="button" data-view="preview">Preview</button>
@@ -55,12 +56,13 @@ app.innerHTML = `
         <span class="addr"><span class="addr-host">rajaedev.space</span><span id="addr-path">/#about</span></span>
         <span class="run-status" id="run-status"></span>
       </div>
+      <div class="mission" id="mission">
+        <span class="mission-tag">CTF</span>
+        <span class="mission-text" id="mission-text"></span>
+        <button type="button" class="mission-btn" id="mission-btn">Hints</button>
+      </div>
       <div class="edit-note" id="edit-note" hidden>You’re editing a copy. Changes only show in your browser and reset when you reload, and links are switched off. <button type="button" id="edit-undo">Undo my edits</button></div>
       <div class="preview-body pv" id="preview" tabindex="-1"></div>
-      <div class="intro" id="intro" hidden role="note">
-        <p><b>This is my portfolio as a code editor.</b> The left side is the source, the right side is what it renders. Click the tabs to look around, edit the code, or find the 3 flags hidden inside.</p>
-        <div class="intro-actions"><button type="button" class="btn btn-primary" id="intro-ok">Look around</button><button type="button" class="btn" id="intro-ctf">Show the CTF</button><a class="btn" href="/site/">Normal site</a></div>
-      </div>
     </section>
   </div>
   <div class="statusline">
@@ -70,7 +72,6 @@ app.innerHTML = `
     <button type="button" class="sl-btn" id="skip" hidden>skip typing ▸</button>
     <button type="button" class="sl-btn" id="reset" hidden>undo my edits</button>
     <span class="fill"></span>
-    <button type="button" class="sl-btn flags" id="flags">flags 0/3</button>
     <span class="hint" id="hint">click the code to edit it · <kbd>:help</kbd></span>
     <span class="ft">rg</span>
     <span class="pos" id="pos">1:1</span>
@@ -92,15 +93,47 @@ app.innerHTML = `
         <dt><kbd>:e projects</kbd></dt><dd>open a section by name</dd>
         <dt><kbd>:e!</kbd></dt><dd>undo your edits</dd>
         <dt><kbd>:ctf</kbd></dt><dd>the capture-the-flag challenges</dd>
+        <dt><kbd>:decode</kbd></dt><dd>decode the base64 string on the cursor line</dd>
+        <dt><kbd>:ls!</kbd></dt><dd>list every buffer, even unlisted ones</dd>
       </dl>
       <p class="help-text">Not into code? The <a href="/site/">normal site</a> has the same content as a plain page.</p>
       <p class="help-foot">Press <kbd>Esc</kbd> to close.</p>
     </div>
   </div>
+  <div class="overlay" id="intro" hidden role="dialog" aria-modal="true" aria-labelledby="intro-title">
+    <div class="help-box start-box">
+      <p class="start-kicker">rajaedev.space</p>
+      <h2 class="start-title" id="intro-title">Capture the flag</h2>
+      <p class="help-text">This portfolio is a Vim editor with <b>3 flags</b> hidden in it. Find them using Vim commands. Each flag looks like <code>rg{...}</code>. Find all three and you’ll get my contact details at the end.</p>
+      <dl class="start-keys">
+        <dt><kbd>:</kbd></dt><dd>opens the command line at the bottom (try <kbd>:help</kbd>)</dd>
+        <dt><kbd>i</kbd></dt><dd>edits the code, <kbd>Esc</kbd> stops</dd>
+        <dt><kbd>j</kbd> <kbd>k</kbd></dt><dd>move the cursor down and up</dd>
+      </dl>
+      <div class="intro-actions">
+        <button type="button" class="btn btn-primary" id="intro-start">Start the CTF</button>
+        <button type="button" class="btn" id="intro-ok">Just browse</button>
+        <a class="btn" href="/site/">Normal site</a>
+      </div>
+    </div>
+  </div>
+  <div class="overlay" id="done" hidden role="dialog" aria-modal="true" aria-labelledby="done-title">
+    <div class="help-box start-box">
+      <p class="start-kicker">3/3 flags</p>
+      <h2 class="start-title" id="done-title">You got them all</h2>
+      <p class="help-text">Thanks for playing. If you’d like to talk about a role or a project, here’s where to find me.</p>
+      <div class="intro-actions">
+        <a class="btn btn-primary" id="done-email" href="#contact"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Email me</a>
+        <a class="btn" href="https://github.com/RajaeDev6" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a>
+        <a class="btn" href="https://linkedin.com/in/rajae-g" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</a>
+      </div>
+      <p class="help-foot"><button type="button" class="linkish" id="done-close">Close</button> to keep looking around.</p>
+    </div>
+  </div>
   <div class="overlay" id="ctf" hidden role="dialog" aria-modal="true" aria-label="Capture the flag">
     <div class="help-box ctf-box">
       <p class="help-title">Capture the flag</p>
-      <p class="help-text">Three flags are hidden in this editor. Each looks like <code>rg{...}</code>. Submit one with <kbd>:flag rg{...}</kbd>. Stuck? The <a href="/site/">normal site</a> has everything without the puzzles.</p>
+      <p class="help-text">Three flags are hidden in this editor. Each looks like <code>rg{...}</code>. Use Vim commands to find them, then submit each one below or with <kbd>:flag rg{...}</kbd>. Stuck? The <a href="/site/">normal site</a> has everything without the puzzles.</p>
       <ol class="ctf-list" id="ctf-list"></ol>
       <form class="flag-form" id="flag-form"><input id="flag-input" placeholder="rg{...}" autocomplete="off" spellcheck="false" aria-label="Flag"><button type="submit" class="btn btn-primary">Submit</button></form>
       <p class="flag-msg" id="flag-msg" aria-live="polite"></p>
@@ -491,6 +524,7 @@ function run(cmd) {
     case 'ls': case 'buffers': return message(BUFFERS.map((b, i) => `${i + 1} ${b}.rg${b in edits ? ' [+]' : ''}`).join('   '));
     case 'ls!': case 'buffers!': return message([...BUFFERS.map((b, i) => `${i + 1} ${b}.rg`), `${BUFFERS.length + 1}u ${HIDDEN[0]}.rg (unlisted)`].join('   '));
     case 'ctf': return showCtf();
+    case 'decode': return decode(args.join(' '));
     case 'flag': return submitFlag(args.join(' '));
     case 'site': case 'normal': location.href = '/site/'; return;
     case 'h': case 'help': return showHelp();
@@ -531,7 +565,8 @@ document.addEventListener('keydown', (e) => {
   if (e.target === cmdInput || e.target === ta || e.target.id === 'flag-input') { if (e.key === 'Escape' && e.target.id === 'flag-input') ctfEl.hidden = true; return; }
   if (!lightbox.hidden) { if (e.key === 'Escape') closeLightbox(); return; }
   if (!ctfEl.hidden) { if (e.key === 'Escape' || e.key === 'q') { e.preventDefault(); ctfEl.hidden = true; } return; }
-  if (!intro.hidden && e.key === 'Escape') { dismissIntro(); return; }
+  if (!intro.hidden) { if (e.key === 'Escape') dismissIntro(); return; }
+  if (!$('done').hidden) { if (e.key === 'Escape') $('done').hidden = true; return; }
   if (!helpEl.hidden) { if (e.key === 'Escape' || e.key === 'q') { e.preventDefault(); hideHelp(); } return; }
   if (e.metaKey || e.altKey) return;
   if (e.ctrlKey) {
@@ -644,11 +679,41 @@ window.addEventListener('hashchange', () => {
 
 /* ---------- capture the flag ---------- */
 
+// :decode decodes base64, either the argument or the string on the cursor line
+function decode(arg) {
+  let input = arg.trim();
+  if (!input) {
+    const line = text().split('\n')[ta === document.activeElement ? lineOfCaret() : cursorLine] || '';
+    const m = line.match(/"([^"]*)"/);
+    if (!m) return message(`E: no string on line ${cursorLine + 1}. Put the cursor on a line with a "string" first.`, true);
+    input = m[1];
+  }
+  try {
+    const out = atob(input.replace(/\s+/g, ''));
+    if (!/^[\x20-\x7e]+$/.test(out)) throw new Error('binary');
+    message(`decoded: ${out}`);
+  } catch {
+    message('That isn’t base64, so there’s nothing to decode.', true);
+  }
+}
+
 // Flags are checked by SHA-256 hash, so the answers are not sitting in this file.
 const CHALLENGES = [
-  { name: 'Recon', hint: 'Not every buffer is listed. Vim has a command that shows them all.', hash: '5b78a99b3c6c582b58cc6c42989ed5e0d62d21782d78c98e15720a391b7dd7e9' },
-  { name: 'Crypto', hint: 'Some secrets are only encoded, not encrypted.', hash: 'f633a3187b0e3e9c9a0adf0296d301377a9031729c9b21b6a48b57d412b6a203' },
-  { name: 'Web', hint: 'Try to make the preview run your own code: edit a link or slip in some HTML.', hash: 'f55a6d298066c78a134b366dd482a88d2a84fc4e4aebddeda7a602c37eb7ff8b' },
+  {
+    name: 'Recon', hint: 'Not every buffer shows up in the tabs.',
+    tip: 'Type <kbd>:ls!</kbd> to list every buffer, then <kbd>:e name</kbd> to open the hidden one. The flag is in its comments.',
+    hash: '5b78a99b3c6c582b58cc6c42989ed5e0d62d21782d78c98e15720a391b7dd7e9',
+  },
+  {
+    name: 'Crypto', hint: 'The hidden buffer holds a string that is encoded, not encrypted.',
+    tip: 'Move the cursor onto that line with <kbd>j</kbd> / <kbd>k</kbd> (or click it), then type <kbd>:decode</kbd>.',
+    hash: 'f633a3187b0e3e9c9a0adf0296d301377a9031729c9b21b6a48b57d412b6a203',
+  },
+  {
+    name: 'Web', hint: 'Try to make the preview run your own code.',
+    tip: 'Press <kbd>i</kbd> (or click the code) to edit, change a link to <code>javascript:alert(1)</code>, and read the message at the bottom.',
+    hash: 'f55a6d298066c78a134b366dd482a88d2a84fc4e4aebddeda7a602c37eb7ff8b',
+  },
 ];
 const found = new Set(JSON.parse(store.get('rg-flags') || '[]'));
 
@@ -675,10 +740,26 @@ async function submitFlag(value) {
   found.add(i);
   store.set('rg-flags', JSON.stringify([...found]));
   syncFlags();
-  say(found.size === CHALLENGES.length
-    ? 'All 3 flags found. Nice work. If you’re hiring, :e contact'
-    : `Correct: ${CHALLENGES[i].name} flag. ${found.size}/${CHALLENGES.length} found.`);
+  if (found.size === CHALLENGES.length) {
+    say('All 3 flags found.');
+    finish();
+    return;
+  }
+  const next = CHALLENGES.find((_, n) => !found.has(n));
+  say(`Correct: ${CHALLENGES[i].name} flag (${found.size}/${CHALLENGES.length}). Next: ${next.name}. ${next.hint}`);
 }
+
+// All flags: show where to reach me and open the contact buffer behind it
+function finish() {
+  ctfEl.hidden = true;
+  open('contact');
+  const [user, domain] = ['rgivans9', 'gmail.com'];
+  $('done-email').href = `mailto:${user}@${domain}`;
+  $('done').hidden = false;
+  $('done-email').focus();
+}
+$('done-close').addEventListener('click', () => { $('done').hidden = true; });
+$('done').addEventListener('click', (e) => { if (e.target.id === 'done') $('done').hidden = true; });
 $('flag-form').addEventListener('submit', (e) => {
   e.preventDefault();
   submitFlag($('flag-input').value);
@@ -686,12 +767,29 @@ $('flag-form').addEventListener('submit', (e) => {
 });
 
 function syncFlags() {
-  $('flags').textContent = `flags ${found.size}/${CHALLENGES.length}`;
-  $('ctf-list').innerHTML = CHALLENGES.map((c, i) => `<li class="${found.has(i) ? 'done' : ''}"><b>${c.name}</b> ${found.has(i) ? '<span class="got">found</span>' : ''}<span>${c.hint}</span></li>`).join('');
+  const total = CHALLENGES.length;
+  $('ctf-btn').textContent = `CTF ${found.size}/${total}`;
+  $('ctf-btn').classList.toggle('complete', found.size === total);
+  $('ctf-list').innerHTML = CHALLENGES.map((c, i) => `<li class="${found.has(i) ? 'done' : ''}"><b>${c.name}</b>${found.has(i) ? '<span class="got">found</span>' : ''}<span>${c.hint}</span><span class="tip">${c.tip}</span></li>`).join('');
+  const nextIdx = CHALLENGES.findIndex((_, n) => !found.has(n));
+  const mission = $('mission');
+  mission.classList.toggle('complete', nextIdx < 0);
+  if (nextIdx < 0) {
+    $('mission-text').innerHTML = '<b>All 3 flags found.</b> Thanks for playing.';
+    $('mission-btn').textContent = 'Contact me';
+  } else {
+    const c = CHALLENGES[nextIdx];
+    $('mission-text').innerHTML = `<b>Flag ${nextIdx + 1} of ${total}: ${c.name}.</b> ${c.hint}`;
+    $('mission-btn').textContent = 'Hints';
+  }
 }
+$('mission-btn').addEventListener('click', () => {
+  if (found.size === CHALLENGES.length) { $('done-email').href = 'mailto:' + ['rgivans9', 'gmail.com'].join('@'); $('done').hidden = false; open('contact'); }
+  else showCtf();
+});
 
 function showCtf() { dismissIntro(); syncFlags(); $('flag-msg').textContent = ''; ctfEl.hidden = false; }
-$('flags').addEventListener('click', showCtf);
+$('ctf-btn').addEventListener('click', showCtf);
 ctfEl.addEventListener('click', (e) => { if (e.target === ctfEl) ctfEl.hidden = true; });
 
 /* ---------- first visit ---------- */
@@ -702,7 +800,8 @@ function dismissIntro() {
   store.set('rg-intro', 'seen');
 }
 $('intro-ok').addEventListener('click', dismissIntro);
-$('intro-ctf').addEventListener('click', showCtf);
+$('intro-start').addEventListener('click', showCtf);
+intro.addEventListener('click', (e) => { if (e.target === intro) dismissIntro(); });
 if (!store.get('rg-intro')) intro.hidden = false;
 
 /* ---------- start ---------- */

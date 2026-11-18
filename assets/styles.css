@@ -273,10 +273,6 @@ a.entry:hover { border-color: var(--line-strong); }
 .edit-note { padding: 8px 16px; background: #2a2414; border-bottom: 1px solid #4a3d1c; color: #e8d7a8; font-family: var(--sans); font-size: 13.5px; line-height: 20px; }
 .edit-note button { margin-left: 6px; padding: 0 8px; border: 1px solid #6b5a2b; border-radius: 6px; background: none; color: #f3e3b5; font-weight: 700; cursor: pointer; }
 .pv .is-inert { cursor: not-allowed; opacity: .55; }
-.intro { position: absolute; right: 20px; bottom: 20px; z-index: 5; width: min(400px, calc(100% - 40px)); padding: 20px; background: var(--ed-bar); border: 1px solid var(--line-strong); border-radius: 14px; font-family: var(--sans); font-size: 15px; line-height: 23px; color: var(--sub); box-shadow: 0 12px 32px rgb(0 0 0 / 0.4); }
-.intro b { color: var(--ink); }
-.intro-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-.intro .btn { min-height: 38px; padding: 0 14px; font-size: 14px; }
 .flags { color: var(--sub); }
 .help-text a, .ctf-box a { color: var(--accent-text); text-decoration: underline; text-underline-offset: 3px; }
 .help-text code { font-family: var(--mono); font-size: 12.5px; color: var(--ink); }
@@ -286,7 +282,6 @@ a.entry:hover { border-color: var(--line-strong); }
 .ctf-list .got { margin-left: 6px; padding: 0 8px; border-radius: 999px; background: #24391a; color: #a8d58a; font-family: var(--mono); font-size: 11px; }
 @media (max-width: 899px) {
   .site-link { padding: 0 10px; }
-  .intro { right: 12px; left: 12px; bottom: 12px; width: auto; }
 }
 .flag-form { display: flex; gap: 8px; margin-top: 16px; }
 .flag-form input { flex: 1; min-width: 0; height: 40px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--ed-bg); color: var(--ink); font-family: var(--mono); font-size: 13px; }
@@ -294,3 +289,34 @@ a.entry:hover { border-color: var(--line-strong); }
 .flag-msg { min-height: 20px; margin-top: 8px; font-family: var(--sans); font-size: 13.5px; color: #a8d58a; }
 .flag-msg.error { color: #e06c75; }
 .cmdline { cursor: text; }
+
+/* CTF: tab-bar button, mission strip, start and finish screens */
+.ctf-btn { padding: 0 14px; border: 0; border-left: 1px solid var(--ed-line); background: #1b2733; color: #9fd3f0; font-family: var(--mono); font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.ctf-btn:hover { background: #213141; }
+.ctf-btn.complete { background: #22361a; color: #a8d58a; }
+.mission { display: flex; align-items: center; gap: 10px; padding: 8px 16px; border-bottom: 1px solid var(--line); background: #141c25; font-family: var(--sans); font-size: 14px; line-height: 20px; color: var(--sub); min-width: 0; }
+.mission b { color: var(--ink); }
+.mission-tag { flex: none; padding: 1px 8px; border-radius: 6px; background: var(--accent); color: #fff; font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .04em; }
+.mission-text { flex: 1; min-width: 0; }
+.mission-btn { flex: none; padding: 3px 12px; border-radius: 999px; border: 1px solid #2f4a60; background: none; color: #9fd3f0; font-weight: 700; font-size: 13px; cursor: pointer; }
+.mission-btn:hover { border-color: var(--accent); }
+.mission.complete { background: #17221a; }
+.mission.complete .mission-tag { background: #4f8a36; }
+.mission.complete .mission-btn { border-color: #3d5e2c; color: #a8d58a; }
+.preview { grid-template-rows: auto auto auto 1fr; }
+.start-box { width: min(520px, 100%); padding: 28px; }
+.start-kicker { font-family: var(--mono); font-size: 12px; color: var(--accent-text); margin-bottom: 6px; }
+.start-title { font-family: var(--sans); font-size: 30px; line-height: 36px; font-weight: 900; color: var(--ink); margin-bottom: 12px; }
+.start-box .help-text b { color: var(--ink); }
+.start-keys { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; margin: 4px 0 20px; padding: 14px 16px; border-radius: 10px; background: var(--ed-bg); border: 1px solid var(--ed-line); font-size: 13px; }
+.start-keys dt { color: var(--ink); }
+.start-keys dd { color: var(--sub); font-family: var(--sans); font-size: 14px; }
+.intro-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.intro-actions .btn { min-height: 42px; padding: 0 16px; font-family: var(--sans); font-size: 14px; }
+.ctf-list .tip { margin-top: 4px; padding: 6px 10px; border-left: 2px solid var(--accent); background: var(--ed-bg); border-radius: 0 6px 6px 0; font-size: 13.5px; color: var(--sub); }
+.ctf-list li.done .tip { display: none; }
+.linkish { padding: 0; border: 0; background: none; color: var(--accent-text); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font: inherit; }
+@media (max-width: 899px) {
+  .ctf-btn { padding: 0 10px; }
+  .mission { padding: 8px 12px; font-size: 13px; }
+}

@@ -15,7 +15,12 @@ Live: [rajaedev.space](https://rajaedev.space)
 - **Interactive preview.** Project cards open into the full write-up, and screenshots open full size.
 - **Layout.** Drag the divider to resize the code pane, or hide the code entirely. Both are remembered.
 - **Safe to edit.** Edits only change what you see in your own tab and reset on reload. While the code is edited, links in the preview are switched off. Every string is HTML-escaped, only `https://` links that appear in the original source can ever become working links, and screenshot names, icons and buffer targets are checked against fixed lists.
-- **A small CTF.** Three flags are hidden in the editor (`:ctf` for hints, `:flag rg{...}` to submit, or use the flags button). Flags are checked against SHA-256 hashes.
+- **A capture-the-flag you solve with Vim.** First-time visitors see a start screen, and a CTF strip above the preview always shows the next step.
+  1. Recon: `:ls!` lists an unlisted buffer, `:e .notes` opens it.
+  2. Crypto: move the cursor to the encoded string (`j`/`k`) and run `:decode`.
+  3. Web: press `i`, try an injection like a `javascript:` link, and the editor blocks it and hands over the flag.
+
+  Submit with `:flag rg{...}` or the CTF dialog; flags are checked against SHA-256 hashes. Finding all three opens a screen with my email, GitHub and LinkedIn, and switches to `contact.rg`.
 - **Normal site.** `/site/` has the same content as a plain portfolio page, linked from the editor's tab bar, the first-visit note and the help.
 - **A real interpreter.** `assets/rg.js` tokenizes, parses and renders rg. It never throws on half-typed code, which is what lets the preview update while the code is still being written.
 - **Vim touches.** Line numbers, cursor line, `~` past the end of the file, a mode indicator, a status line and a command line (`:e`, `:e!`, `:b 3`, `:bn`, `:ls`, `:w`, `:help`, `:12`). `j`/`k`, `gg`/`G` and `Ctrl-d`/`Ctrl-u` move the cursor.

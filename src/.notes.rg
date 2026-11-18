@@ -4,6 +4,8 @@
 --
 -- flag 2 is below. it looks
 -- scrambled, but it isn't locked.
+-- put the cursor on its line (j/k)
+-- and type :decode
 
 module notes
 title "Notes"
