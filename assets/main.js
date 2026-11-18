@@ -31,3 +31,9 @@ if (sections.length && 'IntersectionObserver' in window) {
 }
 
 document.getElementById('year').textContent = new Date().getFullYear();
+
+// Build email links at runtime so the address isn't sitting in the page source for scrapers
+document.querySelectorAll('[data-email]').forEach((a) => {
+  const [user, domain] = a.dataset.email.split('|');
+  a.href = `mailto:${user}@${domain}`;
+});

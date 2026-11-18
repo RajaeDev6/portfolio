@@ -27,10 +27,10 @@ Styles live in `assets/styles.css`. After editing it, run `python3 tools/inline-
 Works smoothly across desktop, tablet, and mobile.  
 Includes a clean mobile hamburger menu with auto-close behavior.
 
-### **2. Work**
+### **2. Projects**
 Four short project tiles (Shop Weh, EStore Trust, Chichi Bus, Sequik) link to `projects.html` (served at `/projects`), which has the full write-ups and screenshots, security tools and labs, and smaller projects.
 
-### **3. Security**
+### **3. Security Projects**
 SOC Shift (security analyst training), CoreSight (log search) and PingSweeper (network scanner).
 
 ### **4. Experience, Skills & Education**

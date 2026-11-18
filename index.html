@@ -297,8 +297,8 @@ footer { border-top: 1px solid var(--line); }
     </button>
     <div class="nav-links" id="nav-links">
       <a href="#experience">Experience</a>
-      <a href="#security">Security</a>
-      <a href="#work">Work</a>
+      <a href="#security">Security Projects</a>
+      <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
     </div>
@@ -311,7 +311,7 @@ footer { border-top: 1px solid var(--line); }
 <section class="section hero" id="home">
   <div class="hero-copy">
     <h1><span>Rajae</span> Givans</h1>
-    <p class="role">Software engineer with a cybersecurity background, based in Kingston, Jamaica.</p>
+    <p class="role">Cybersecurity and software engineering student, based in Kingston, Jamaica.</p>
     <p class="bio">
       I build and deploy full-stack web apps, mobile apps and APIs in TypeScript, Go and Python,
       with a focus on backend development, secure design and AI features built on LLM APIs. I’ve shipped production features as a
@@ -319,8 +319,8 @@ footer { border-top: 1px solid var(--line); }
     </p>
 
     <div class="cta">
-      <a href="#work" class="btn btn-primary">See my projects</a>
-      <a href="mailto:rgivans9@gmail.com" class="btn"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Email me</a>
+      <a href="#projects" class="btn btn-primary">See my projects</a>
+      <a href="#contact" data-email="rgivans9|gmail.com" class="btn"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Email me</a>
       <div class="socials">
         <a href="https://github.com/RajaeDev6" target="_blank" rel="noopener" aria-label="GitHub profile"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
         <a href="https://linkedin.com/in/rajae-g" target="_blank" rel="noopener" aria-label="LinkedIn profile"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
@@ -354,40 +354,41 @@ footer { border-top: 1px solid var(--line); }
       </div>
       <p class="org">Talawa API, Palisadoes Foundation</p>
       <ul>
-        <li>Wrote tests that check only the right users can see protected data, and revised them through review with the maintainers.</li>
+        <li>Wrote automated tests for a GraphQL API that confirm only authorized users (admins, organization admins, members) can view protected data.</li>
+        <li>Worked through code review with the maintainers on GitHub and revised the tests based on their feedback.</li>
       </ul>
       <a class="link" href="https://github.com/RajaeDev6/talawa-api" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </article>
   </div>
 </section>
 
-<!-- SECURITY -->
+<!-- SECURITY PROJECTS -->
 <section class="section" id="security">
   <div class="section-head">
-    <h2 class="section-title">Security</h2>
+    <h2 class="section-title">Security Projects</h2>
     <a class="link" href="/projects#security">Tools and labs<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
   </div>
 
   <div class="rows">
     <a class="row" href="/projects#soc-shift">
       <span class="row-name">SOC Shift</span>
-      <span class="row-line">Practice triaging security alerts and spotting phishing emails, with feedback on every call.</span>
+      <span class="row-line">A training platform for security analysts. Sort real threats from false alarms in an alert queue, rank them, map them to MITRE ATT&amp;CK and spot phishing emails, with a scored debrief after each shift.</span>
     </a>
     <a class="row" href="/projects#coresight">
       <span class="row-name">CoreSight</span>
-      <span class="row-line">Searches server and login logs and flags suspicious patterns.</span>
+      <span class="row-line">A log analysis engine that parses server, login and web access logs, indexes them for fast search, and flags patterns like repeated failed logins.</span>
     </a>
     <a class="row" href="/projects#pingsweeper">
       <span class="row-name">PingSweeper</span>
-      <span class="row-line">Finds which devices are online on a network and how fast they respond.</span>
+      <span class="row-line">A network scanner written in Go that pings every address in a subnet at the same time, reports which devices are online and measures how fast they respond.</span>
     </a>
   </div>
 </section>
 
-<!-- WORK -->
-<section class="section" id="work">
+<!-- PROJECTS -->
+<section class="section" id="projects">
   <div class="section-head">
-    <h2 class="section-title">Work</h2>
+    <h2 class="section-title">Projects</h2>
     <a class="link" href="/projects">All projects<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
   </div>
 
@@ -396,7 +397,7 @@ footer { border-top: 1px solid var(--line); }
       <img src="assets/shopweh-cheapest-280.webp" width="120" height="260" loading="lazy" alt="Shop Weh showing the cheapest store for a grocery list">
       <span class="pick-text">
         <span class="pick-name">Shop Weh</span>
-        <span class="pick-line">Compares grocery prices across Jamaican stores and tells you where your whole list is cheapest.</span>
+        <span class="pick-line">Add your grocery list and it compares prices across Jamaican stores, shows which store is cheapest for the whole list, and how much you save. Prices refresh every day.</span>
         <span class="pick-stack">Next.js · Firebase</span>
       </span>
     </a>
@@ -404,7 +405,7 @@ footer { border-top: 1px solid var(--line); }
       <img src="assets/estoretrust-store-280.webp" width="120" height="260" loading="lazy" alt="EStore Trust page showing a shop’s trust score">
       <span class="pick-text">
         <span class="pick-name">EStore Trust</span>
-        <span class="pick-line">Look up an Instagram shop before you send money: trust score, reviews and scam reports.</span>
+        <span class="pick-line">Look up an Instagram shop before you send money. It scores each shop with automatic checks and shows buyer reviews and any confirmed scam reports.</span>
         <span class="pick-stack">Next.js · Supabase · OpenAI</span>
       </span>
     </a>
@@ -412,7 +413,7 @@ footer { border-top: 1px solid var(--line); }
       <img src="assets/chichibus-route-280.webp" width="120" height="260" loading="lazy" alt="Chichi Bus map of a JUTC route">
       <span class="pick-text">
         <span class="pick-name">Chichi Bus</span>
-        <span class="pick-line">Riders report buses they see, so everyone on the route gets an estimate of when the next JUTC bus arrives.</span>
+        <span class="pick-line">JUTC doesn’t share live bus locations, so riders do. Tap “I see a bus” and everyone on that route gets an estimate of when it will reach them. All 159 routes are mapped.</span>
         <span class="pick-stack">Preact · Firebase · Leaflet</span>
       </span>
     </a>
@@ -420,7 +421,7 @@ footer { border-top: 1px solid var(--line); }
       <img src="assets/sequik-overview-280.webp" width="120" height="260" loading="lazy" alt="Sequik overview of rent collected this month">
       <span class="pick-text">
         <span class="pick-name">Sequik</span>
-        <span class="pick-line">Helps small landlords track rent, tenants and repairs from their phone.</span>
+        <span class="pick-line">A rent tracker for small landlords: see who has paid and who owes, record payments with receipts, store documents and track repairs from your phone.</span>
         <span class="pick-stack">React Native · Supabase</span>
       </span>
     </a>
@@ -456,10 +457,11 @@ footer { border-top: 1px solid var(--line); }
 
 <!-- CONTACT -->
 <section class="section contact" id="contact">
-  <h2 class="section-title">Let’s talk</h2>
-  <p class="lead">I’m looking for software engineering and security internships and entry-level roles.</p>
+  <h2 class="section-title">Contact</h2>
+  <p class="lead">Open to software engineer and security analyst roles, internships and freelance work. Feel free to reach out.</p>
   <div class="cta">
-    <a href="mailto:rgivans9@gmail.com" class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>rgivans9@gmail.com</a>
+    <a href="#contact" data-email="rgivans9|gmail.com" class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Email me</a>
+    <a href="https://github.com/RajaeDev6" class="btn" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a>
     <a href="https://linkedin.com/in/rajae-g" class="btn" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</a>
   </div>
 </section>

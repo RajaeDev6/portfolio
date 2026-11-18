@@ -240,8 +240,8 @@ footer { border-top: 1px solid var(--line); }
     </button>
     <div class="nav-links" id="nav-links">
       <a href="/#experience">Experience</a>
-      <a href="/#security">Security</a>
-      <a href="/#work" aria-current="page">Work</a>
+      <a href="/#security">Security Projects</a>
+      <a href="/#projects" aria-current="page">Projects</a>
       <a href="/#skills">Skills</a>
       <a href="/#contact">Contact</a>
     </div>
@@ -265,6 +265,7 @@ footer { border-top: 1px solid var(--line); }
         <ul>
         <li>Prices from stores across Jamaica, updated every day</li>
         <li>Collects prices from government price surveys and store websites</li>
+        <li>Ranks stores by how much of your list they carry, not just price</li>
         <li>Works on your phone like an app</li>
         </ul>
         <p class="pick-stack">Next.js · TypeScript · Firebase · GitHub Actions</p>
@@ -285,6 +286,7 @@ footer { border-top: 1px solid var(--line); }
         <li>Automatic checks of each shop, with every result shown</li>
         <li>Owners can verify their shop to earn a higher trust level</li>
         <li>Proof of order is checked, with addresses blurred and kept private</li>
+        <li>Accounts are phone-verified so reviews come from real buyers</li>
         </ul>
         <p class="pick-stack">Next.js · TypeScript · Supabase · OpenAI</p>
         <a class="link" href="https://estoretrust.vercel.app" target="_blank" rel="noopener">Open EStore Trust<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -304,13 +306,14 @@ footer { border-top: 1px solid var(--line); }
         <li>All 159 JUTC routes and 208 stops, mapped on real roads</li>
         <li>Your location is only shared when you choose to</li>
         <li>Works offline once the routes are loaded</li>
+        <li>Route and stop data collected from the official JUTC route guide</li>
         </ul>
         <p class="pick-stack">Preact · Firebase · Leaflet · OpenStreetMap</p>
         <a class="link" href="https://chichibus.vercel.app" target="_blank" rel="noopener">Open Chichi Bus<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
       <div class="shots">
-        <img src="assets/sequik-overview-280.webp" srcset="assets/sequik-overview-200.webp 200w, assets/sequik-overview-280.webp 280w, assets/sequik-overview.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Sequik rent tracker overview showing rent collected this month, outstanding balance and overdue tenants">
-        <img src="assets/sequik-tenants-280.webp" srcset="assets/sequik-tenants-200.webp 200w, assets/sequik-tenants-280.webp 280w, assets/sequik-tenants.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Sequik tenants screen listing overdue and due tenants with amounts owed">
+        <img src="assets/chichibus-route-280.webp" srcset="assets/chichibus-route-200.webp 200w, assets/chichibus-route-280.webp 280w, assets/chichibus-route.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Chichi Bus route 8 map from Naggo Head to downtown Kingston with timetable and I see a bus button">
+        <img src="assets/chichibus-my-routes-280.webp" srcset="assets/chichibus-my-routes-200.webp 200w, assets/chichibus-my-routes-280.webp 280w, assets/chichibus-my-routes.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Chichi Bus My routes screen with a map of nearby stops and followed routes">
       </div>
     </article>
 
@@ -322,39 +325,40 @@ footer { border-top: 1px solid var(--line); }
         <ul>
         <li>Rent collected vs expected, with overdue reminders</li>
         <li>Tenants, properties, documents and repairs in one place</li>
+        <li>Six months of payment history for each tenant</li>
         <li>Each landlord’s data and receipts are kept private</li>
         </ul>
         <p class="pick-stack">React Native · Expo · TypeScript · Supabase</p>
         <a class="link" href="https://sequik.netlify.app" target="_blank" rel="noopener">Join the waitlist<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
       <div class="shots">
-        <img src="assets/chichibus-route-280.webp" srcset="assets/chichibus-route-200.webp 200w, assets/chichibus-route-280.webp 280w, assets/chichibus-route.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Chichi Bus route 8 map from Naggo Head to downtown Kingston with timetable and I see a bus button">
-        <img src="assets/chichibus-my-routes-280.webp" srcset="assets/chichibus-my-routes-200.webp 200w, assets/chichibus-my-routes-280.webp 280w, assets/chichibus-my-routes.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Chichi Bus My routes screen with a map of nearby stops and followed routes">
+        <img src="assets/sequik-overview-280.webp" srcset="assets/sequik-overview-200.webp 200w, assets/sequik-overview-280.webp 280w, assets/sequik-overview.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Sequik rent tracker overview showing rent collected this month, outstanding balance and overdue tenants">
+        <img src="assets/sequik-tenants-280.webp" srcset="assets/sequik-tenants-200.webp 200w, assets/sequik-tenants-280.webp 280w, assets/sequik-tenants.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Sequik tenants screen listing overdue and due tenants with amounts owed">
       </div>
     </article>
 </section>
 
 <section class="section" id="security">
-  <h2 class="section-title">Security</h2>
+  <h2 class="section-title">Security projects</h2>
   <div class="items">
     <article class="item" id="soc-shift">
       <h3>SOC Shift</h3>
       <p class="tag">Security analyst training</p>
-      <p>Practice the day-to-day work of a security analyst: sort real threats from false alarms, rank them, and spot phishing emails. Fifteen shifts that get harder, each ending with feedback on every call.</p>
+      <p>Practice the day-to-day work of a security analyst. Classify each alert in a queue as a real threat, a false alarm or expected activity, rank the real threats, and map them to MITRE ATT&amp;CK tactics. Other shifts give you an inbox to sort phishing from legitimate email. Fifteen shifts get harder as you go, and each ends with a score and an explanation of every call.</p>
       <p class="pick-stack">JavaScript · Firebase</p>
       <a class="link" href="https://socshift.vercel.app" target="_blank" rel="noopener">Open SOC Shift<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </article>
     <article class="item" id="coresight">
       <h3>CoreSight</h3>
       <p class="tag">Log search</p>
-      <p>Reads server and login logs, makes them searchable, and flags patterns like repeated failed logins.</p>
+      <p>Parses syslog, login and web access logs into a searchable index. You can filter with its own query operators, and it flags suspicious patterns such as repeated failed logins from one address.</p>
       <p class="pick-stack">Python</p>
       <a class="link" href="https://github.com/RajaeDev6/coresight" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </article>
     <article class="item" id="pingsweeper">
       <h3>PingSweeper</h3>
       <p class="tag">Network scanner</p>
-      <p>Checks which devices on a network are online and how quickly they respond.</p>
+      <p>Sends ICMP echo requests (pings) to every address in a subnet at the same time using Go’s goroutines, then reports which hosts are up and how long each took to respond.</p>
       <p class="pick-stack">Go</p>
       <a class="link" href="https://github.com/RajaeDev6/PingSweeper" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </article>
@@ -364,21 +368,21 @@ footer { border-top: 1px solid var(--line); }
   <div class="items">
     <article class="item">
       <h3>Penetration test</h3>
-      <p class="tag">Team of three</p>
-      <p>Tested a deliberately weak company network, found exposed passwords, and presented the fixes in a report.</p>
+      <p class="tag">GreenFields Financial Services · Team of 3</p>
+      <p>Scanned, exploited and reported on a deliberately vulnerable network, capturing unencrypted passwords and presenting a fix plan in an executive summary.</p>
       <p class="pick-stack">Kali Linux · Wireshark</p>
     </article>
     <article class="item">
       <h3>Vulnerability assessment</h3>
-      <p class="tag">Windows</p>
-      <p>Listed what was running on a Windows machine, matched it against known vulnerabilities, and wrote up the risks and fixes.</p>
-      <p class="pick-stack">Nmap · PowerShell</p>
+      <p class="tag">University lab</p>
+      <p>Inventoried services, ports and software versions on a Windows system, researched known CVEs in NVD and MITRE, and wrote up the risks and fixes.</p>
+      <p class="pick-stack">Nmap · PowerShell · CVE research</p>
     </article>
     <article class="item">
-      <h3>Network security</h3>
-      <p class="tag">Traffic and firewalls</p>
-      <p>Analysed network traffic, scanned for open ports, and set up firewall rules to block unwanted connections.</p>
-      <p class="pick-stack">Wireshark · Nmap</p>
+      <h3>Network security lab</h3>
+      <p class="tag">University lab</p>
+      <p>Analyzed DNS, web and ICMP traffic in Wireshark, scanned hosts for open ports, and configured firewall rules to block unwanted connections.</p>
+      <p class="pick-stack">Wireshark · Nmap · Windows Firewall</p>
     </article>
   </div>
 </section>
@@ -389,20 +393,20 @@ footer { border-top: 1px solid var(--line); }
     <article class="item">
       <h3>Request Inspector</h3>
       <p class="tag">Developer tool</p>
-      <p>Gives you a temporary link that shows every request sent to it, live, and lets you resend them with changes.</p>
+      <p>Captures incoming HTTP requests on temporary public links and shows them live, so developers can see exactly what their apps receive. Any request can be replayed with changed headers or data, and it starts with one Docker command.</p>
       <p class="pick-stack">Go · PostgreSQL · React · Docker</p>
       <a class="link" href="https://github.com/RajaeDev6/request-inspector" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </article>
     <article class="item">
       <h3>Due &amp; ExpenseTrakr</h3>
       <p class="tag">In progress</p>
-      <p>Two money apps: Due splits household bills between housemates, and ExpenseTrakr tracks spending and budgets.</p>
+      <p>Two money apps: Due splits household bills between housemates, and ExpenseTrakr tracks spending across wallets, with recurring transactions and budgets.</p>
       <p class="pick-stack">React Native · TypeScript · Firebase</p>
     </article>
     <article class="item">
       <h3>Public Eye JA</h3>
       <p class="tag">Earlier project</p>
-      <p>Take a photo of a road or utility problem and the app identifies it, adds the location and reports it.</p>
+      <p>Take a photo of an infrastructure problem, like a pothole or broken light, and the app classifies it, adds your location and reports it to the authorities.</p>
       <p class="pick-stack">React Native</p>
       <a class="link" href="https://github.com/RajaeDev6/public-eye-ja" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </article>
