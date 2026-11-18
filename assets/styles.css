@@ -352,3 +352,29 @@ a.entry:hover { border-color: var(--line-strong); }
 .dialog-close { flex: none; display: grid; place-items: center; width: 32px; height: 32px; margin: -6px -8px 0 4px; border: 0; border-radius: 8px; background: none; color: var(--muted); font-size: 18px; cursor: pointer; }
 .dialog-close:hover { color: var(--ink); background: var(--ed-bg); }
 .board-head .score { margin-left: auto; }
+
+/* ---------- phones ---------- */
+.vim-phone { display: none; margin-top: 8px; }
+@media (max-width: 899px) {
+  /* tabs get their own full-width row under the view switch and Normal site */
+  .tabline { flex-wrap: wrap; }
+  .tabs { order: 2; flex-basis: 100%; border-top: 1px solid var(--ed-line); }
+  .view-toggle { order: -1; margin-right: auto; border-left: 0; }
+  .site-link { margin-left: auto; }
+  .tab { padding: 9px 12px; }
+  .tab-ext { display: none; }
+  /* status line: keep the essentials, shorten the rest */
+  .statusline { gap: 8px; }
+  .file { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .pos, .modified { display: none; }
+  .vim-phone { display: block; }
+}
+@media (max-width: 560px) {
+  .help-box dl { grid-template-columns: 1fr; gap: 0; }
+  .help-box dd { margin-bottom: 8px; }
+}
+/* touch screens: 16px text in fields so phones don't zoom in when you tap them */
+@media (pointer: coarse) {
+  .hl, .ta, .gutter-col { font-size: 16px; }
+  .cmdline input, .flag-form input { font-size: 16px; }
+}

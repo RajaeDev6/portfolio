@@ -28,7 +28,7 @@ if (store.get('rg-code') === 'hidden') app.classList.add('code-hidden');
 app.innerHTML = `
   <div class="tabline">
     <div class="tabs" role="tablist" aria-label="Sections">
-      ${BUFFERS.map((b, i) => `<button class="tab" role="tab" type="button" data-buf="${b}" aria-selected="false"><span class="tab-n">${i + 1}</span>${b}.rg</button>`).join('')}
+      ${BUFFERS.map((b, i) => `<button class="tab" role="tab" type="button" data-buf="${b}" aria-selected="false"><span class="tab-n">${i + 1}</span>${b}<span class="tab-ext">.rg</span></button>`).join('')}
     </div>
     <button type="button" class="code-toggle" id="code-toggle"></button>
     <a class="site-link" href="/site/">Normal site</a>
@@ -121,6 +121,7 @@ app.innerHTML = `
           <dt>click a line</dt><dd>puts the cursor on it (or use <kbd>j</kbd> / <kbd>k</kbd>)</dd>
           <dt><kbd>i</kbd></dt><dd>edits the code, <kbd>Esc</kbd> stops</dd>
         </dl>
+        <p class="vim-phone">On a phone: switch to Code, tap a line to put the cursor there, and tap the bar at the bottom to type a command (or <kbd>/word</kbd> to search).</p>
       </div>
       <ol class="ctf-list" id="ctf-list"></ol>
       <p class="help-foot">Press <kbd>Esc</kbd> to close.</p>
@@ -172,7 +173,8 @@ let cursorLine = 0;
 let lastHTML = '';
 
 const text = (b = current) => edits[b] ?? SOURCES[b];
-const editorVisible = () => !app.classList.contains('code-hidden') && app.dataset.view !== 'preview';
+// On phones the Preview/Code switch decides; on desktop the Hide code toggle does
+const editorVisible = () => (narrow.matches ? app.dataset.view === 'code' : !app.classList.contains('code-hidden'));
 
 /* ---------- editor drawing ---------- */
 
@@ -527,6 +529,7 @@ function closeCmd() {
 function run(cmd) {
   const c = cmd.trim().replace(/^:/, '');
   if (!c) return;
+  if (c.startsWith('/')) return search(c.slice(1));   // lets phones search from the command line
   const [name, ...args] = c.split(/\s+/);
   const arg = (args[0] || '').replace(/\.rg$/, '');
   if (/^\d+$/.test(c)) { markCursor(Number(c) - 1, { sync: true }); return; }
