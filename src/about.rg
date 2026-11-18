@@ -3,9 +3,11 @@
 -- for this site. The preview is its
 -- output: click in here and edit it.
 --
--- there are 3 flags hidden in here.
--- type :ctf for hints, or click
--- "Normal site" for the plain version.
+-- the other files are encrypted.
+-- 3 flags are hidden in here, and
+-- each one decrypts more. :ctf for
+-- hints, or click "Normal site" to
+-- read everything right away.
 
 module about
 

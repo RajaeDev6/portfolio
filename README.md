@@ -1,6 +1,8 @@
 # Rajae Givans - Portfolio
 
-My portfolio is a live coding environment. A narrow Vim-style editor on the left holds the site's source, written in **rg**, a small language I made for it. The large pane on the right is a browser-style preview of what the rg interpreter renders. Each section (about, experience, projects, security, skills, education, contact) is a buffer.
+My portfolio has two versions. The **normal site** (`/site/`) is a plain portfolio page. The root is an **interactive version**: a capture-the-flag game where most of the portfolio is encrypted and each flag decrypts more of it.
+
+The interactive version is a live coding environment. A narrow Vim-style editor on the left holds the site's source, written in **rg**, a small language I made for it. The large pane on the right is a browser-style preview of what the rg interpreter renders. Each section (about, experience, projects, security, skills, education, contact) is a buffer.
 
 Live: [rajaedev.space](https://rajaedev.space)
 
@@ -15,6 +17,7 @@ Live: [rajaedev.space](https://rajaedev.space)
 - **Interactive preview.** Project cards open into the full write-up, and screenshots open full size.
 - **Layout.** Drag the divider to resize the code pane, or hide the code entirely. Both are remembered.
 - **Safe to edit.** Edits only change what you see in your own tab and reset on reload. While the code is edited, links in the preview are switched off. Every string is HTML-escaped, only `https://` links that appear in the original source can ever become working links, and screenshot names, icons and buffer targets are checked against fixed lists.
+- **Encrypted until you earn it.** Only `about.rg` is open at first. Locked tabs show scrambled code and a screen pointing to the CTF or to the same section on the normal site. Recon decrypts experience, skills and education; Crypto decrypts projects and security; Web decrypts contact. Decrypting types the real code out.
 - **A capture-the-flag you solve with Vim.** First-time visitors see a start screen, and a CTF strip above the preview always shows the next step.
   1. Recon: `:ls!` lists an unlisted buffer, `:e .notes` opens it.
   2. Crypto: move the cursor to the encoded string (`j`/`k`) and run `:decode`.

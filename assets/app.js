@@ -104,7 +104,8 @@ app.innerHTML = `
     <div class="help-box start-box">
       <p class="start-kicker">rajaedev.space</p>
       <h2 class="start-title" id="intro-title">Capture the flag</h2>
-      <p class="help-text">This portfolio is a Vim editor with <b>3 flags</b> hidden in it. Find them using Vim commands. Each flag looks like <code>rg{...}</code>. Find all three and you’ll get my contact details at the end.</p>
+      <p class="help-text">This portfolio is a Vim editor, and most of its files are <b>encrypted</b>. <b>3 flags</b> are hidden inside. Each one you find with Vim commands decrypts more of the portfolio, and the last one unlocks my contact details. Flags look like <code>rg{...}</code>.</p>
+      <p class="help-text">Just want to read my portfolio? The <a href="/site/">normal site</a> has everything, no puzzles.</p>
       <dl class="start-keys">
         <dt><kbd>:</kbd></dt><dd>opens the command line at the bottom (try <kbd>:help</kbd>)</dd>
         <dt><kbd>i</kbd></dt><dd>edits the code, <kbd>Esc</kbd> stops</dd>
@@ -112,8 +113,8 @@ app.innerHTML = `
       </dl>
       <div class="intro-actions">
         <button type="button" class="btn btn-primary" id="intro-start">Start the CTF</button>
-        <button type="button" class="btn" id="intro-ok">Just browse</button>
-        <a class="btn" href="/site/">Normal site</a>
+        <a class="btn" href="/site/">Go to the normal site</a>
+        <button type="button" class="btn" id="intro-ok">Look around first</button>
       </div>
     </div>
   </div>
@@ -333,6 +334,8 @@ function open(buf, { scrollTo } = {}) {
   if (location.hash.slice(1) !== (scrollTo || buf)) history.replaceState(null, '', `#${scrollTo || buf}`);
   bandLink.hidden = true;
 
+  if (isLocked(buf)) { showLocked(buf); return true; }
+
   if (typed.has(buf) || reduced || !editorVisible() || scrollTo) {
     typed.add(buf);
     settle(buf);
@@ -381,7 +384,7 @@ function bufferFor(hash) {
 
 /* ---------- editing ---------- */
 
-ta.addEventListener('focus', () => { if (typing) stopTyping(); setMode('INSERT'); });
+ta.addEventListener('focus', () => { if (typing) stopTyping(); if (!isLocked(current)) setMode('INSERT'); });
 ta.addEventListener('blur', () => { if (!typing) setMode('NORMAL'); });
 ta.addEventListener('input', () => {
   edits[current] = ta.value;
@@ -434,6 +437,7 @@ previewEl.addEventListener('focusin', (e) => showLink(e.target.closest('[data-l0
 previewEl.addEventListener('click', (e) => {
   const shot = e.target.closest('.shot');
   if (shot) { openLightbox(shot); return; }
+  if (e.target.closest('[data-ctf]')) { showCtf(); return; }
   if (e.target.closest('[data-inert]')) {
     e.preventDefault();
     message(current in edits
@@ -508,7 +512,7 @@ function run(cmd) {
   const arg = (args[0] || '').replace(/\.rg$/, '');
   if (/^\d+$/.test(c)) { markCursor(Number(c) - 1, { sync: true }); return; }
   switch (name) {
-    case 'e!': return resetEdits();
+    case 'e!': return isLocked(current) ? message(`"${current}.rg" is encrypted`, true) : resetEdits();
     case 'e': case 'edit': case 'o': case 'open':
       if (!arg) return message('E32: No file name', true);
       if (!open(arg)) message(`E484: Can't open file ${arg}.rg  (try: ${BUFFERS.join(', ')})`, true);
@@ -700,22 +704,76 @@ function decode(arg) {
 // Flags are checked by SHA-256 hash, so the answers are not sitting in this file.
 const CHALLENGES = [
   {
-    name: 'Recon', hint: 'Not every buffer shows up in the tabs.',
+    name: 'Recon', hint: 'Not every buffer shows up in the tabs.', unlocks: ['experience', 'skills', 'education'],
     tip: 'Type <kbd>:ls!</kbd> to list every buffer, then <kbd>:e name</kbd> to open the hidden one. The flag is in its comments.',
     hash: '5b78a99b3c6c582b58cc6c42989ed5e0d62d21782d78c98e15720a391b7dd7e9',
   },
   {
-    name: 'Crypto', hint: 'The hidden buffer holds a string that is encoded, not encrypted.',
+    name: 'Crypto', hint: 'The hidden buffer holds a string that is encoded, not encrypted.', unlocks: ['projects', 'security'],
     tip: 'Move the cursor onto that line with <kbd>j</kbd> / <kbd>k</kbd> (or click it), then type <kbd>:decode</kbd>.',
     hash: 'f633a3187b0e3e9c9a0adf0296d301377a9031729c9b21b6a48b57d412b6a203',
   },
   {
-    name: 'Web', hint: 'Try to make the preview run your own code.',
+    name: 'Web', hint: 'Try to make the preview run your own code.', unlocks: ['contact'],
     tip: 'Press <kbd>i</kbd> (or click the code) to edit, change a link to <code>javascript:alert(1)</code>, and read the message at the bottom.',
     hash: 'f55a6d298066c78a134b366dd482a88d2a84fc4e4aebddeda7a602c37eb7ff8b',
   },
 ];
 const found = new Set(JSON.parse(store.get('rg-flags') || '[]'));
+
+// Which flag decrypts each buffer; about.rg and the hidden notes are always open
+const LOCKS = Object.fromEntries(CHALLENGES.flatMap((c, i) => c.unlocks.map((b) => [b, i])));
+function isLocked(buf) { return buf in LOCKS && !found.has(LOCKS[buf]); }
+
+// Locked buffers show scrambled code: same shape, unreadable letters
+const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+function scramble(buf) {
+  let i = 0;
+  const body = SOURCES[buf].split('\n').slice(1).join('\n')
+    .replace(/[A-Za-z0-9]/g, (ch) => GLYPHS[(ch.charCodeAt(0) * 17 + (i++) * 29) % 64]);
+  return `-- ${buf}.rg  [encrypted]\n-- find flag ${LOCKS[buf] + 1} to decrypt it\n${body}`;
+}
+
+const LOCK_ICON = '<svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>';
+
+function showLocked(buf) {
+  const c = CHALLENGES[LOCKS[buf]];
+  const value = scramble(buf);
+  ta.value = value;
+  ta.readOnly = true;
+  setMode('NORMAL');
+  $('modified').textContent = '[locked]';
+  $('reset').hidden = true;
+  $('skip').hidden = true;
+  $('edit-note').hidden = true;
+  cursorLine = 0;
+  drawCode(value);
+  editorEl.scrollTop = 0;
+  lastHTML = '';
+  previewEl.innerHTML = `<div class="locked">
+    <span class="locked-icon">${LOCK_ICON}</span>
+    <p class="locked-kicker">${buf}.rg</p>
+    <h2>This file is encrypted</h2>
+    <p>Find flag ${LOCKS[buf] + 1} of ${CHALLENGES.length} (${c.name}) to decrypt it. ${c.hint}</p>
+    <div class="cta">
+      <button type="button" class="btn btn-primary" data-ctf>Show hints</button>
+      <a class="btn" href="/site/#${buf}">Read it on the normal site</a>
+    </div>
+  </div>`;
+  $('run-status').textContent = `rg run ${buf}.rg · encrypted`;
+  message(`"${buf}.rg" is encrypted. Find flag ${LOCKS[buf] + 1} to decrypt it, or read it on the normal site (:site).`);
+}
+
+// Tabs show a lock until their flag is found
+function syncLocks() {
+  tabs.forEach((t) => {
+    const locked = isLocked(t.dataset.buf);
+    t.classList.toggle('locked', locked);
+    t.querySelector('.tab-lock')?.remove();
+    if (locked) t.insertAdjacentHTML('beforeend', `<span class="tab-lock">${LOCK_ICON}</span>`);
+    t.setAttribute('aria-label', `${t.dataset.buf}.rg${locked ? ' (encrypted)' : ''}`);
+  });
+}
 
 // The third flag is shown when an injection attempt is blocked; it is stored scrambled
 function flag3() {
@@ -737,16 +795,19 @@ async function submitFlag(value) {
   const i = CHALLENGES.findIndex((c) => c.hash === h);
   if (i < 0) return say('Not a flag. Keep looking.', true);
   if (found.has(i)) return say(`You already have the ${CHALLENGES[i].name} flag.`);
+  const wasLocked = isLocked(current);
   found.add(i);
   store.set('rg-flags', JSON.stringify([...found]));
   syncFlags();
+  CHALLENGES[i].unlocks.forEach((b) => typed.delete(b));   // decrypting types the real code out
+  if (wasLocked && !isLocked(current)) open(current);
   if (found.size === CHALLENGES.length) {
     say('All 3 flags found.');
     finish();
     return;
   }
   const next = CHALLENGES.find((_, n) => !found.has(n));
-  say(`Correct: ${CHALLENGES[i].name} flag (${found.size}/${CHALLENGES.length}). Next: ${next.name}. ${next.hint}`);
+  say(`Correct: ${CHALLENGES[i].name} flag. Decrypted ${CHALLENGES[i].unlocks.map((b) => b + '.rg').join(', ')}. Next: ${next.name}. ${next.hint}`);
 }
 
 // All flags: show where to reach me and open the contact buffer behind it
@@ -770,7 +831,8 @@ function syncFlags() {
   const total = CHALLENGES.length;
   $('ctf-btn').textContent = `CTF ${found.size}/${total}`;
   $('ctf-btn').classList.toggle('complete', found.size === total);
-  $('ctf-list').innerHTML = CHALLENGES.map((c, i) => `<li class="${found.has(i) ? 'done' : ''}"><b>${c.name}</b>${found.has(i) ? '<span class="got">found</span>' : ''}<span>${c.hint}</span><span class="tip">${c.tip}</span></li>`).join('');
+  $('ctf-list').innerHTML = CHALLENGES.map((c, i) => `<li class="${found.has(i) ? 'done' : ''}"><b>${c.name}</b>${found.has(i) ? '<span class="got">found</span>' : ''}<span>${c.hint}</span><span class="unlocks">Decrypts ${c.unlocks.map((b) => b + '.rg').join(', ')}</span><span class="tip">${c.tip}</span></li>`).join('');
+  syncLocks();
   const nextIdx = CHALLENGES.findIndex((_, n) => !found.has(n));
   const mission = $('mission');
   mission.classList.toggle('complete', nextIdx < 0);
@@ -779,7 +841,7 @@ function syncFlags() {
     $('mission-btn').textContent = 'Contact me';
   } else {
     const c = CHALLENGES[nextIdx];
-    $('mission-text').innerHTML = `<b>Flag ${nextIdx + 1} of ${total}: ${c.name}.</b> ${c.hint}`;
+    $('mission-text').innerHTML = `<b>Flag ${nextIdx + 1} of ${total}: ${c.name}.</b> ${c.hint} <span class="mission-unlocks">Decrypts ${c.unlocks.map((b) => b + '.rg').join(', ')}.</span>`;
     $('mission-btn').textContent = 'Hints';
   }
 }

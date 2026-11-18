@@ -1,8 +1,8 @@
 # Send the old Netlify subdomain to the custom domain so search engines index one address
 https://rajaedev.netlify.app/* https://rajaedev.space/:splat 301!
 
-# The projects and access pages are now buffers in the editor
-/projects  /#projects  301
+# Old pages: projects lives on the normal site now, the access page became the editor
+/projects  /site/projects  301
 /os        /           301
 
 # The normal site (plain version of the portfolio)
