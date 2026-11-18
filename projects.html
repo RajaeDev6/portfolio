@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>Projects | Rajae Givans</title>
-  <meta name="description" content="Projects by Rajae Givans, a software engineer and security student in Kingston, Jamaica: Shop Weh, EStore Trust, Sequik, Chichi Bus, SOC Shift, Request Inspector and security labs, with screenshots and write-ups." />
+  <meta name="description" content="Projects by Rajae Givans, a software engineer in Kingston, Jamaica: Shop Weh, EStore Trust, Chichi Bus, Sequik, SOC Shift and more." />
   <meta name="author" content="Rajae Givans" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
-  <meta name="theme-color" content="#0d0f12" />
+  <meta name="theme-color" content="#101012" />
   <meta name="color-scheme" content="dark" />
   <link rel="canonical" href="https://rajaedev.space/projects" />
   <link rel="icon" type="image/png" href="/assets/favicon.png" />
@@ -30,267 +30,185 @@
   <meta name="twitter:description" content="Software engineer in Kingston, Jamaica building full-stack web and mobile apps, APIs and security tools." />
   <meta name="twitter:image" content="https://rajaedev.space/assets/og-image.jpg" />
 
-  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/nunito-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
 
   <!-- Inlined from assets/styles.css by tools/inline-css.py: edit that file, then run the script -->
   <style>
 /*
- * Terminal look: a dark Linux console with Arch blue as the one accent.
- * Everything is JetBrains Mono. Boxes are square with 1px borders, the way a
- * TUI draws them. No glow, no blinking cursor, no typing effect: each section
- * opens with a shell prompt line, then a plain heading anyone can read.
- *
- * Spacing runs on 4px steps: 4, 8, 12, 16, 24, 32, 48, 64.
+ * Dark, warm and plain. Nunito Sans throughout, one gold accent.
+ * Spacing runs on 4px steps: 4, 8, 12, 16, 24, 32, 48, 64, 96.
  */
-/* Self-hosted Latin subset of JetBrains Mono (variable weight, OFL) */
-@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 100 800; font-display: swap; src: url(/assets/fonts/jetbrains-mono-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Nunito Sans'; font-style: normal; font-weight: 200 1000; font-display: swap; src: url(/assets/fonts/nunito-sans-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 
 :root {
-  --bg: #0d0f12;
-  --surface: #12151a;
-  --surface-alt: #181c22;
-  --line: #262b33;
-  --ink: #e3e6ea;
-  --sub: #b0b6be;
-  --muted: #8b929b;
-  --faint: #5d646d;
-  --accent: #1793d1;
-  --accent-text: #4fb0e3;
-  --green: #8fbf6a;
-  --hover: rgb(255 255 255 / 0.05);
-  --font: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+  --bg: #101012;
+  --surface: #17171a;
+  --surface-2: #1e1e22;
+  --line: #2a2a2f;
+  --ink: #f1efe9;
+  --sub: #b9b6ae;
+  --muted: #8e8b84;
+  --accent: #f0b84a;
+  --accent-ink: #1a1408;
+  --font: 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
   --gutter: 20px;
-  --r: 2px;
+  --width: 960px;
+  --r: 14px;
   --ease: cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 72px; -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font);
-  font-size: 15px;
-  line-height: 24px;
-  -webkit-font-smoothing: antialiased;
-}
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 17px; line-height: 28px; -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
-h1, h2, h3, h4, p, ul { margin: 0; }
-ul { list-style-type: "- "; }
-li::marker { color: var(--faint); }
+h1, h2, h3, p, ul, dl, dd { margin: 0; }
 .icon { width: 1em; height: 1em; fill: none; stroke-width: 1.5; flex-shrink: 0; }
 .sprite { position: absolute; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-::selection { background: var(--accent); color: var(--bg); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+::selection { background: var(--accent); color: var(--accent-ink); }
 
-.btn, .nav-links a, .socials a, .link, a.cert, .pick, .back { transition: color .14s var(--ease), background-color .14s var(--ease), border-color .14s var(--ease); }
-
-/* Shell prompt line that opens each section. Decorative: hidden from screen readers. */
-.cmd { font-size: 13px; line-height: 20px; color: var(--sub); margin-bottom: 8px; overflow-wrap: anywhere; }
-.ps1 { color: var(--accent-text); }
-.ps1 b { color: var(--green); font-weight: 400; }
-
-/* NAV: a status bar */
-.nav { position: fixed; top: 0; width: 100%; z-index: 50; background: var(--bg); border-bottom: 1px solid var(--line); }
-.nav-inner { max-width: 1040px; margin: auto; padding: 10px var(--gutter); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
-.brand { font-size: 14px; line-height: 20px; font-weight: 500; color: var(--accent-text); white-space: nowrap; }
-.brand b { color: var(--green); font-weight: 500; }
-.nav-links { display: flex; gap: 2px; font-size: 13px; color: var(--muted); align-items: center; }
-.nav-links a { padding: 6px 10px; border-radius: var(--r); }
-.nav-links a:hover { color: var(--ink); background: var(--hover); }
-.nav-links a[aria-current="page"] { color: var(--ink); background: var(--surface-alt); }
-.menu-btn {
-  display: none; align-items: center; justify-content: center; flex: none;
-  width: 40px; height: 40px; padding: 0; margin: 0;
-  -webkit-appearance: none; appearance: none; line-height: 0;
-  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
-  color: var(--ink); cursor: pointer;
-}
-.menu-btn .icon { display: block; width: 20px; height: 20px; }
-@media (max-width: 767px) {
+/* NAV */
+.nav { position: fixed; top: 0; width: 100%; z-index: 50; background: rgb(16 16 18 / 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color .2s var(--ease); }
+.nav.scrolled { border-bottom-color: var(--line); }
+.nav-inner { max-width: var(--width); margin: auto; padding: 14px var(--gutter); display: flex; justify-content: space-between; align-items: center; }
+.brand { font-size: 17px; font-weight: 800; }
+.nav-links { display: flex; gap: 4px; font-size: 15px; font-weight: 600; color: var(--muted); }
+.nav-links a { padding: 6px 12px; border-radius: 999px; transition: color .15s var(--ease), background-color .15s var(--ease); }
+.nav-links a:hover { color: var(--ink); }
+.nav-links a.active, .nav-links a[aria-current="page"] { color: var(--ink); background: var(--surface-2); }
+.menu-btn { display: none; align-items: center; justify-content: center; width: 40px; height: 40px; padding: 0; background: none; border: 1px solid var(--line); border-radius: 50%; color: var(--ink); cursor: pointer; }
+.menu-btn .icon { width: 20px; height: 20px; }
+@media (max-width: 720px) {
   .menu-btn { display: inline-flex; }
-  .nav-links {
-    display: none; position: absolute; top: 100%; left: 0; right: 0;
-    flex-direction: column; align-items: stretch; gap: 0;
-    background: var(--bg); border-bottom: 1px solid var(--line);
-    padding: 8px var(--gutter) 12px;
-  }
+  .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px var(--gutter) 16px; }
   .nav-links.open { display: flex; }
-  .nav-links a { padding: 12px 8px; font-size: 15px; color: var(--ink); }
-  .nav-links a::before { content: "> "; color: var(--faint); }
+  .nav-links a { padding: 12px; font-size: 17px; color: var(--ink); border-radius: 10px; }
 }
 
 /* LAYOUT */
-.section { padding: 48px var(--gutter); max-width: 1040px; margin: auto; }
-@media (min-width: 768px) { .section { padding: 64px var(--gutter); } }
-.section-title { font-size: 24px; line-height: 32px; font-weight: 700; margin-bottom: 24px; }
-.section-lead { color: var(--muted); max-width: 44rem; margin: -12px 0 24px; }
-.grid-2, .grid-3 { display: grid; gap: 16px; }
-@media (min-width: 768px) {
-  .grid-2 { grid-template-columns: repeat(2, 1fr); }
-  .grid-3 { grid-template-columns: repeat(3, 1fr); }
-  .grid-2 > :last-child:nth-child(odd) { grid-column: 1 / -1; }
-}
+.section { max-width: var(--width); margin: auto; padding: 56px var(--gutter); }
+@media (min-width: 720px) { .section { padding: 72px var(--gutter); } }
+.section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 24px; }
+.section-title { font-size: 30px; line-height: 36px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 24px; }
+.section-head .section-title { margin-bottom: 0; }
+.lead { font-size: 20px; line-height: 32px; color: var(--sub); max-width: 40rem; }
+.lead a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.lead a:hover { color: var(--accent); }
 
-.card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--r);
-  padding: 24px;
-  display: flex; flex-direction: column;
-}
-@media (max-width: 420px) { .card { padding: 20px; } }
-.card h3 { font-size: 16px; line-height: 24px; font-weight: 700; }
-.meta { font-size: 13px; line-height: 20px; color: var(--accent-text); margin: 4px 0 16px; }
-.card p, .card li { color: var(--sub); font-size: 14px; line-height: 22px; }
-.card p { margin-bottom: 16px; }
-.card ul { padding-left: 2ch; margin-bottom: 20px; }
-.card li + li { margin-top: 6px; }
-.card .badges { margin-top: auto; }
-.card strong { color: var(--ink); font-weight: 600; }
-.card > :last-child { margin-bottom: 0; }
-.card h3 + p { margin-top: 8px; }
-
-.links { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; font-size: 14px; }
-.link { display: inline-flex; align-items: center; gap: 4px; font-weight: 600; color: var(--accent-text); text-underline-offset: 4px; }
-.link .icon { font-size: 14px; }
-.link:hover { text-decoration: underline; }
-
-.badges { display: flex; flex-wrap: wrap; gap: 6px; }
-.badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  height: 26px; padding: 0 8px;
-  border-radius: var(--r);
-  background: var(--surface-alt);
-  border: 1px solid var(--line);
-  font-size: 12px; color: var(--ink);
-}
-.badge img { width: 13px; height: 13px; }
-.invert { filter: invert(1); }
-
-.tile-icon { display: inline-grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: var(--r); background: var(--surface-alt); border: 1px solid var(--line); color: var(--accent-text); font-size: 18px; }
+.link { display: inline-flex; align-items: center; gap: 4px; font-size: 15px; font-weight: 700; color: var(--accent); white-space: nowrap; }
+.link .icon { font-size: 15px; transition: transform .15s var(--ease); }
+.link:hover .icon { transform: translate(2px, -2px); }
 
 /* HERO */
-.hero { padding-top: 112px; }
-@media (min-width: 768px) { .hero { padding-top: 152px; padding-bottom: 80px; } }
-.hero-copy { max-width: 46rem; }
-.hero h1 { font-size: 40px; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; margin: 16px 0; }
-@media (min-width: 768px) { .hero h1 { font-size: 56px; } }
-.hero .role { font-size: 17px; line-height: 26px; font-weight: 500; color: var(--accent-text); margin-bottom: 16px; text-wrap: balance; }
-.hero .bio { color: var(--sub); line-height: 26px; max-width: 42rem; }
-.cta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 32px; }
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  min-height: 44px; padding: 0 18px; border-radius: var(--r);
-  font-family: inherit; font-size: 14px; font-weight: 600;
-  background: var(--surface); color: var(--ink); border: 1px solid var(--line);
-}
-.btn .icon { font-size: 17px; }
-.btn:hover { border-color: var(--accent); }
-.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-.btn-primary:hover { background: #1286c0; border-color: #1286c0; }
-.socials { display: flex; gap: 4px; }
-.socials a { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: var(--r); font-size: 21px; color: var(--muted); }
-.socials a:hover { color: var(--ink); background: var(--hover); }
+.hero { padding-top: 136px; padding-bottom: 48px; }
+@media (min-width: 720px) { .hero { padding-top: 184px; padding-bottom: 72px; } }
+.eyebrow { font-size: 15px; font-weight: 700; color: var(--accent); margin-bottom: 12px; }
+.hero h1 { font-size: 48px; line-height: 1.05; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 24px; }
+@media (min-width: 720px) { .hero h1 { font-size: 72px; } }
+.hero .lead { font-size: 22px; line-height: 34px; color: var(--ink); max-width: 38rem; }
+@media (max-width: 480px) { .hero .lead { font-size: 19px; line-height: 30px; } }
+.bio { margin-top: 16px; color: var(--muted); }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border-radius: 999px; font-size: 15px; font-weight: 700; border: 1px solid var(--line); background: var(--surface); transition: border-color .15s var(--ease), background-color .15s var(--ease); }
+.btn .icon { font-size: 18px; }
+.btn:hover { border-color: var(--muted); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { background: #f5c868; border-color: #f5c868; }
+
+/* WORK (home) */
+.picks { display: grid; gap: 16px; }
+@media (min-width: 720px) { .picks { grid-template-columns: repeat(2, 1fr); } }
+.pick { display: flex; gap: 20px; align-items: center; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); transition: border-color .15s var(--ease), transform .15s var(--ease); }
+.pick:hover { border-color: #3a3a40; transform: translateY(-2px); }
+.pick img { width: 96px; height: auto; aspect-ratio: 420 / 909; border-radius: 10px; flex: none; background: var(--surface-2); }
+.pick-text { display: flex; flex-direction: column; gap: 6px; }
+.pick-name { font-size: 19px; line-height: 26px; font-weight: 800; }
+.pick:hover .pick-name { color: var(--accent); }
+.pick-line { font-size: 15px; line-height: 23px; color: var(--sub); }
+.pick-stack { font-size: 13px; line-height: 20px; color: var(--muted); }
+
+/* SECURITY (home) */
+.rows { border-top: 1px solid var(--line); }
+.row { display: grid; gap: 4px 24px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+@media (min-width: 720px) { .row { grid-template-columns: 180px 1fr; } }
+.row-name { font-weight: 800; }
+.row-line { color: var(--sub); }
+.row:hover .row-name { color: var(--accent); }
 
 /* EXPERIENCE */
-.timeline { display: grid; gap: 16px; }
-.job-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; align-items: baseline; }
-.job-head .when { font-size: 13px; color: var(--muted); }
+.jobs { display: grid; gap: 40px; }
+.job-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 16px; }
+.job h3 { font-size: 20px; line-height: 28px; font-weight: 800; }
+.when { font-size: 15px; color: var(--muted); }
+.org { color: var(--accent); font-weight: 600; margin: 2px 0 12px; }
+.job ul { padding-left: 20px; color: var(--sub); margin-bottom: 12px; }
+.job li + li { margin-top: 6px; }
+.job li::marker { color: var(--muted); }
 
-/* FEATURED PROJECTS (projects page) */
-.featured { display: grid; gap: 16px; }
-.feature { display: grid; gap: 32px; align-items: center; padding: 32px; }
-@media (max-width: 420px) { .feature { padding: 20px; gap: 24px; } }
-@media (min-width: 860px) { .feature { grid-template-columns: 1fr auto; } }
-.feature h3 { font-size: 20px; line-height: 28px; }
-.shots { display: flex; gap: 12px; justify-content: center; padding: 16px; background: var(--surface-alt); border: 1px solid var(--line); border-radius: var(--r); }
-.shots img { width: 160px; height: auto; aspect-ratio: 420 / 909; border-radius: var(--r); background: var(--surface); border: 1px solid var(--line); }
-@media (max-width: 420px) { .shots { padding: 12px; gap: 8px; } .shots img { width: calc(50% - 4px); } }
-
-/* LISTS: one box, a row per item, rows can open for details */
-.project-list { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
-.project + .project, .project-row + .project-row { border-top: 1px solid var(--line); }
-.project summary, .project-row { display: flex; align-items: center; gap: 16px; padding: 16px 24px; list-style: none; transition: background-color .14s var(--ease); }
-.project summary, a.project-row { cursor: pointer; }
-.project summary::-webkit-details-marker { display: none; }
-.project summary:hover, a.project-row:hover { background: var(--hover); }
-.project summary:focus-visible, .project-row:focus-visible { outline-offset: -2px; }
-.project-head { flex: 1; min-width: 0; }
-.project-title { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; }
-.project-title h3, .project-title h4 { margin: 0; font-size: 15px; line-height: 24px; font-weight: 700; }
-a.project-row:hover h3, a.project-row:hover h4 { color: var(--accent-text); }
-.project-meta { margin-top: 2px; font-size: 13px; line-height: 20px; color: var(--muted); }
-.project-stack { font-size: 12px; line-height: 20px; color: var(--faint); white-space: nowrap; }
-summary > .project-stack { flex: none; }
-@media (max-width: 767px) { summary > .project-stack { display: none; } }
-.chip { display: inline-flex; align-items: center; height: 20px; padding: 0 6px; border-radius: var(--r); border: 1px solid var(--line); font-size: 11px; color: var(--muted); }
-.caret { flex: none; font-size: 18px; color: var(--muted); transition: transform .2s var(--ease); }
-.project[open] .caret { transform: rotate(180deg); }
-.project-body { padding: 0 24px 24px; max-width: 48rem; }
-.project-body p, .project-body li { color: var(--sub); font-size: 14px; line-height: 22px; }
-.project-body p { margin-bottom: 12px; }
-.project-body strong { color: var(--ink); font-weight: 600; }
-.project-body ul { padding-left: 2ch; margin-bottom: 16px; }
-.project-body li + li { margin-top: 6px; }
-.row-link { flex: none; display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; color: var(--accent-text); }
-.row-link .icon { font-size: 13px; }
-@media (max-width: 420px) {
-  .project summary, .project-row { padding: 14px 16px; }
-  .project-body { padding: 0 16px 20px; }
-}
-
-.minor { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--accent-text); margin: 32px 0 12px; }
-.stack { font-size: 12px; line-height: 18px; color: var(--muted); }
-.card p.stack { margin: auto 0 0; padding-top: 4px; }
-.card ul + p.stack { margin-top: 0; }
-
-/* PROJECTS (home): compact picks that link to the projects page */
-.picks { display: grid; gap: 12px; }
-@media (min-width: 768px) { .picks { grid-template-columns: repeat(2, 1fr); } }
-.pick { display: flex; align-items: center; gap: 16px; padding: 12px 20px 12px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
-.pick:hover { border-color: var(--accent); }
-.pick img { width: 64px; height: auto; aspect-ratio: 420 / 909; border-radius: var(--r); border: 1px solid var(--line); background: var(--surface-alt); flex: none; }
-.pick-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.pick-name { font-size: 15px; line-height: 22px; font-weight: 700; }
-.pick:hover .pick-name { color: var(--accent-text); }
-.pick-line { color: var(--sub); font-size: 13px; line-height: 20px; }
-#projects > .links, #security > .links { margin-top: 24px; }
-
-/* PROJECTS PAGE */
-.page-head { padding-top: 96px; }
-@media (min-width: 768px) { .page-head { padding-top: 120px; } }
-.back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); margin-bottom: 24px; }
-.back:hover { color: var(--ink); }
-.page-title { font-size: 36px; line-height: 1.15; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 24px; }
-.page-head > .section-lead { margin-top: 0; margin-bottom: 32px; }
-.subhead { font-size: 18px; line-height: 28px; font-weight: 700; margin: 56px 0 16px; }
-.subhead::before { content: "## "; color: var(--faint); font-weight: 400; }
-
-/* SKILLS: boxes with the title set into the top border, like a TUI panel */
-.skill-groups { display: grid; gap: 24px 16px; padding-top: 8px; }
-@media (min-width: 768px) { .skill-groups { grid-template-columns: repeat(2, 1fr); } }
-.skill-group { position: relative; border: 1px solid var(--line); border-radius: var(--r); padding: 24px 20px 20px; }
-.skill-group h3 { position: absolute; top: -11px; left: 12px; padding: 0 8px; background: var(--bg); font-size: 13px; line-height: 20px; font-weight: 600; color: var(--accent-text); }
+/* SKILLS */
+.skills { display: grid; gap: 12px 32px; }
+@media (min-width: 720px) { .skills { grid-template-columns: 160px 1fr; } }
+.skills dt { font-weight: 800; }
+.skills dd { color: var(--sub); margin-bottom: 8px; }
+@media (min-width: 720px) { .skills dd { margin-bottom: 0; } }
 
 /* EDUCATION */
-.cert { display: flex; align-items: center; gap: 16px; background: var(--surface); border: 1px solid var(--line); padding: 20px; border-radius: var(--r); }
-a.cert:hover { border-color: var(--accent); }
-.cert-text { display: flex; flex-direction: column; gap: 2px; }
-.cert-text strong { font-weight: 600; font-size: 14px; line-height: 22px; }
-.cert-text span { color: var(--muted); font-size: 12px; line-height: 18px; }
+.edu { display: grid; gap: 16px; }
+@media (min-width: 720px) { .edu { grid-template-columns: repeat(2, 1fr); } }
+.edu-item { display: flex; gap: 16px; align-items: center; padding: 20px; border: 1px solid var(--line); border-radius: var(--r); }
+.edu-item > .icon { font-size: 26px; color: var(--accent); }
+.edu-item div { display: flex; flex-direction: column; }
+.edu-item strong { font-weight: 800; line-height: 24px; }
+.edu-item span { font-size: 15px; color: var(--muted); }
+a.edu-item { transition: border-color .15s var(--ease); }
+a.edu-item:hover { border-color: #3a3a40; }
 
 /* CONTACT */
-.contact-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.contact { padding-bottom: 96px; }
+.contact .section-title { font-size: 40px; line-height: 46px; margin-bottom: 12px; }
 
-/* FOOTER: a status line */
-footer { border-top: 1px solid var(--line); margin-top: 32px; }
-.footer-inner { max-width: 1040px; margin: auto; padding: 16px var(--gutter); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; color: var(--muted); font-size: 12px; }
+/* PROJECTS PAGE */
+.page-head { padding-top: 120px; padding-bottom: 8px; }
+@media (min-width: 720px) { .page-head { padding-top: 144px; } }
+.back { display: inline-flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 700; color: var(--muted); margin-bottom: 20px; }
+.back:hover { color: var(--ink); }
+.page-head h1 { font-size: 48px; line-height: 1.1; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 12px; }
+
+.features { display: grid; gap: 24px; padding-top: 24px; }
+.feature { display: grid; gap: 32px; align-items: center; padding: 32px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); scroll-margin-top: 88px; }
+@media (min-width: 820px) { .feature { grid-template-columns: 1fr auto; padding: 40px; } }
+@media (max-width: 480px) { .feature { padding: 20px; } }
+.feature h2 { font-size: 26px; line-height: 32px; font-weight: 900; }
+.tag { color: var(--accent); font-weight: 700; font-size: 15px; margin: 2px 0 12px; }
+.feature p { color: var(--sub); }
+.feature ul { padding-left: 20px; color: var(--sub); margin: 12px 0 16px; }
+.feature li + li { margin-top: 4px; }
+.feature li::marker { color: var(--muted); }
+.feature .pick-stack { margin-bottom: 12px; }
+.shots { display: flex; gap: 12px; justify-content: center; }
+.shots img { width: 150px; height: auto; aspect-ratio: 420 / 909; border-radius: 12px; background: var(--surface-2); }
+@media (max-width: 480px) { .shots img { width: calc(50% - 6px); } }
+
+.items { display: grid; gap: 16px; }
+@media (min-width: 720px) { .items { grid-template-columns: repeat(3, 1fr); } }
+.item { display: flex; flex-direction: column; padding: 24px; border: 1px solid var(--line); border-radius: var(--r); scroll-margin-top: 88px; }
+.item h3 { font-size: 19px; line-height: 26px; font-weight: 800; }
+.item p { color: var(--sub); font-size: 15px; line-height: 24px; }
+.item .tag { font-size: 14px; margin: 0 0 8px; color: var(--accent); }
+.item .pick-stack { margin: auto 0 0; padding-top: 12px; color: var(--muted); font-size: 13px; }
+.item .link { margin-top: 12px; }
+.minor { font-size: 19px; font-weight: 800; margin: 48px 0 16px; }
+
+/* FOOTER */
+footer { border-top: 1px solid var(--line); }
+.footer-inner { max-width: var(--width); margin: auto; padding: 24px var(--gutter); display: flex; justify-content: space-between; gap: 16px; font-size: 15px; color: var(--muted); }
+.footer-inner a:hover { color: var(--ink); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .pick, .link .icon { transition: none; }
+  .pick:hover { transform: none; }
 }
   </style>
   <script src="assets/main.js" defer></script>
@@ -301,7 +219,6 @@ footer { border-top: 1px solid var(--line); margin-top: 32px; }
 <!-- Icon sprite -->
 <svg width="0" height="0" class="sprite" aria-hidden="true">
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 5L20 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 12L20 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19L20 19" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-  <symbol id="i-caret" viewBox="0 0 24 24"><path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M9 6.65032C9 6.65032 15.9383 6.10759 16.9154 7.08463C17.8924 8.06167 17.3496 15 17.3496 15M16.5 7.5L6.5 17.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-back" viewBox="0 0 24 24"><path d="M4 12H20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.99996 17C8.99996 17 4.00001 13.3176 4 12C3.99999 10.6824 9 7 9 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M18.9991 19L5 5.00098" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 5L5.00092 18.999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -310,16 +227,15 @@ footer { border-top: 1px solid var(--line); margin-top: 32px; }
 <!-- NAV -->
 <header class="nav">
   <nav class="nav-inner" aria-label="Main">
-    <a href="/" class="brand" aria-label="Rajae Givans, home">[<b>rajae</b>@kingston ~]$</a>
+    <a href="/" class="brand">Rajae Givans</a>
     <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
       <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
     </button>
     <div class="nav-links" id="nav-links">
-      <a href="/#experience">Experience</a>
+      <a href="/#work" aria-current="page">Work</a>
       <a href="/#security">Security</a>
-      <a href="/projects" aria-current="page">Projects</a>
+      <a href="/#experience">Experience</a>
       <a href="/#skills">Skills</a>
-      <a href="/#certs">Education</a>
       <a href="/#contact">Contact</a>
     </div>
   </nav>
@@ -327,38 +243,25 @@ footer { border-top: 1px solid var(--line); margin-top: 32px; }
 
 <main>
 
-<!-- PROJECTS -->
-<section class="section page-head" id="projects">
+<section class="section page-head">
   <a class="back" href="/"><svg class="icon" aria-hidden="true"><use href="#i-back"/></svg>Home</a>
-  <p class="cmd" aria-hidden="true"><span class="ps1">[<b>rajae</b>@kingston ~]$</span> cd ~/projects &amp;&amp; ls</p>
-  <h1 class="page-title">Projects</h1>
-  <p class="section-lead">Apps I’ve built and shipped, security tools and labs, and a few things still in progress. Each one lists what it does, how it’s built and where to try it.</p>
+  <h1>Projects</h1>
+  <p class="lead">Things I’ve built, from apps people use every day to security tools.</p>
+</section>
 
-  <div class="featured">
-    <!-- Shop Weh -->
-    <article class="card feature" id="shop-weh">
+<section class="section features">
+    <article class="feature" id="shop-weh">
       <div>
-        <h3>Shop Weh</h3>
-        <p class="meta">Grocery price comparison for Jamaica</p>
-        <p>
-          Add your grocery list and Shop Weh ranks Jamaican stores by how much of the list they
-          carry and what it costs, then shows the cheapest store and how much you save compared with the average.
-          Installable as a PWA.
-        </p>
+        <h2>Shop Weh</h2>
+        <p class="tag">Grocery prices in Jamaica</p>
+        <p>Add your grocery list and Shop Weh shows which store has it cheapest, and how much you save.</p>
         <ul>
-          <li>Real grocery prices from stores across Jamaica</li>
-          <li>Scrapers for Consumer Affairs Commission survey PDFs, WooCommerce and Shopify feeds that obey robots.txt</li>
-          <li>Daily price refresh through a GitHub Actions pipeline, published to Firestore</li>
-          <li>User accounts, price checks and reports</li>
+        <li>Prices from stores across Jamaica, updated every day</li>
+        <li>Collects prices from government price surveys and store websites</li>
+        <li>Works on your phone like an app</li>
         </ul>
-        <div class="badges">
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/nextjs/nextjs-line.svg" alt="" width="16" height="16" loading="lazy" class="invert">Next.js</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="" width="16" height="16" loading="lazy">TypeScript</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/firebase/firebase-original.svg" alt="" width="16" height="16" loading="lazy">Firebase</span>
-          <span class="badge">GitHub Actions</span>
-          <span class="badge">Vercel</span>
-        </div>
-        <div class="links"><a class="link" href="https://shopweh.store" target="_blank" rel="noopener">Visit shopweh.store<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        <p class="pick-stack">Next.js · TypeScript · Firebase · GitHub Actions</p>
+        <a class="link" href="https://shopweh.store" target="_blank" rel="noopener">Visit shopweh.store<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
       <div class="shots">
         <img src="assets/shopweh-list-280.webp" srcset="assets/shopweh-list-200.webp 200w, assets/shopweh-list-280.webp 280w, assets/shopweh-list.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Shop Weh grocery list screen with rice, sugar, cornmeal and flour and a Find the cheapest store button">
@@ -366,30 +269,18 @@ footer { border-top: 1px solid var(--line); margin-top: 32px; }
       </div>
     </article>
 
-
-    <!-- EStore Trust -->
-    <article class="card feature" id="estore-trust">
+    <article class="feature" id="estore-trust">
       <div>
-        <h3>EStore Trust</h3>
-        <p class="meta">Scam checker for Jamaican Instagram shops</p>
-        <p>
-          Look up an Instagram business before you send it money. EStore Trust shows a trust score,
-          the checks behind it, buyer reviews and any confirmed scam reports.
-        </p>
+        <h2>EStore Trust</h2>
+        <p class="tag">Check an Instagram shop before you pay</p>
+        <p>Search for an Instagram business and see its trust score, the checks behind it, buyer reviews and any scam reports.</p>
         <ul>
-          <li>Rule-based checks plus LLM page scans through the OpenAI API that score each business, with every check shown</li>
-          <li>Four-tier trust ladder, from scanned to verified owner via a bio code and admin interview</li>
-          <li>Order proof checked by AI, with addresses blurred and stored in a private bucket</li>
-          <li>Phone-verified accounts and Postgres row-level security</li>
+        <li>Automatic checks of each shop, with every result shown</li>
+        <li>Owners can verify their shop to earn a higher trust level</li>
+        <li>Proof of order is checked, with addresses blurred and kept private</li>
         </ul>
-        <div class="badges">
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/nextjs/nextjs-line.svg" alt="" width="16" height="16" loading="lazy" class="invert">Next.js</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="" width="16" height="16" loading="lazy">TypeScript</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/supabase/supabase-original.svg" alt="" width="16" height="16" loading="lazy">Supabase</span>
-          <span class="badge">OpenAI</span>
-          <span class="badge">Tailwind CSS</span>
-        </div>
-        <div class="links"><a class="link" href="https://estoretrust.vercel.app" target="_blank" rel="noopener">Open EStore Trust<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        <p class="pick-stack">Next.js · TypeScript · Supabase · OpenAI</p>
+        <a class="link" href="https://estoretrust.vercel.app" target="_blank" rel="noopener">Open EStore Trust<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
       <div class="shots">
         <img src="assets/estoretrust-home-280.webp" srcset="assets/estoretrust-home-200.webp 200w, assets/estoretrust-home-280.webp 280w, assets/estoretrust-home.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="EStore Trust home screen with a search bar for Instagram profiles, most popular shops and a list of scanned businesses">
@@ -397,30 +288,18 @@ footer { border-top: 1px solid var(--line); margin-top: 32px; }
       </div>
     </article>
 
-    <!-- Sequik -->
-    <article class="card feature" id="sequik">
+    <article class="feature" id="chichi-bus">
       <div>
-        <h3>Sequik</h3>
-        <p class="meta">Rent tracker for landlords · iOS &amp; Android · Waitlist open</p>
-        <p>
-          A rental property management app for small landlords. See what’s been collected this month,
-          who owes what, and which leases are expiring, then record payments with receipts, store documents
-          and track repairs from your phone.
-        </p>
+        <h2>Chichi Bus</h2>
+        <p class="tag">When is the next JUTC bus?</p>
+        <p>JUTC doesn’t share live bus locations, so riders share them with each other. Tap “I see a bus” and everyone on that route gets an estimate of when it will reach them.</p>
         <ul>
-          <li>Rent ledger with collected vs expected, overdue alerts and 6-month history</li>
-          <li>Tenants, properties, units, documents and maintenance in one place</li>
-          <li>Receipt and document uploads to a private bucket, read through short-lived signed URLs</li>
-          <li>Postgres row-level security so each account only sees its own data</li>
+        <li>All 159 JUTC routes and 208 stops, mapped on real roads</li>
+        <li>Your location is only shared when you choose to</li>
+        <li>Works offline once the routes are loaded</li>
         </ul>
-        <div class="badges">
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" width="16" height="16" loading="lazy">React Native</span>
-          <span class="badge">Expo</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="" width="16" height="16" loading="lazy">TypeScript</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/supabase/supabase-original.svg" alt="" width="16" height="16" loading="lazy">Supabase</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg" alt="" width="16" height="16" loading="lazy">PostgreSQL</span>
-        </div>
-        <div class="links"><a class="link" href="https://sequik.netlify.app" target="_blank" rel="noopener">Join the Sequik waitlist<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        <p class="pick-stack">Preact · Firebase · Leaflet · OpenStreetMap</p>
+        <a class="link" href="https://chichibus.vercel.app" target="_blank" rel="noopener">Open Chichi Bus<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
       <div class="shots">
         <img src="assets/sequik-overview-280.webp" srcset="assets/sequik-overview-200.webp 200w, assets/sequik-overview-280.webp 280w, assets/sequik-overview.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Sequik rent tracker overview showing rent collected this month, outstanding balance and overdue tenants">
@@ -428,151 +307,98 @@ footer { border-top: 1px solid var(--line); margin-top: 32px; }
       </div>
     </article>
 
-    <!-- Chichi Bus -->
-    <article class="card feature" id="chichi-bus">
+    <article class="feature" id="sequik">
       <div>
-        <h3>Chichi Bus</h3>
-        <p class="meta">Crowdsourced JUTC bus tracker</p>
-        <p>
-          JUTC doesn’t publish live bus locations, so riders tell each other. Ask riders on your route,
-          report “I see a bus”, and the app moves an estimated bus along the real road toward you with a live ETA.
-        </p>
+        <h2>Sequik</h2>
+        <p class="tag">Rent tracking for small landlords · iOS &amp; Android</p>
+        <p>See what rent has come in this month, who owes what and which leases are ending, then log payments, store documents and track repairs from your phone.</p>
         <ul>
-          <li>All 159 JUTC routes and 208 stops, scraped from the official route guide</li>
-          <li>Routes snapped to real roads with OSRM, using a dynamic-programming pass to avoid U-turn loops</li>
-          <li>Location is only sent when you confirm; live sharing is a separate opt-in</li>
-          <li>Offline-ready PWA with precached route data</li>
+        <li>Rent collected vs expected, with overdue reminders</li>
+        <li>Tenants, properties, documents and repairs in one place</li>
+        <li>Each landlord’s data and receipts are kept private</li>
         </ul>
-        <div class="badges">
-          <span class="badge">Preact</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/firebase/firebase-original.svg" alt="" width="16" height="16" loading="lazy">Firebase</span>
-          <span class="badge">Leaflet</span>
-          <span class="badge">OpenStreetMap</span>
-          <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/vitejs/vitejs-original.svg" alt="" width="16" height="16" loading="lazy">Vite</span>
-        </div>
-        <div class="links"><a class="link" href="https://chichibus.vercel.app" target="_blank" rel="noopener">Open Chichi Bus<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        <p class="pick-stack">React Native · Expo · TypeScript · Supabase</p>
+        <a class="link" href="https://sequik.netlify.app" target="_blank" rel="noopener">Join the waitlist<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
       <div class="shots">
         <img src="assets/chichibus-route-280.webp" srcset="assets/chichibus-route-200.webp 200w, assets/chichibus-route-280.webp 280w, assets/chichibus-route.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Chichi Bus route 8 map from Naggo Head to downtown Kingston with timetable and I see a bus button">
         <img src="assets/chichibus-my-routes-280.webp" srcset="assets/chichibus-my-routes-200.webp 200w, assets/chichibus-my-routes-280.webp 280w, assets/chichibus-my-routes.webp 420w" sizes="(max-width: 420px) calc(50vw - 56px), 160px" width="168" height="364" loading="lazy" alt="Chichi Bus My routes screen with a map of nearby stops and followed routes">
       </div>
     </article>
-  </div>
+</section>
 
-  <h2 class="subhead" id="security">Security</h2>
-  <div class="grid-3">
-    <article class="card" id="soc-shift">
+<section class="section" id="security">
+  <h2 class="section-title">Security</h2>
+  <div class="items">
+    <article class="item" id="soc-shift">
       <h3>SOC Shift</h3>
-      <p class="meta">SOC analyst training platform</p>
-      <p>Practise the core SOC skill: telling real threats apart from noise. Fifteen shifts, rising in difficulty, each built from hand-written alerts or emails.</p>
-      <ul>
-        <li>Classify each alert as a true positive, false positive, benign positive or informational</li>
-        <li>Rank confirmed threats by priority and attribute each to a MITRE ATT&amp;CK tactic</li>
-        <li>Phishing shifts: review a reported-email inbox and call each message phishing or legitimate</li>
-        <li>Scored on classification, priority and ATT&amp;CK accuracy, with a debrief explaining every call</li>
-        <li>Answer keys stay on the server; scoring runs in serverless functions</li>
-      </ul>
-      <p class="stack">JavaScript · Firebase · Vercel Functions</p>
-      <div class="links"><a class="link" href="https://socshift.vercel.app" target="_blank" rel="noopener">Open SOC Shift<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <p class="tag">Security analyst training</p>
+      <p>Practice the day-to-day work of a security analyst: sort real threats from false alarms, rank them, and spot phishing emails. Fifteen shifts that get harder, each ending with feedback on every call.</p>
+      <p class="pick-stack">JavaScript · Firebase</p>
+      <a class="link" href="https://socshift.vercel.app" target="_blank" rel="noopener">Open SOC Shift<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </article>
-    <article class="card" id="coresight">
+    <article class="item" id="coresight">
       <h3>CoreSight</h3>
-      <p class="meta">Log analysis engine</p>
-      <p>Parses syslog, auth and access logs into a searchable index, with custom query operators and pattern detection for things like repeated failed logins.</p>
-      <p class="stack">Python</p>
-      <div class="links"><a class="link" href="https://github.com/RajaeDev6/coresight" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <p class="tag">Log search</p>
+      <p>Reads server and login logs, makes them searchable, and flags patterns like repeated failed logins.</p>
+      <p class="pick-stack">Python</p>
+      <a class="link" href="https://github.com/RajaeDev6/coresight" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </article>
-    <article class="card" id="pingsweeper">
+    <article class="item" id="pingsweeper">
       <h3>PingSweeper</h3>
-      <p class="meta">Concurrent subnet scanner</p>
-      <p>Sends raw ICMP echo requests across a subnet in parallel goroutines, reports which hosts are up and measures their latency.</p>
-      <p class="stack">Go</p>
-      <div class="links"><a class="link" href="https://github.com/RajaeDev6/PingSweeper" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <p class="tag">Network scanner</p>
+      <p>Checks which devices on a network are online and how quickly they respond.</p>
+      <p class="pick-stack">Go</p>
+      <a class="link" href="https://github.com/RajaeDev6/PingSweeper" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </article>
   </div>
 
   <h3 class="minor">Labs from my degree</h3>
-  <div class="project-list">
-    <div class="project-row static">
-      <div class="project-head">
-        <div class="project-title"><h4>Penetration test</h4><span class="project-stack">Kali Linux · Wireshark</span></div>
-        <p class="project-meta">Team of three. Scanned, exploited and reported on a deliberately vulnerable network, captured unencrypted passwords, and presented a fix plan in an executive summary.</p>
-      </div>
-    </div>
-    <div class="project-row static">
-      <div class="project-head">
-        <div class="project-title"><h4>Vulnerability assessment</h4><span class="project-stack">Nmap · PowerShell · NVD</span></div>
-        <p class="project-meta">Inventoried services, ports and software versions on a Windows host, matched them to known CVEs, and wrote up the risks and fixes.</p>
-      </div>
-    </div>
-    <div class="project-row static">
-      <div class="project-head">
-        <div class="project-title"><h4>Network security</h4><span class="project-stack">Wireshark · Nmap · Windows Firewall</span></div>
-        <p class="project-meta">Analysed DNS, web and ICMP traffic, scanned hosts for open ports, and wrote firewall rules to block unwanted connections.</p>
-      </div>
-    </div>
+  <div class="items">
+    <article class="item">
+      <h3>Penetration test</h3>
+      <p class="tag">Team of three</p>
+      <p>Tested a deliberately weak company network, found exposed passwords, and presented the fixes in a report.</p>
+      <p class="pick-stack">Kali Linux · Wireshark</p>
+    </article>
+    <article class="item">
+      <h3>Vulnerability assessment</h3>
+      <p class="tag">Windows</p>
+      <p>Listed what was running on a Windows machine, matched it against known vulnerabilities, and wrote up the risks and fixes.</p>
+      <p class="pick-stack">Nmap · PowerShell</p>
+    </article>
+    <article class="item">
+      <h3>Network security</h3>
+      <p class="tag">Traffic and firewalls</p>
+      <p>Analysed network traffic, scanned for open ports, and set up firewall rules to block unwanted connections.</p>
+      <p class="pick-stack">Wireshark · Nmap</p>
+    </article>
   </div>
+</section>
 
-  <h2 class="subhead">More projects</h2>
-  <div class="project-list">
-
-    <details class="project">
-      <summary>
-        <div class="project-head">
-          <div class="project-title"><h4>Request Inspector</h4></div>
-          <p class="project-meta">Developer debugging tool</p>
-        </div>
-        <span class="project-stack">Go · PostgreSQL · React</span>
-        <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
-      </summary>
-      <div class="project-body">
-        <p>Captures incoming HTTP requests on temporary public links and shows them live, so developers can see exactly what their apps receive.</p>
-        <ul>
-        <li>Live view of headers, query parameters and bodies</li>
-        <li>Replay any request with changed headers or data</li>
-        <li>Starts with a single Docker command</li>
-      </ul>
-        <div class="badges">
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/go/go-original.svg" alt="" width="16" height="16" loading="lazy">Go</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg" alt="" width="16" height="16" loading="lazy">PostgreSQL</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" width="16" height="16" loading="lazy">React</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-original.svg" alt="" width="16" height="16" loading="lazy">Docker</span>
-      </div>
-        <div class="links"><a class="link" href="https://github.com/RajaeDev6/request-inspector" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-      </div>
-    </details>
-
-    <details class="project">
-      <summary>
-        <div class="project-head">
-          <div class="project-title"><h4>Due &amp; ExpenseTrakr</h4><span class="chip">In development</span></div>
-          <p class="project-meta">Personal finance mobile apps</p>
-        </div>
-        <span class="project-stack">React Native · TypeScript · Firebase</span>
-        <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
-      </summary>
-      <div class="project-body">
-        <p><strong>Due</strong> splits household bills between housemates. <strong>ExpenseTrakr</strong> tracks spending across wallets, with recurring transactions and budgets.</p>
-        <div class="badges">
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" width="16" height="16" loading="lazy">React Native</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="" width="16" height="16" loading="lazy">TypeScript</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/firebase/firebase-original.svg" alt="" width="16" height="16" loading="lazy">Firebase</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/supabase/supabase-original.svg" alt="" width="16" height="16" loading="lazy">Supabase</span>
-      </div>
-        
-      </div>
-    </details>
-  </div>
-
-  <h2 class="subhead">Earlier work</h2>
-  <div class="project-list">
-    <a class="project-row" href="https://github.com/RajaeDev6/public-eye-ja" target="_blank" rel="noopener">
-      <div class="project-head">
-        <div class="project-title"><h4>Public Eye JA</h4><span class="project-stack">React Native · AI</span></div>
-        <p class="project-meta">Mobile app that classifies infrastructure problems from a photo, gets the location and reports it to the authorities.</p>
-      </div>
-      <span class="row-link">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
-    </a>
+<section class="section">
+  <h2 class="section-title">More</h2>
+  <div class="items">
+    <article class="item">
+      <h3>Request Inspector</h3>
+      <p class="tag">Developer tool</p>
+      <p>Gives you a temporary link that shows every request sent to it, live, and lets you resend them with changes.</p>
+      <p class="pick-stack">Go · PostgreSQL · React · Docker</p>
+      <a class="link" href="https://github.com/RajaeDev6/request-inspector" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </article>
+    <article class="item">
+      <h3>Due &amp; ExpenseTrakr</h3>
+      <p class="tag">In progress</p>
+      <p>Two money apps: Due splits household bills between housemates, and ExpenseTrakr tracks spending and budgets.</p>
+      <p class="pick-stack">React Native · TypeScript · Firebase</p>
+    </article>
+    <article class="item">
+      <h3>Public Eye JA</h3>
+      <p class="tag">Earlier project</p>
+      <p>Take a photo of a road or utility problem and the app identifies it, adds the location and reports it.</p>
+      <p class="pick-stack">React Native</p>
+      <a class="link" href="https://github.com/RajaeDev6/public-eye-ja" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </article>
   </div>
 </section>
 
@@ -580,8 +406,8 @@ footer { border-top: 1px solid var(--line); margin-top: 32px; }
 
 <footer>
   <div class="footer-inner">
-    <span>© <span id="year">2026</span> Rajae Givans · Kingston, Jamaica</span>
-    <span>Hand-written HTML &amp; CSS · no frameworks</span>
+    <span>© <span id="year">2026</span> Rajae Givans</span>
+    <a href="/">Home</a>
   </div>
 </footer>
 

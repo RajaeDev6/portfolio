@@ -11,4 +11,23 @@ btn.addEventListener('click', () => setMenu(!links.classList.contains('open')));
 links.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
 
+// Show a border under the nav once the page has scrolled
+const nav = document.querySelector('.nav');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+// Highlight the nav link for the section on screen (home page only)
+const navLinks = [...links.querySelectorAll('a[href^="#"]')];
+const sections = navLinks.map((a) => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+if (sections.length && 'IntersectionObserver' in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      navLinks.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  sections.forEach((s) => observer.observe(s));
+}
+
 document.getElementById('year').textContent = new Date().getFullYear();
