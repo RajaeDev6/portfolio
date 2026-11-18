@@ -1,111 +1,54 @@
-# Rajae - Personal Portfolio
+# Rajae Givans - Portfolio
 
-A clean and minimal portfolio website that highlights my software engineering and cybersecurity work.  
-The site focuses on clarity, structure, and simple navigation while showcasing my software engineering projects and experience.
+My portfolio is a Vim-style editor. The left pane shows the site's source written in **rg**, a small language I made for it; the right pane is a live preview of what the rg interpreter renders. Each section (about, experience, projects, security, skills, education, contact) is a buffer.
 
-Live Demo: [Rajae's portfolio](https://rajaedev.space)
-
----
-
-## Tech Used
-
-- **HTML**
-- **CSS** (hand-written, no framework), inlined into the page so nothing blocks the first render
-- **JavaScript**
-- **Nunito Sans**, a self-hosted Latin subset with preload
-- **Hugeicons** as an inline SVG sprite
-
-No frameworks or build tools - the site is lightweight and loads quickly by design.
-
-Styles live in `assets/styles.css`. After editing it, run `python3 tools/inline-css.py` to copy it into `index.html`, `projects.html` and `os.html` and update the CSP hash in `_headers`.
+Live: [rajaedev.space](https://rajaedev.space)
 
 ---
 
-## Features
+## How it works
 
-### **1. Responsive Layout**
-Works smoothly across desktop, tablet, and mobile.  
-Includes a clean mobile hamburger menu with auto-close behavior.
+- **Buffers as sections.** Click a tab, press `1`–`7`, use `gt` / `gT`, or type `:e projects`. Links in the preview open other buffers too. Each buffer has its own URL (`/#projects`).
+- **Code that writes itself.** The first time a buffer opens, its source types out in insert mode and the preview builds up as each property is written. Click the code, press `Esc` or hit "skip typing" to jump to the end. Visitors who prefer reduced motion get the finished code straight away.
+- **A real interpreter.** `assets/rg.js` tokenizes, parses and renders rg. It never throws on half-typed code, which is what lets the preview update while the code is still being written.
+- **Vim touches.** Line numbers, cursor line, `~` past the end of the file, a mode indicator, a status line and a command line (`:e`, `:b 3`, `:bn`, `:ls`, `:w`, `:help`, `:12`). `j`/`k`, `gg`/`G` and `Ctrl-d`/`Ctrl-u` move the cursor.
+- **Phones.** One pane at a time with a Preview / Code switch; the preview shows first.
+- **No JavaScript.** Every section is prerendered into `index.html`, so search engines and visitors without JavaScript get the full content as a plain page.
 
-### **2. Projects**
-Four short project tiles (Shop Weh, EStore Trust, Chichi Bus, Sequik) link to `projects.html` (served at `/projects`), which has the full write-ups and screenshots, security tools and labs, and smaller projects.
+## The rg language
 
-### **3. Security Projects**
-SOC Shift (security analyst training), CoreSight (log search) and PingSweeper (network scanner).
+```
+-- comment
+module projects
+title "Projects"                 section heading
+heading "More projects"          sub-heading
 
-### **4. Experience, Skills & Education**
-- Software Engineer Intern at the Jamaica Artificial Intelligence Association
-- Contributed to open source (Talawa API)
+project shop_weh {               block: <kind> <name> {
+  name    "Shop Weh"             property: <key> <args...>
+  text    "Add your grocery list and Shop Weh shows"
+       .. "which store has it cheapest"     .. continues the last string
+  stack   [Next.js, Firebase]    list
+  button  "Email me" -> mail     arrow points at a target (mail, :e buffer, or a URL)
+}
+```
 
-### **Access page (`/os`)**
-An interactive version of the portfolio. Each section is a file you open from a list; opening one prints a short access log, then shows the section, with progress tracked in the top bar. Every section can be opened in any order or linked directly (`/os#projects`), and a link goes back to the normal site. Not indexed by search engines.
+Block kinds: `profile`, `job`, `project`, `item`, `skills`, `entry`, `contact`.
 
-### **SEO**
-- Descriptive title, meta description and keywords
-- Open Graph and Twitter card tags with a social preview image (`assets/og-image.jpg`)
-- JSON-LD structured data (Person, WebSite and a list of projects)
-- Canonical URL, `robots.txt` and `sitemap.xml`
-- Semantic HTML, alt text on every screenshot, and no render-blocking CSS framework
+## Editing content
 
-### **Security headers**
-`_headers` sets a strict Content-Security-Policy (no inline scripts or styles), HSTS, `nosniff`, a referrer policy, a permissions policy and frame blocking for Netlify.
+1. Edit the files in `src/*.rg`.
+2. Run `node tools/build.mjs`. It writes `assets/sources.js` (what the editor loads) and prerenders every section into `index.html`.
+3. If you changed `assets/styles.css`, run `python3 tools/inline-css.py`. It inlines the CSS into `index.html` and updates the CSP hash in `_headers`.
 
-### **5. Navigation**
-The nav highlights the section you're reading as you scroll. Motion is limited to small hover effects and is turned off for visitors who prefer reduced motion.
+## Tech
 
-### **6. Look**
-Dark, with Nunito Sans and one blue accent. Copy is short and plain.
+- Hand-written HTML, CSS and JavaScript modules. No frameworks, no bundler.
+- JetBrains Mono for the editor and Nunito Sans for the preview, both self-hosted.
+- Hugeicons as an inline SVG sprite.
+- `_headers` sets a strict Content-Security-Policy (scripts from this site only, inline CSS allowed by hash), HSTS, `nosniff`, a referrer policy, a permissions policy and frame blocking.
+- The email address is assembled in JavaScript, so it never appears whole in the page source.
 
----
-
-## The Process
-
-The goal was to build a portfolio that reflects how I approach software:  
-simple, functional, and intentional.
-
-1. **Design First**  
-   Planned a clean layout with clear sections and consistent spacing.  
-   Prioritized readability over decoration.
-
-2. **Plain CSS**  
-   Started with Tailwind's CDN, then moved to a small hand-written stylesheet so the page loads faster.
-
-3. **Mobile Experience**  
-   Focused heavily on mobile:
-   - hamburger menu  
-   - auto-closing navigation  
-   - smooth scrolling  
-   - clean spacing  
-
-4. **Content Structure**  
-   Split the work into:
-   - About  
-   - Software Projects  
-   - Cybersecurity Projects  
-   - Skills  
-   - Certifications  
-   - Contact  
-
-   This keeps the portfolio balanced between software engineering and cybersecurity.
-
-5. **Performance**  
-   Avoided frameworks and build pipelines to keep things simple and load times extremely fast.
-
----
-
-## 🔧 How It Can Be Improved
-
-Some future enhancements I’m considering:
-
-- **Add a downloadable resume button**  
-- **Add a blog section** for technical writeups (Go, Linux, cyber labs, etc.)
-
----
-
-## 📬 Contact
-
-If you want to reach out:
+## Contact
 
 - LinkedIn: https://linkedin.com/in/rajae-g
-
-
+- GitHub: https://github.com/RajaeDev6

@@ -11,7 +11,7 @@ css = (root / "assets/styles.css").read_text().strip()
 body = "\n" + css + "\n  "
 
 # Every page inlines the same stylesheet, so one CSP hash covers them all
-for page in ("index.html", "projects.html", "os.html"):
+for page in ("index.html",):
     html_path = root / page
     html = html_path.read_text()
     html, n = re.subn(r"<style>.*?</style>", lambda _: f"<style>{body}</style>", html, count=1, flags=re.S)
