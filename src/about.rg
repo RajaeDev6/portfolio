@@ -3,16 +3,17 @@
 -- for this site. The preview is its
 -- output: click in here and edit it.
 --
--- the other files are encrypted.
--- 3 flags are hidden in here, and
--- each one decrypts more. :ctf for
--- hints, or click "Normal site" to
--- read everything right away.
+-- each file hides a secret next to
+-- something worth knowing about me.
+-- find it to open the next file.
+-- tip: press / to search the code,
+-- or click the preview to jump to it.
 
 module about
 
 profile rajae {
   name    "Rajae Givans"
+  -- flag: rg{security_meets_software}
   role    "Cybersecurity and software"
        .. "engineering student, based in"
        .. "Kingston, Jamaica."

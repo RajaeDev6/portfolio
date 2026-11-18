@@ -4,6 +4,7 @@ module security
 title "Security Projects"
 
 item soc_shift {
+  -- flag: rg{soc_analyst_training}
   name    "SOC Shift"
   tag     "Security analyst training"
   text    "Practice the day-to-day work of a"

@@ -6,7 +6,7 @@ import { parse, toHTML, highlight, urlsIn, findInjection } from './rg.js';
 import SOURCES from './sources.js';
 
 const BUFFERS = ['about', 'experience', 'projects', 'security', 'skills', 'education', 'contact'];
-const HIDDEN = ['.notes'];                         // unlisted buffers (part of the CTF)
+const HIDDEN = [];                                // unlisted buffers, if any
 const ALL = [...BUFFERS, ...HIDDEN];
 // Only URLs that appear in the original source may ever become working links
 const ALLOWED_URLS = urlsIn(Object.values(SOURCES).join('\n'));
@@ -77,7 +77,7 @@ app.innerHTML = `
     <span class="pos" id="pos">1:1</span>
   </div>
   <div class="cmdline">
-    <form id="cmd-form" hidden><label for="cmd">:</label><input id="cmd" autocomplete="off" spellcheck="false" aria-label="Editor command"></form>
+    <form id="cmd-form" hidden><label for="cmd" id="cmd-label">:</label><input id="cmd" autocomplete="off" spellcheck="false" aria-label="Editor command"></form>
     <span id="msg" class="msg" aria-live="polite"></span>
   </div>
   <div class="overlay" id="help" hidden role="dialog" aria-modal="true" aria-label="Help">
@@ -93,8 +93,7 @@ app.innerHTML = `
         <dt><kbd>:e projects</kbd></dt><dd>open a section by name</dd>
         <dt><kbd>:e!</kbd></dt><dd>undo your edits</dd>
         <dt><kbd>:ctf</kbd></dt><dd>the capture-the-flag challenges</dd>
-        <dt><kbd>:decode</kbd></dt><dd>decode the base64 string on the cursor line</dd>
-        <dt><kbd>:ls!</kbd></dt><dd>list every buffer, even unlisted ones</dd>
+        <dt><kbd>/flag</kbd>, <kbd>n</kbd></dt><dd>search the code, jump to the next match</dd>
       </dl>
       <p class="help-text">Not into code? The <a href="/site/">normal site</a> has the same content as a plain page.</p>
       <p class="help-foot">Press <kbd>Esc</kbd> to close.</p>
@@ -104,12 +103,12 @@ app.innerHTML = `
     <div class="help-box start-box">
       <p class="start-kicker">rajaedev.space</p>
       <h2 class="start-title" id="intro-title">Capture the flag</h2>
-      <p class="help-text">This portfolio is a Vim editor, and most of its files are <b>encrypted</b>. <b>3 flags</b> are hidden inside. Each one you find with Vim commands decrypts more of the portfolio, and the last one unlocks my contact details. Flags look like <code>rg{...}</code>.</p>
+      <p class="help-text">This portfolio is a Vim editor with a small capture-the-flag. Each file hides a flag, written like <code>rg{...}</code>, next to something worth knowing about me. Find it to unlock the next file. The last one unlocks my contact details.</p>
       <p class="help-text">Just want to read my portfolio? The <a href="/site/">normal site</a> has everything, no puzzles.</p>
       <dl class="start-keys">
-        <dt><kbd>:</kbd></dt><dd>opens the command line at the bottom (try <kbd>:help</kbd>)</dd>
-        <dt><kbd>i</kbd></dt><dd>edits the code, <kbd>Esc</kbd> stops</dd>
-        <dt><kbd>j</kbd> <kbd>k</kbd></dt><dd>move the cursor down and up</dd>
+        <dt>click the preview</dt><dd>jumps to the code behind it</dd>
+        <dt><kbd>/flag</kbd></dt><dd>searches the code (press <kbd>/</kbd>, type, Enter)</dd>
+        <dt><kbd>:</kbd></dt><dd>opens the command line (try <kbd>:help</kbd>)</dd>
       </dl>
       <div class="intro-actions">
         <button type="button" class="btn btn-primary" id="intro-start">Start the CTF</button>
@@ -120,7 +119,7 @@ app.innerHTML = `
   </div>
   <div class="overlay" id="done" hidden role="dialog" aria-modal="true" aria-labelledby="done-title">
     <div class="help-box start-box">
-      <p class="start-kicker">3/3 flags</p>
+      <p class="start-kicker">4/4 flags</p>
       <h2 class="start-title" id="done-title">You got them all</h2>
       <p class="help-text">Thanks for playing. If you’d like to talk about a role or a project, here’s where to find me.</p>
       <div class="intro-actions">
@@ -134,7 +133,7 @@ app.innerHTML = `
   <div class="overlay" id="ctf" hidden role="dialog" aria-modal="true" aria-label="Capture the flag">
     <div class="help-box ctf-box">
       <p class="help-title">Capture the flag</p>
-      <p class="help-text">Three flags are hidden in this editor. Each looks like <code>rg{...}</code>. Use Vim commands to find them, then submit each one below or with <kbd>:flag rg{...}</kbd>. Stuck? The <a href="/site/">normal site</a> has everything without the puzzles.</p>
+      <p class="help-text">Each file hides a flag like <code>rg{...}</code> next to the answer to a question about me. Submit it below or with <kbd>:flag rg{...}</kbd> to unlock the next file. Stuck? The <a href="/site/">normal site</a> has everything without the puzzles.</p>
       <ol class="ctf-list" id="ctf-list"></ol>
       <form class="flag-form" id="flag-form"><input id="flag-input" placeholder="rg{...}" autocomplete="off" spellcheck="false" aria-label="Flag"><button type="submit" class="btn btn-primary">Submit</button></form>
       <p class="flag-msg" id="flag-msg" aria-live="polite"></p>
@@ -229,6 +228,7 @@ function drawPreview(value, { done = true } = {}) {
   const ms = (performance.now() - t0).toFixed(1);
   const blocks = nodes.filter((n) => n.name).length;
   $('run-status').textContent = done ? `rg run ${current}.rg · ${blocks} block${blocks === 1 ? '' : 's'} · ${ms}ms` : 'rg run · interpreting…';
+  if (typeof markTarget === 'function' && done) { markTarget(); syncFlags(); }
   previewEl.querySelectorAll('[data-email]').forEach((a) => {
     const [user, domain] = a.dataset.email.split('|');
     a.href = `mailto:${user}@${domain}`;
@@ -397,7 +397,7 @@ ta.addEventListener('input', () => {
   const attack = findInjection(ta.value);
   if (attack && attack !== lastAttack) {
     lastAttack = attack;
-    message(`Blocked ${attack}. Everything you type is rendered as plain text, so it can’t run. flag 3: ${flag3()}`);
+    message(`Blocked ${attack}. Everything you type is rendered as plain text, so it can’t run.`);
   } else if (!attack) lastAttack = null;
 });
 let lastAttack = null;
@@ -490,13 +490,34 @@ function message(t, isError = false) {
 
 /* ---------- command line ---------- */
 
-function openCmd() {
+let cmdPrefix = ':';
+function openCmd(prefix = ':') {
   if (typing) stopTyping();
+  cmdPrefix = prefix;
+  $('cmd-label').textContent = prefix;
   cmdForm.hidden = false;
   msgEl.hidden = true;
   cmdInput.value = '';
-  setMode('COMMAND');
+  setMode(prefix === '/' ? 'SEARCH' : 'COMMAND');
   cmdInput.focus();
+}
+
+// /pattern: jump to the next line containing it (n and N repeat)
+let lastSearch = '';
+function search(term, dir = 1) {
+  if (!term) return;
+  lastSearch = term;
+  const ls = (ta.value || text()).split('\n');
+  const needle = term.toLowerCase();
+  for (let k = 1; k <= ls.length; k++) {
+    const n = (cursorLine + dir * k + ls.length * 2) % ls.length;
+    if (ls[n].toLowerCase().includes(needle)) {
+      markCursor(n, { sync: true });
+      message(`/${term}`);
+      return;
+    }
+  }
+  message(`E486: Pattern not found: ${term}`, true);
 }
 
 function closeCmd() {
@@ -526,9 +547,7 @@ function run(cmd) {
     case 'bn': case 'bnext': case 'tabn': case 'tabnext': return step(1);
     case 'bp': case 'bprev': case 'bprevious': case 'tabp': case 'tabprevious': return step(-1);
     case 'ls': case 'buffers': return message(BUFFERS.map((b, i) => `${i + 1} ${b}.rg${b in edits ? ' [+]' : ''}`).join('   '));
-    case 'ls!': case 'buffers!': return message([...BUFFERS.map((b, i) => `${i + 1} ${b}.rg`), `${BUFFERS.length + 1}u ${HIDDEN[0]}.rg (unlisted)`].join('   '));
     case 'ctf': return showCtf();
-    case 'decode': return decode(args.join(' '));
     case 'flag': return submitFlag(args.join(' '));
     case 'site': case 'normal': location.href = '/site/'; return;
     case 'h': case 'help': return showHelp();
@@ -547,7 +566,8 @@ cmdForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const value = cmdInput.value;
   closeCmd();
-  run(value);
+  if (cmdPrefix === '/') search(value);
+  else run(value);
 });
 cmdInput.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') { e.preventDefault(); closeCmd(); message(''); }
@@ -586,6 +606,9 @@ document.addEventListener('keydown', (e) => {
 
   if (e.key === 'Escape') { if (typing) { e.preventDefault(); stopTyping(); } return; }
   if (e.key === ':') { e.preventDefault(); openCmd(); return; }
+  if (e.key === '/') { e.preventDefault(); openCmd('/'); return; }
+  if (e.key === 'n' && lastSearch && !typing) { e.preventDefault(); search(lastSearch, 1); return; }
+  if (e.key === 'N' && lastSearch && !typing) { e.preventDefault(); search(lastSearch, -1); return; }
   if (e.key === '?') { e.preventDefault(); showHelp(); return; }
   if (e.key === 'i' && editorVisible()) { e.preventDefault(); if (typing) stopTyping(); placeCaret(cursorLine); return; }
   if (/^[1-7]$/.test(e.key)) { dismissIntro(); e.preventDefault(); open(BUFFERS[Number(e.key) - 1]); return; }
@@ -683,45 +706,39 @@ window.addEventListener('hashchange', () => {
 
 /* ---------- capture the flag ---------- */
 
-// :decode decodes base64, either the argument or the string on the cursor line
-function decode(arg) {
-  let input = arg.trim();
-  if (!input) {
-    const line = text().split('\n')[ta === document.activeElement ? lineOfCaret() : cursorLine] || '';
-    const m = line.match(/"([^"]*)"/);
-    if (!m) return message(`E: no string on line ${cursorLine + 1}. Put the cursor on a line with a "string" first.`, true);
-    input = m[1];
-  }
-  try {
-    const out = atob(input.replace(/\s+/g, ''));
-    if (!/^[\x20-\x7e]+$/.test(out)) throw new Error('binary');
-    message(`decoded: ${out}`);
-  } catch {
-    message('That isn’t base64, so there’s nothing to decode.', true);
-  }
-}
-
-// Flags are checked by SHA-256 hash, so the answers are not sitting in this file.
+// Each flag sits in the code next to a detail worth knowing, and finding it opens the
+// next file, so playing walks through the portfolio in order. Flags are checked by
+// SHA-256 hash, so the answers are not written in this file.
 const CHALLENGES = [
   {
-    name: 'Recon', hint: 'Not every buffer shows up in the tabs.', unlocks: ['experience', 'skills', 'education'],
-    tip: 'Type <kbd>:ls!</kbd> to list every buffer, then <kbd>:e name</kbd> to open the hidden one. The flag is in its comments.',
-    hash: '5b78a99b3c6c582b58cc6c42989ed5e0d62d21782d78c98e15720a391b7dd7e9',
+    name: 'What I do', where: 'about', block: 'rajae', unlocks: ['experience'],
+    question: 'What do I do? The flag is right next to my role.',
+    tip: 'Click my role in the preview to jump to its code, or press <kbd>/</kbd>, type <kbd>flag</kbd> and Enter.',
+    hash: '4f2fe91023d1ed9b9592df53852f6d11f5bd6938cff6d1da9b36b8a546ad9cd0',
   },
   {
-    name: 'Crypto', hint: 'The hidden buffer holds a string that is encoded, not encrypted.', unlocks: ['projects', 'security'],
-    tip: 'Move the cursor onto that line with <kbd>j</kbd> / <kbd>k</kbd> (or click it), then type <kbd>:decode</kbd>.',
-    hash: 'f633a3187b0e3e9c9a0adf0296d301377a9031729c9b21b6a48b57d412b6a203',
+    name: 'Experience', where: 'experience', block: 'jaia', unlocks: ['projects'],
+    question: 'Where did I work as a software engineer intern?',
+    tip: 'Click the internship in the preview to jump to its code, or search with <kbd>/flag</kbd>.',
+    hash: 'aaa84e22db90106eb3cc62052131406f77f3d86f773ccba67f0dbe5bf1720f66',
   },
   {
-    name: 'Web', hint: 'Try to make the preview run your own code.', unlocks: ['contact'],
-    tip: 'Press <kbd>i</kbd> (or click the code) to edit, change a link to <code>javascript:alert(1)</code>, and read the message at the bottom.',
-    hash: 'f55a6d298066c78a134b366dd482a88d2a84fc4e4aebddeda7a602c37eb7ff8b',
+    name: 'Projects', where: 'projects', block: 'shop_weh', unlocks: ['security'],
+    question: 'Which of my apps finds the cheapest groceries in Jamaica?',
+    tip: 'Click its card in the preview to see the full write-up and jump to its code, or search with <kbd>/flag</kbd>.',
+    hash: '30f7c04a9c9c87335717e8f832ef9468b99f32203e20f925104ea85f7ffa399b',
+  },
+  {
+    name: 'Security', where: 'security', block: 'soc_shift', unlocks: ['skills', 'education', 'contact'],
+    question: 'Which of my projects trains security analysts?',
+    tip: 'Click it in the preview to jump to its code, or search with <kbd>/flag</kbd>.',
+    hash: '10a872a71b9d49fa051c7579518509dfc58abc7f241c3f8fc2ceea8dc03c2fd5',
   },
 ];
-const found = new Set(JSON.parse(store.get('rg-flags') || '[]'));
+const found = new Set(JSON.parse(store.get('rg-flags') || '[]').filter((i) => i < CHALLENGES.length));
+const nextChallenge = () => CHALLENGES.findIndex((_, n) => !found.has(n));
 
-// Which flag decrypts each buffer; about.rg and the hidden notes are always open
+// Which flag opens each buffer; about.rg is always open
 const LOCKS = Object.fromEntries(CHALLENGES.flatMap((c, i) => c.unlocks.map((b) => [b, i])));
 function isLocked(buf) { return buf in LOCKS && !found.has(LOCKS[buf]); }
 
@@ -731,7 +748,7 @@ function scramble(buf) {
   let i = 0;
   const body = SOURCES[buf].split('\n').slice(1).join('\n')
     .replace(/[A-Za-z0-9]/g, (ch) => GLYPHS[(ch.charCodeAt(0) * 17 + (i++) * 29) % 64]);
-  return `-- ${buf}.rg  [encrypted]\n-- find flag ${LOCKS[buf] + 1} to decrypt it\n${body}`;
+  return `-- ${buf}.rg  [locked]\n-- find the flag in ${CHALLENGES[LOCKS[buf]].where}.rg to open it\n${body}`;
 }
 
 const LOCK_ICON = '<svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>';
@@ -753,15 +770,15 @@ function showLocked(buf) {
   previewEl.innerHTML = `<div class="locked">
     <span class="locked-icon">${LOCK_ICON}</span>
     <p class="locked-kicker">${buf}.rg</p>
-    <h2>This file is encrypted</h2>
-    <p>Find flag ${LOCKS[buf] + 1} of ${CHALLENGES.length} (${c.name}) to decrypt it. ${c.hint}</p>
+    <h2>Locked for now</h2>
+    <p>Find the flag in <b>${c.where}.rg</b> to open this file. ${c.question}</p>
     <div class="cta">
-      <button type="button" class="btn btn-primary" data-ctf>Show hints</button>
+      <a class="btn btn-primary" href="#${c.where}" data-buf="${c.where}">Go to ${c.where}.rg</a>
       <a class="btn" href="/site/#${buf}">Read it on the normal site</a>
     </div>
   </div>`;
-  $('run-status').textContent = `rg run ${buf}.rg · encrypted`;
-  message(`"${buf}.rg" is encrypted. Find flag ${LOCKS[buf] + 1} to decrypt it, or read it on the normal site (:site).`);
+  $('run-status').textContent = `rg run ${buf}.rg · locked`;
+  message(`"${buf}.rg" is locked. Find the flag in ${c.where}.rg first, or read it on the normal site (:site).`);
 }
 
 // Tabs show a lock until their flag is found
@@ -771,14 +788,31 @@ function syncLocks() {
     t.classList.toggle('locked', locked);
     t.querySelector('.tab-lock')?.remove();
     if (locked) t.insertAdjacentHTML('beforeend', `<span class="tab-lock">${LOCK_ICON}</span>`);
-    t.setAttribute('aria-label', `${t.dataset.buf}.rg${locked ? ' (encrypted)' : ''}`);
+    t.setAttribute('aria-label', `${t.dataset.buf}.rg${locked ? ' (locked)' : ''}`);
   });
 }
 
-// The third flag is shown when an injection attempt is blocked; it is stored scrambled
-function flag3() {
-  return [97, 125, 90, 77, 92, 85, 92, 52, 46, 13, 60, 22, 2, 28, 12, 8, 235, 227, 255, 255, 226]
-    .map((c, i) => String.fromCharCode(c ^ ((19 + i * 7) % 256))).join('');
+// Mark the detail the current question is about, so it stands out in the preview
+function markTarget() {
+  previewEl.querySelector('.pv-target')?.classList.remove('pv-target');
+  const i = nextChallenge();
+  if (i < 0 || CHALLENGES[i].where !== current || isLocked(current)) return;
+  const node = parse(text()).nodes.find((n) => n.name === CHALLENGES[i].block);
+  const el = node && previewEl.querySelector(`[data-l0="${node.start}"]`);
+  if (el) el.classList.add('pv-target');
+}
+
+// Take the visitor to the current question's file and detail
+function goToChallenge() {
+  const i = nextChallenge();
+  if (i < 0) return;
+  open(CHALLENGES[i].where);
+  if (typing) stopTyping();
+  const el = previewEl.querySelector('.pv-target');
+  if (el) {
+    if (el.tagName === 'DETAILS') el.open = true;
+    el.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' });
+  }
 }
 
 async function sha256(t) {
@@ -794,28 +828,23 @@ async function submitFlag(value) {
   const h = await sha256(v);
   const i = CHALLENGES.findIndex((c) => c.hash === h);
   if (i < 0) return say('Not a flag. Keep looking.', true);
-  if (found.has(i)) return say(`You already have the ${CHALLENGES[i].name} flag.`);
-  const wasLocked = isLocked(current);
+  if (found.has(i)) return say('You already found that one.');
   found.add(i);
   store.set('rg-flags', JSON.stringify([...found]));
+  CHALLENGES[i].unlocks.forEach((b) => typed.delete(b));   // opening a file types its code out
   syncFlags();
-  CHALLENGES[i].unlocks.forEach((b) => typed.delete(b));   // decrypting types the real code out
-  if (wasLocked && !isLocked(current)) open(current);
-  if (found.size === CHALLENGES.length) {
-    say('All 3 flags found.');
-    finish();
-    return;
-  }
-  const next = CHALLENGES.find((_, n) => !found.has(n));
-  say(`Correct: ${CHALLENGES[i].name} flag. Decrypted ${CHALLENGES[i].unlocks.map((b) => b + '.rg').join(', ')}. Next: ${next.name}. ${next.hint}`);
+  if (found.size === CHALLENGES.length) { finish(); return; }
+  ctfEl.hidden = true;
+  const next = CHALLENGES[nextChallenge()];
+  open(next.where);
+  say(`Correct. ${next.where}.rg is open. Next: ${next.question}`);
 }
 
 // All flags: show where to reach me and open the contact buffer behind it
 function finish() {
   ctfEl.hidden = true;
   open('contact');
-  const [user, domain] = ['rgivans9', 'gmail.com'];
-  $('done-email').href = `mailto:${user}@${domain}`;
+  $('done-email').href = `mailto:${['rgivans9', 'gmail.com'].join('@')}`;
   $('done').hidden = false;
   $('done-email').focus();
 }
@@ -831,23 +860,23 @@ function syncFlags() {
   const total = CHALLENGES.length;
   $('ctf-btn').textContent = `CTF ${found.size}/${total}`;
   $('ctf-btn').classList.toggle('complete', found.size === total);
-  $('ctf-list').innerHTML = CHALLENGES.map((c, i) => `<li class="${found.has(i) ? 'done' : ''}"><b>${c.name}</b>${found.has(i) ? '<span class="got">found</span>' : ''}<span>${c.hint}</span><span class="unlocks">Decrypts ${c.unlocks.map((b) => b + '.rg').join(', ')}</span><span class="tip">${c.tip}</span></li>`).join('');
+  $('ctf-list').innerHTML = CHALLENGES.map((c, i) => `<li class="${found.has(i) ? 'done' : ''}"><b>${c.where}.rg</b>${found.has(i) ? '<span class="got">found</span>' : ''}<span>${c.question}</span><span class="tip">${c.tip}</span></li>`).join('');
   syncLocks();
-  const nextIdx = CHALLENGES.findIndex((_, n) => !found.has(n));
-  const mission = $('mission');
-  mission.classList.toggle('complete', nextIdx < 0);
-  if (nextIdx < 0) {
-    $('mission-text').innerHTML = '<b>All 3 flags found.</b> Thanks for playing.';
+  const i = nextChallenge();
+  $('mission').classList.toggle('complete', i < 0);
+  if (i < 0) {
+    $('mission-text').innerHTML = `<b>All ${total} flags found.</b> Thanks for playing.`;
     $('mission-btn').textContent = 'Contact me';
   } else {
-    const c = CHALLENGES[nextIdx];
-    $('mission-text').innerHTML = `<b>Flag ${nextIdx + 1} of ${total}: ${c.name}.</b> ${c.hint} <span class="mission-unlocks">Decrypts ${c.unlocks.map((b) => b + '.rg').join(', ')}.</span>`;
-    $('mission-btn').textContent = 'Hints';
+    $('mission-text').innerHTML = `<b>Flag ${i + 1} of ${total}</b> · ${CHALLENGES[i].question}`;
+    $('mission-btn').textContent = current === CHALLENGES[i].where ? 'Hint' : `Go to ${CHALLENGES[i].where}.rg`;
   }
 }
 $('mission-btn').addEventListener('click', () => {
-  if (found.size === CHALLENGES.length) { $('done-email').href = 'mailto:' + ['rgivans9', 'gmail.com'].join('@'); $('done').hidden = false; open('contact'); }
-  else showCtf();
+  const i = nextChallenge();
+  if (i < 0) { $('done-email').href = `mailto:${['rgivans9', 'gmail.com'].join('@')}`; $('done').hidden = false; open('contact'); return; }
+  if (current === CHALLENGES[i].where) showCtf();
+  else goToChallenge();
 });
 
 function showCtf() { dismissIntro(); syncFlags(); $('flag-msg').textContent = ''; ctfEl.hidden = false; }
@@ -862,7 +891,7 @@ function dismissIntro() {
   store.set('rg-intro', 'seen');
 }
 $('intro-ok').addEventListener('click', dismissIntro);
-$('intro-start').addEventListener('click', showCtf);
+$('intro-start').addEventListener('click', () => { dismissIntro(); goToChallenge(); });
 intro.addEventListener('click', (e) => { if (e.target === intro) dismissIntro(); });
 if (!store.get('rg-intro')) intro.hidden = false;
 

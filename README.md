@@ -17,16 +17,16 @@ Live: [rajaedev.space](https://rajaedev.space)
 - **Interactive preview.** Project cards open into the full write-up, and screenshots open full size.
 - **Layout.** Drag the divider to resize the code pane, or hide the code entirely. Both are remembered.
 - **Safe to edit.** Edits only change what you see in your own tab and reset on reload. While the code is edited, links in the preview are switched off. Every string is HTML-escaped, only `https://` links that appear in the original source can ever become working links, and screenshot names, icons and buffer targets are checked against fixed lists.
-- **Encrypted until you earn it.** Only `about.rg` is open at first. Locked tabs show scrambled code and a screen pointing to the CTF or to the same section on the normal site. Recon decrypts experience, skills and education; Crypto decrypts projects and security; Web decrypts contact. Decrypting types the real code out.
-- **A capture-the-flag you solve with Vim.** First-time visitors see a start screen, and a CTF strip above the preview always shows the next step.
-  1. Recon: `:ls!` lists an unlisted buffer, `:e .notes` opens it.
-  2. Crypto: move the cursor to the encoded string (`j`/`k`) and run `:decode`.
-  3. Web: press `i`, try an injection like a `javascript:` link, and the editor blocks it and hands over the flag.
+- **A capture-the-flag that walks through the portfolio.** Each file hides a flag (an rg comment) right next to a detail worth knowing, and each question points at that detail:
+  1. `about.rg`: what I do
+  2. `experience.rg`: where I interned
+  3. `projects.rg`: which app finds the cheapest groceries
+  4. `security.rg`: which project trains security analysts
 
-  Submit with `:flag rg{...}` or the CTF dialog; flags are checked against SHA-256 hashes. Finding all three opens a screen with my email, GitHub and LinkedIn, and switches to `contact.rg`.
+  Find a flag by clicking the detail in the preview (which jumps the editor to its code) or by searching with `/flag` (`n` for the next match), then submit it with `:flag rg{...}` or the CTF dialog. Each flag opens the next file; the last one opens skills, education and contact and shows my email, GitHub and LinkedIn. Locked files show scrambled code and a link to the same section on the normal site. A strip above the preview always shows the current question, and the detail it's about is marked in the preview. Flags are checked against SHA-256 hashes.
 - **Normal site.** `/site/` has the same content as a plain portfolio page, linked from the editor's tab bar, the first-visit note and the help.
 - **A real interpreter.** `assets/rg.js` tokenizes, parses and renders rg. It never throws on half-typed code, which is what lets the preview update while the code is still being written.
-- **Vim touches.** Line numbers, cursor line, `~` past the end of the file, a mode indicator, a status line and a command line (`:e`, `:e!`, `:b 3`, `:bn`, `:ls`, `:w`, `:help`, `:12`). `j`/`k`, `gg`/`G` and `Ctrl-d`/`Ctrl-u` move the cursor.
+- **Vim touches.** Line numbers, cursor line, `~` past the end of the file, a mode indicator, a status line and a command line (`:e`, `:e!`, `:b 3`, `:bn`, `:ls`, `:w`, `:help`, `:12`) and search (`/pattern`, `n`, `N`). `j`/`k`, `gg`/`G` and `Ctrl-d`/`Ctrl-u` move the cursor.
 - **Phones.** One pane at a time with a Preview / Code switch; the preview shows first.
 - **No JavaScript.** Every section is prerendered into `index.html`, so search engines and visitors without JavaScript get the full content as a plain page.
 
