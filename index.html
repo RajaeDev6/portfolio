@@ -76,7 +76,7 @@
           { "@type": "ListItem", "position": 2, "item": { "@type": "WebApplication", "name": "EStore Trust", "url": "https://estoretrust.vercel.app", "applicationCategory": "UtilitiesApplication", "description": "Checks Jamaican Instagram businesses for trust and scam reports before you send money.", "creator": { "@id": "https://rajaedev.space/#person" } } },
           { "@type": "ListItem", "position": 3, "item": { "@type": "SoftwareApplication", "name": "Sequik", "url": "https://sequik.netlify.app", "applicationCategory": "BusinessApplication", "operatingSystem": "iOS, Android", "description": "Rent tracker and rental property management app for landlords.", "creator": { "@id": "https://rajaedev.space/#person" } } },
           { "@type": "ListItem", "position": 4, "item": { "@type": "WebApplication", "name": "Chichi Bus", "url": "https://chichibus.vercel.app", "applicationCategory": "TravelApplication", "operatingSystem": "Web, iOS, Android (PWA)", "description": "Crowdsourced JUTC bus tracker for Kingston, Jamaica, with all 159 routes mapped on real roads.", "creator": { "@id": "https://rajaedev.space/#person" } } },
-          { "@type": "ListItem", "position": 5, "item": { "@type": "WebApplication", "name": "SOC Shift", "url": "https://socshift.vercel.app", "applicationCategory": "EducationalApplication", "description": "SOC alert triage and phishing identification training game mapped to MITRE ATT&CK.", "creator": { "@id": "https://rajaedev.space/#person" } } }
+          { "@type": "ListItem", "position": 5, "item": { "@type": "WebApplication", "name": "SOC Shift", "url": "https://socshift.vercel.app", "applicationCategory": "EducationalApplication", "description": "SOC analyst training platform: fifteen alert-triage and phishing shifts with MITRE ATT&CK attribution, scoring and full debriefs.", "creator": { "@id": "https://rajaedev.space/#person" } } }
         ]
       }
     ]
@@ -255,7 +255,7 @@ h1, h2, h3, p, ul { margin: 0; }
 .socials a:hover { color: var(--accent); background: var(--hover); }
 
 /* now.txt: a plain-text status note beside the hero */
-.now { width: 100%; max-width: 380px; align-self: center; font-family: var(--font-mono); font-size: 13px; line-height: 20px; border-left: 2px solid var(--accent); padding: 4px 0 4px 20px; }
+.now { width: 100%; max-width: 380px; align-self: center; font-family: var(--font-mono); font-size: 13px; line-height: 20px; border-left: 1px solid var(--line); padding: 4px 0 4px 20px; }
 @media (max-width: 1023px) { .now { max-width: 36rem; } }
 .now-file { color: var(--faint); margin-bottom: 12px; }
 .now dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; margin: 0; }
@@ -343,7 +343,7 @@ summary > .project-stack { flex: none; }
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card);
   transition: border-color .16s var(--ease);
 }
-.pick:hover { border-color: var(--accent); }
+.pick:hover { background: var(--surface-alt); }
 .pick img { width: 64px; height: auto; aspect-ratio: 420 / 909; border-radius: var(--r-inner); border: 1px solid var(--line); background: var(--surface-alt); flex: none; }
 .pick-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .pick-name { font-size: 17px; line-height: 24px; font-weight: 600; }
@@ -453,8 +453,8 @@ footer { border-top: 1px solid var(--line); margin-top: 32px; padding: 32px var(
       <p class="now-file">~/now.txt</p>
       <dl>
         <dt>studying</dt><dd>Cyber Security &amp; Digital Forensics, Caribbean Maritime University</dd>
-        <dt>building</dt><dd>Kaaty, a kart racer written in Rust and compiled to WebAssembly</dd>
-        <dt>exploring</dt><dd>Go, real-time multiplayer and data pipelines</dd>
+        <dt>building</dt><dd>web and mobile apps with security designed in from the start</dd>
+        <dt>practising</dt><dd>SOC alert triage, phishing analysis and log analysis</dd>
         <dt>open to</dt><dd>software engineering and security roles, on-site or remote</dd>
       </dl>
     </aside>
@@ -505,7 +505,7 @@ footer { border-top: 1px solid var(--line); margin-top: 32px; padding: 32px var(
       <a class="project-row" href="/projects#soc-shift">
         <div class="project-head">
           <div class="project-title"><h3>SOC Shift</h3><span class="project-stack">JavaScript · Firebase</span></div>
-          <p class="project-meta">A training game where you work a SOC alert queue: triage alerts, map them to MITRE ATT&amp;CK and catch phishing. Scoring runs on the server so answers never reach the browser.</p>
+          <p class="project-meta">SOC analyst training platform. Work through fifteen shifts: classify each alert in a queue, rank confirmed threats, attribute them to MITRE ATT&amp;CK tactics, and find phishing in an inbox. Every shift ends with a scored debrief.</p>
         </div>
       </a>
       <a class="project-row" href="/projects#coresight">

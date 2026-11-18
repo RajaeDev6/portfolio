@@ -28,7 +28,7 @@ Works smoothly across desktop, tablet, and mobile.
 Includes a clean mobile hamburger menu with auto-close behavior.
 
 ### **2. Security**
-The home page has a Security section: SOC Shift (alert-triage training game), CoreSight (log analysis engine) and PingSweeper (subnet scanner), next to the security habits that carry into the apps (row-level security, private storage with signed URLs, opt-in location, a strict CSP on this site).
+The home page has a Security section: SOC Shift (SOC analyst training platform), CoreSight (log analysis engine) and PingSweeper (subnet scanner), next to the security habits that carry into the apps (row-level security, private storage with signed URLs, opt-in location, a strict CSP on this site).
 
 ### **3. Projects**
 The home page shows four short picks (Shop Weh, EStore Trust, Chichi Bus, Sequik) that link to `projects.html` (served at `/projects`). That page has the full write-ups and screenshots:
@@ -37,7 +37,7 @@ The home page shows four short picks (Shop Weh, EStore Trust, Chichi Bus, Sequik
 - Sequik: rent tracker for landlords ([sequik.netlify.app](https://sequik.netlify.app))
 - Chichi Bus: crowdsourced JUTC bus tracker ([chichibus.vercel.app](https://chichibus.vercel.app))
 - Security tools and labs from my degree (penetration test, vulnerability assessment, network security)
-- Kaaty, The Forgotten Maze, Request Inspector, Due & ExpenseTrakr and Public Eye JA in a compact, expandable list
+- Request Inspector, Due & ExpenseTrakr and Public Eye JA in a compact, expandable list
 
 ### **4. Experience, Skills & Education**
 - Software Engineer Intern at the Jamaica Artificial Intelligence Association

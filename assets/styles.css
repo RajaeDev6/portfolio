@@ -166,7 +166,7 @@ h1, h2, h3, p, ul { margin: 0; }
 .socials a:hover { color: var(--accent); background: var(--hover); }
 
 /* now.txt: a plain-text status note beside the hero */
-.now { width: 100%; max-width: 380px; align-self: center; font-family: var(--font-mono); font-size: 13px; line-height: 20px; border-left: 2px solid var(--accent); padding: 4px 0 4px 20px; }
+.now { width: 100%; max-width: 380px; align-self: center; font-family: var(--font-mono); font-size: 13px; line-height: 20px; border-left: 1px solid var(--line); padding: 4px 0 4px 20px; }
 @media (max-width: 1023px) { .now { max-width: 36rem; } }
 .now-file { color: var(--faint); margin-bottom: 12px; }
 .now dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; margin: 0; }
@@ -254,7 +254,7 @@ summary > .project-stack { flex: none; }
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card);
   transition: border-color .16s var(--ease);
 }
-.pick:hover { border-color: var(--accent); }
+.pick:hover { background: var(--surface-alt); }
 .pick img { width: 64px; height: auto; aspect-ratio: 420 / 909; border-radius: var(--r-inner); border: 1px solid var(--line); background: var(--surface-alt); flex: none; }
 .pick-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .pick-name { font-size: 17px; line-height: 24px; font-weight: 600; }

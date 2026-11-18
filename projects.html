@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>Projects | Rajae Givans</title>
-  <meta name="description" content="Projects by Rajae Givans, a software engineer and security student in Kingston, Jamaica: Shop Weh, EStore Trust, Sequik, Chichi Bus, SOC Shift, Kaaty, Request Inspector and security labs, with screenshots and write-ups." />
+  <meta name="description" content="Projects by Rajae Givans, a software engineer and security student in Kingston, Jamaica: Shop Weh, EStore Trust, Sequik, Chichi Bus, SOC Shift, Request Inspector and security labs, with screenshots and write-ups." />
   <meta name="author" content="Rajae Givans" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="theme-color" content="#0c0c0c" />
@@ -202,7 +202,7 @@ h1, h2, h3, p, ul { margin: 0; }
 .socials a:hover { color: var(--accent); background: var(--hover); }
 
 /* now.txt: a plain-text status note beside the hero */
-.now { width: 100%; max-width: 380px; align-self: center; font-family: var(--font-mono); font-size: 13px; line-height: 20px; border-left: 2px solid var(--accent); padding: 4px 0 4px 20px; }
+.now { width: 100%; max-width: 380px; align-self: center; font-family: var(--font-mono); font-size: 13px; line-height: 20px; border-left: 1px solid var(--line); padding: 4px 0 4px 20px; }
 @media (max-width: 1023px) { .now { max-width: 36rem; } }
 .now-file { color: var(--faint); margin-bottom: 12px; }
 .now dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; margin: 0; }
@@ -290,7 +290,7 @@ summary > .project-stack { flex: none; }
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card);
   transition: border-color .16s var(--ease);
 }
-.pick:hover { border-color: var(--accent); }
+.pick:hover { background: var(--surface-alt); }
 .pick img { width: 64px; height: auto; aspect-ratio: 420 / 909; border-radius: var(--r-inner); border: 1px solid var(--line); background: var(--surface-alt); flex: none; }
 .pick-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .pick-name { font-size: 17px; line-height: 24px; font-weight: 600; }
@@ -505,15 +505,17 @@ footer { border-top: 1px solid var(--line); margin-top: 32px; padding: 32px var(
   <div class="grid-3">
     <article class="card" id="soc-shift">
       <h3>SOC Shift</h3>
-      <p class="meta">SOC analyst training game</p>
-      <p>Work a Security Operations Center alert queue: classify what happened, rank threats, map them to MITRE ATT&amp;CK, and spot phishing in a reported-email inbox.</p>
+      <p class="meta">SOC analyst training platform</p>
+      <p>Practise the core SOC skill: telling real threats apart from noise. Fifteen shifts, rising in difficulty, each built from hand-written alerts or emails.</p>
       <ul>
-        <li>15 hand-written alert-triage and phishing scenarios with full debriefs</li>
-        <li>Server-side scoring, so answer keys never reach the browser</li>
-        <li>XP, ranks, unlocks and a leaderboard</li>
+        <li>Classify each alert as a true positive, false positive, benign positive or informational</li>
+        <li>Rank confirmed threats by priority and attribute each to a MITRE ATT&amp;CK tactic</li>
+        <li>Phishing shifts: review a reported-email inbox and call each message phishing or legitimate</li>
+        <li>Scored on classification, priority and ATT&amp;CK accuracy, with a debrief explaining every call</li>
+        <li>Answer keys stay on the server; scoring runs in serverless functions</li>
       </ul>
       <p class="stack">JavaScript · Firebase · Vercel Functions</p>
-      <div class="links"><a class="link" href="https://socshift.vercel.app" target="_blank" rel="noopener">Play SOC Shift<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <div class="links"><a class="link" href="https://socshift.vercel.app" target="_blank" rel="noopener">Open SOC Shift<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
     </article>
     <article class="card" id="coresight">
       <h3>CoreSight</h3>
@@ -555,56 +557,6 @@ footer { border-top: 1px solid var(--line); margin-top: 32px; padding: 32px var(
 
   <h2 class="subhead">More projects</h2>
   <div class="project-list">
-
-    <details class="project">
-      <summary>
-        <div class="project-head">
-          <div class="project-title"><h4>Kaaty</h4><span class="chip">In development</span></div>
-          <p class="project-meta">3D browser kart racer · Rust → WebAssembly</p>
-        </div>
-        <span class="project-stack">Rust · WebAssembly · Docker</span>
-        <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
-      </summary>
-      <div class="project-body">
-        <p>A Jamaican hand-cart racing game: drift through Kingston, the Blue Mountains, Negril and Port Royal, and win “Cuss Clashes” against rivals.</p>
-        <ul>
-        <li>Physics, AI, rendering, netcode and server all written in Rust with zero dependencies</li>
-        <li>Online and LAN multiplayer for up to 8 racers with lobby codes</li>
-        <li>Fixed 60 Hz simulation that runs on modest laptops</li>
-      </ul>
-        <div class="badges">
-        <span class="badge">Rust</span>
-        <span class="badge">WebAssembly</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-original.svg" alt="" width="16" height="16" loading="lazy">Docker</span>
-      </div>
-        
-      </div>
-    </details>
-
-    <details class="project">
-      <summary>
-        <div class="project-head">
-          <div class="project-title"><h4>The Forgotten Maze</h4><span class="chip">In development</span></div>
-          <p class="project-meta">Multiplayer horror maze game · iOS &amp; Android</p>
-        </div>
-        <span class="project-stack">React Native · Skia · Supabase</span>
-        <svg class="icon caret" aria-hidden="true"><use href="#i-caret"/></svg>
-      </summary>
-      <div class="project-body">
-        <p>Two to four players collect journal pages to find the hidden exit, or take them from rivals. Fallen players return as ghosts and set traps.</p>
-        <ul>
-        <li>Real-time online rooms with Supabase Realtime, plus offline bots</li>
-        <li>2D rendering with React Native Skia</li>
-        <li>Cloud saves and in-app purchases</li>
-      </ul>
-        <div class="badges">
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" width="16" height="16" loading="lazy">React Native</span>
-        <span class="badge">Skia</span>
-        <span class="badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/supabase/supabase-original.svg" alt="" width="16" height="16" loading="lazy">Supabase</span>
-      </div>
-        
-      </div>
-    </details>
 
     <details class="project">
       <summary>
