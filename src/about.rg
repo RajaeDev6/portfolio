@@ -2,6 +2,10 @@
 -- written in rg, a language I made
 -- for this site. The preview is its
 -- output: click in here and edit it.
+--
+-- there are 3 flags hidden in here.
+-- type :ctf for hints, or click
+-- "Normal site" for the plain version.
 
 module about
 

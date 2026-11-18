@@ -355,6 +355,35 @@ a.entry:hover { border-color: var(--line-strong); }
 @media (prefers-reduced-motion: reduce) {
   .band, .link .icon, .btn, .project-cover img, .shot img, .more .icon { transition: none; }
 }
+
+/* ---------- normal-site link, edit notice, first-visit note, CTF ---------- */
+.site-link { display: inline-flex; align-items: center; padding: 0 14px; border-left: 1px solid var(--ed-line); background: var(--accent); color: #fff; font-family: var(--mono); font-size: 12px; font-weight: 600; white-space: nowrap; }
+.site-link:hover { background: var(--accent-hover); }
+.preview { position: relative; grid-template-rows: auto auto 1fr; }
+.edit-note { padding: 8px 16px; background: #2a2414; border-bottom: 1px solid #4a3d1c; color: #e8d7a8; font-family: var(--sans); font-size: 13.5px; line-height: 20px; }
+.edit-note button { margin-left: 6px; padding: 0 8px; border: 1px solid #6b5a2b; border-radius: 6px; background: none; color: #f3e3b5; font-weight: 700; cursor: pointer; }
+.pv .is-inert { cursor: not-allowed; opacity: .55; }
+.intro { position: absolute; right: 20px; bottom: 20px; z-index: 5; width: min(400px, calc(100% - 40px)); padding: 20px; background: var(--ed-bar); border: 1px solid var(--line-strong); border-radius: 14px; font-family: var(--sans); font-size: 15px; line-height: 23px; color: var(--sub); box-shadow: 0 12px 32px rgb(0 0 0 / 0.4); }
+.intro b { color: var(--ink); }
+.intro-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.intro .btn { min-height: 38px; padding: 0 14px; font-size: 14px; }
+.flags { color: var(--sub); }
+.help-text a, .ctf-box a { color: var(--accent-text); text-decoration: underline; text-underline-offset: 3px; }
+.help-text code { font-family: var(--mono); font-size: 12.5px; color: var(--ink); }
+.ctf-list { margin: 0; padding-left: 20px; display: grid; gap: 12px; font-family: var(--sans); font-size: 14px; line-height: 21px; }
+.ctf-list b { color: var(--ink); }
+.ctf-list span:not(.got) { display: block; color: var(--sub); }
+.ctf-list .got { margin-left: 6px; padding: 0 8px; border-radius: 999px; background: #24391a; color: #a8d58a; font-family: var(--mono); font-size: 11px; }
+@media (max-width: 899px) {
+  .site-link { padding: 0 10px; }
+  .intro { right: 12px; left: 12px; bottom: 12px; width: auto; }
+}
+.flag-form { display: flex; gap: 8px; margin-top: 16px; }
+.flag-form input { flex: 1; min-width: 0; height: 40px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--ed-bg); color: var(--ink); font-family: var(--mono); font-size: 13px; }
+.flag-form .btn { min-height: 40px; padding: 0 16px; font-size: 14px; }
+.flag-msg { min-height: 20px; margin-top: 8px; font-family: var(--sans); font-size: 13.5px; color: #a8d58a; }
+.flag-msg.error { color: #e06c75; }
+.cmdline { cursor: text; }
   </style>
   <script type="module" src="/assets/app.js"></script>
 </head>
@@ -373,14 +402,14 @@ a.entry:hover { border-color: var(--line-strong); }
 </svg>
 
 <main id="app" class="static">
-  <p class="static-note">This site is an editor written in rg, a small language I made. Turn on JavaScript to see it; here is the plain version.</p>
+  <p class="static-note">This site is an editor written in rg, a small language I made. Turn on JavaScript to see it, or open the <a href="/site/">normal site</a>. The content is below too.</p>
 <!-- prerender:start -->
 <section class="static-section pv" id="about">
-<div class="pv-hero" data-l0="7" data-l1="27">
+<div class="pv-hero" data-l0="11" data-l1="31">
       <h1><span>Rajae</span> Givans</h1>
       <p class="role">Cybersecurity and software engineering student, based in Kingston, Jamaica.</p>
       <p class="bio">I build and deploy full-stack web apps, mobile apps and APIs in TypeScript, Go and Python, with a focus on backend development, secure design and AI features built on LLM APIs. I’ve shipped production features as a software engineer intern and contributed to open source.</p>
-      <div class="cta"><a class="btn btn-primary" href="#projects" data-buf="projects">See my projects</a><a class="btn" href="#contact" data-email="rgivans9|gmail.com"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Email me</a><span class="socials"><a href="https://github.com/RajaeDev6" target="_blank" rel="noopener" aria-label="github"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a><a href="https://linkedin.com/in/rajae-g" target="_blank" rel="noopener" aria-label="linkedin"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a></span></div>
+      <div class="cta"><a class="btn btn-primary" href="#projects" data-buf="projects">See my projects</a><a class="btn" href="#contact" data-email="rgivans9|gmail.com"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Email me</a><span class="socials"><a class="social" href="https://github.com/RajaeDev6" target="_blank" rel="noopener" aria-label="github"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a><a class="social" href="https://linkedin.com/in/rajae-g" target="_blank" rel="noopener" aria-label="linkedin"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a></span></div>
     </div>
 </section>
 <section class="static-section pv" id="experience">

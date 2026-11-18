@@ -14,6 +14,9 @@ Live: [rajaedev.space](https://rajaedev.space)
 - **Code and preview are linked.** Hover anything in the preview to highlight the lines that produce it; click it to jump the editor there. Moving the cursor in the code outlines the matching block in the preview.
 - **Interactive preview.** Project cards open into the full write-up, and screenshots open full size.
 - **Layout.** Drag the divider to resize the code pane, or hide the code entirely. Both are remembered.
+- **Safe to edit.** Edits only change what you see in your own tab and reset on reload. While the code is edited, links in the preview are switched off. Every string is HTML-escaped, only `https://` links that appear in the original source can ever become working links, and screenshot names, icons and buffer targets are checked against fixed lists.
+- **A small CTF.** Three flags are hidden in the editor (`:ctf` for hints, `:flag rg{...}` to submit, or use the flags button). Flags are checked against SHA-256 hashes.
+- **Normal site.** `/site/` has the same content as a plain portfolio page, linked from the editor's tab bar, the first-visit note and the help.
 - **A real interpreter.** `assets/rg.js` tokenizes, parses and renders rg. It never throws on half-typed code, which is what lets the preview update while the code is still being written.
 - **Vim touches.** Line numbers, cursor line, `~` past the end of the file, a mode indicator, a status line and a command line (`:e`, `:e!`, `:b 3`, `:bn`, `:ls`, `:w`, `:help`, `:12`). `j`/`k`, `gg`/`G` and `Ctrl-d`/`Ctrl-u` move the cursor.
 - **Phones.** One pane at a time with a Preview / Code switch; the preview shows first.
@@ -44,7 +47,9 @@ Block kinds: `profile`, `job`, `project`, `item`, `skills`, `entry`, `contact`.
 
 1. Edit the files in `src/*.rg`.
 2. Run `node tools/build.mjs`. It writes `assets/sources.js` (what the editor loads) and prerenders every section into `index.html`.
-3. If you changed `assets/styles.css`, run `python3 tools/inline-css.py`. It inlines the CSS into `index.html` and updates the CSP hash in `_headers`.
+3. If you changed `assets/styles.css` (editor) or `assets/site.css` (normal site), run `python3 tools/inline-css.py`. It inlines each stylesheet into its pages and updates the CSP hashes in `_headers`.
+
+The normal site's pages (`site/index.html`, `site/projects.html`) are plain HTML; edit them directly.
 
 ## Tech
 

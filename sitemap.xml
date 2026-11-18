@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://rajaedev.space/</loc>
-    <lastmod>2026-11-17</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image><image:loc>https://rajaedev.space/assets/og-image.jpg</image:loc></image:image>
@@ -15,5 +15,17 @@
     <image:image><image:loc>https://rajaedev.space/assets/chichibus-my-routes.webp</image:loc></image:image>
     <image:image><image:loc>https://rajaedev.space/assets/sequik-overview.webp</image:loc></image:image>
     <image:image><image:loc>https://rajaedev.space/assets/sequik-tenants.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://rajaedev.space/site/</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://rajaedev.space/site/projects</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>

@@ -4,3 +4,6 @@ https://rajaedev.netlify.app/* https://rajaedev.space/:splat 301!
 # The projects and access pages are now buffers in the editor
 /projects  /#projects  301
 /os        /           301
+
+# The normal site (plain version of the portfolio)
+/site/projects  /site/projects.html  200

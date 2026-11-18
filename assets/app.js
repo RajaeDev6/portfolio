@@ -2,10 +2,14 @@
 // preview of what the rg interpreter renders. Visitors can edit the code and the preview
 // re-renders; hovering the preview highlights the code behind it, and the cursor line
 // in the code highlights its block in the preview.
-import { parse, toHTML, highlight } from './rg.js';
+import { parse, toHTML, highlight, urlsIn, findInjection } from './rg.js';
 import SOURCES from './sources.js';
 
 const BUFFERS = ['about', 'experience', 'projects', 'security', 'skills', 'education', 'contact'];
+const HIDDEN = ['.notes'];                         // unlisted buffers (part of the CTF)
+const ALL = [...BUFFERS, ...HIDDEN];
+// Only URLs that appear in the original source may ever become working links
+const ALLOWED_URLS = urlsIn(Object.values(SOURCES).join('\n'));
 const LINE_H = 22;
 const PAD_TOP = 8;
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -27,6 +31,7 @@ app.innerHTML = `
       ${BUFFERS.map((b, i) => `<button class="tab" role="tab" type="button" data-buf="${b}" aria-selected="false"><span class="tab-n">${i + 1}</span>${b}.rg</button>`).join('')}
     </div>
     <button type="button" class="code-toggle" id="code-toggle"></button>
+    <a class="site-link" href="/site/">Normal site</a>
     <div class="view-toggle" role="group" aria-label="View">
       <button type="button" data-view="preview">Preview</button>
       <button type="button" data-view="code">Code</button>
@@ -50,7 +55,12 @@ app.innerHTML = `
         <span class="addr"><span class="addr-host">rajaedev.space</span><span id="addr-path">/#about</span></span>
         <span class="run-status" id="run-status"></span>
       </div>
+      <div class="edit-note" id="edit-note" hidden>You’re editing a copy. Changes only show in your browser and reset when you reload, and links are switched off. <button type="button" id="edit-undo">Undo my edits</button></div>
       <div class="preview-body pv" id="preview" tabindex="-1"></div>
+      <div class="intro" id="intro" hidden role="note">
+        <p><b>This is my portfolio as a code editor.</b> The left side is the source, the right side is what it renders. Click the tabs to look around, edit the code, or find the 3 flags hidden inside.</p>
+        <div class="intro-actions"><button type="button" class="btn btn-primary" id="intro-ok">Look around</button><button type="button" class="btn" id="intro-ctf">Show the CTF</button><a class="btn" href="/site/">Normal site</a></div>
+      </div>
     </section>
   </div>
   <div class="statusline">
@@ -60,6 +70,7 @@ app.innerHTML = `
     <button type="button" class="sl-btn" id="skip" hidden>skip typing ▸</button>
     <button type="button" class="sl-btn" id="reset" hidden>undo my edits</button>
     <span class="fill"></span>
+    <button type="button" class="sl-btn flags" id="flags">flags 0/3</button>
     <span class="hint" id="hint">click the code to edit it · <kbd>:help</kbd></span>
     <span class="ft">rg</span>
     <span class="pos" id="pos">1:1</span>
@@ -80,7 +91,19 @@ app.innerHTML = `
         <dt><kbd>j</kbd> <kbd>k</kbd> <kbd>gg</kbd> <kbd>G</kbd></dt><dd>move the cursor</dd>
         <dt><kbd>:e projects</kbd></dt><dd>open a section by name</dd>
         <dt><kbd>:e!</kbd></dt><dd>undo your edits</dd>
+        <dt><kbd>:ctf</kbd></dt><dd>the capture-the-flag challenges</dd>
       </dl>
+      <p class="help-text">Not into code? The <a href="/site/">normal site</a> has the same content as a plain page.</p>
+      <p class="help-foot">Press <kbd>Esc</kbd> to close.</p>
+    </div>
+  </div>
+  <div class="overlay" id="ctf" hidden role="dialog" aria-modal="true" aria-label="Capture the flag">
+    <div class="help-box ctf-box">
+      <p class="help-title">Capture the flag</p>
+      <p class="help-text">Three flags are hidden in this editor. Each looks like <code>rg{...}</code>. Submit one with <kbd>:flag rg{...}</kbd>. Stuck? The <a href="/site/">normal site</a> has everything without the puzzles.</p>
+      <ol class="ctf-list" id="ctf-list"></ol>
+      <form class="flag-form" id="flag-form"><input id="flag-input" placeholder="rg{...}" autocomplete="off" spellcheck="false" aria-label="Flag"><button type="submit" class="btn btn-primary">Submit</button></form>
+      <p class="flag-msg" id="flag-msg" aria-live="polite"></p>
       <p class="help-foot">Press <kbd>Esc</kbd> to close.</p>
     </div>
   </div>
@@ -104,6 +127,8 @@ const cmdInput = $('cmd');
 const msgEl = $('msg');
 const helpEl = $('help');
 const lightbox = $('lightbox');
+const ctfEl = $('ctf');
+const intro = $('intro');
 
 /* ---------- state ---------- */
 
@@ -159,7 +184,9 @@ function scrollEditorTo(l0, l1, { smooth = false } = {}) {
 function drawPreview(value, { done = true } = {}) {
   const t0 = performance.now();
   const { nodes } = parse(value, { partial: !done });
-  const html = toHTML(nodes);
+  const edited = current in edits;
+  const html = toHTML(nodes, { allow: ALLOWED_URLS, trusted: !edited, buffers: ALL });
+  $('edit-note').hidden = !edited;
   if (html === lastHTML && !done) return;
   lastHTML = html;
   const open = [...previewEl.querySelectorAll('details[open]')].map((d) => d.id);
@@ -262,11 +289,12 @@ function startTyping(buf) {
 /* ---------- buffers ---------- */
 
 function open(buf, { scrollTo } = {}) {
-  if (!BUFFERS.includes(buf)) return false;
+  if (!ALL.includes(buf)) return false;
+  syncHiddenTab(buf);
   if (typing) stopTyping();
   current = buf;
-  tabs.forEach((t) => t.setAttribute('aria-selected', String(t.dataset.buf === buf)));
-  tabs.find((t) => t.dataset.buf === buf)?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  app.querySelectorAll('.tab').forEach((t) => t.setAttribute('aria-selected', String(t.dataset.buf === buf)));
+  app.querySelector(`.tab[data-buf="${CSS.escape(buf)}"]`)?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   $('file').textContent = `${buf}.rg`;
   $('addr-path').textContent = `/#${scrollTo || buf}`;
   if (location.hash.slice(1) !== (scrollTo || buf)) history.replaceState(null, '', `#${scrollTo || buf}`);
@@ -288,6 +316,20 @@ function open(buf, { scrollTo } = {}) {
     }
   }
   return true;
+}
+
+// An unlisted buffer gets a tab only while it is open
+function syncHiddenTab(buf) {
+  app.querySelector('.tab.hidden-tab')?.remove();
+  if (!HIDDEN.includes(buf)) return;
+  const t = document.createElement('button');
+  t.className = 'tab hidden-tab';
+  t.type = 'button';
+  t.setAttribute('role', 'tab');
+  t.dataset.buf = buf;
+  t.innerHTML = `<span class="tab-n">~</span>${buf}.rg`;
+  t.addEventListener('click', () => open(buf));
+  app.querySelector('.tabs').appendChild(t);
 }
 
 function step(dir) {
@@ -316,7 +358,13 @@ ta.addEventListener('input', () => {
   markCursor(lineOfCaret(), { scroll: false, sync: true });
   $('run-status').textContent = `rg run ${current}.rg · live`;
   updateModified();
+  const attack = findInjection(ta.value);
+  if (attack && attack !== lastAttack) {
+    lastAttack = attack;
+    message(`Blocked ${attack}. Everything you type is rendered as plain text, so it can’t run. flag 3: ${flag3()}`);
+  } else if (!attack) lastAttack = null;
 });
+let lastAttack = null;
 ta.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') { e.preventDefault(); ta.blur(); }
 });
@@ -341,6 +389,7 @@ function resetEdits() {
   message(`"${current}.rg" restored`);
 }
 $('reset').addEventListener('click', resetEdits);
+$('edit-undo').addEventListener('click', resetEdits);
 $('skip').addEventListener('click', stopTyping);
 
 /* ---------- preview ⇄ code links ---------- */
@@ -352,6 +401,13 @@ previewEl.addEventListener('focusin', (e) => showLink(e.target.closest('[data-l0
 previewEl.addEventListener('click', (e) => {
   const shot = e.target.closest('.shot');
   if (shot) { openLightbox(shot); return; }
+  if (e.target.closest('[data-inert]')) {
+    e.preventDefault();
+    message(current in edits
+      ? 'Links are switched off while the code is edited. :e! puts the original back.'
+      : 'That link was blocked: only links from the original source can be opened.', !(current in edits));
+    return;
+  }
   const a = e.target.closest('[data-buf]');
   if (a) {
     e.preventDefault();
@@ -433,6 +489,10 @@ function run(cmd) {
     case 'bn': case 'bnext': case 'tabn': case 'tabnext': return step(1);
     case 'bp': case 'bprev': case 'bprevious': case 'tabp': case 'tabprevious': return step(-1);
     case 'ls': case 'buffers': return message(BUFFERS.map((b, i) => `${i + 1} ${b}.rg${b in edits ? ' [+]' : ''}`).join('   '));
+    case 'ls!': case 'buffers!': return message([...BUFFERS.map((b, i) => `${i + 1} ${b}.rg`), `${BUFFERS.length + 1}u ${HIDDEN[0]}.rg (unlisted)`].join('   '));
+    case 'ctf': return showCtf();
+    case 'flag': return submitFlag(args.join(' '));
+    case 'site': case 'normal': location.href = '/site/'; return;
     case 'h': case 'help': return showHelp();
     case 'w': case 'write': {
       const v = text();
@@ -455,6 +515,8 @@ cmdInput.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') { e.preventDefault(); closeCmd(); message(''); }
 });
 cmdInput.addEventListener('blur', () => { if (!cmdForm.hidden) closeCmd(); });
+// Tapping the command line opens it (phones have no ":" key handy)
+app.querySelector('.cmdline').addEventListener('click', () => { if (cmdForm.hidden) openCmd(); });
 
 /* ---------- help ---------- */
 
@@ -466,8 +528,10 @@ helpEl.addEventListener('click', (e) => { if (e.target === helpEl) hideHelp(); }
 
 let pendingG = false;
 document.addEventListener('keydown', (e) => {
-  if (e.target === cmdInput || e.target === ta) return;
+  if (e.target === cmdInput || e.target === ta || e.target.id === 'flag-input') { if (e.key === 'Escape' && e.target.id === 'flag-input') ctfEl.hidden = true; return; }
   if (!lightbox.hidden) { if (e.key === 'Escape') closeLightbox(); return; }
+  if (!ctfEl.hidden) { if (e.key === 'Escape' || e.key === 'q') { e.preventDefault(); ctfEl.hidden = true; } return; }
+  if (!intro.hidden && e.key === 'Escape') { dismissIntro(); return; }
   if (!helpEl.hidden) { if (e.key === 'Escape' || e.key === 'q') { e.preventDefault(); hideHelp(); } return; }
   if (e.metaKey || e.altKey) return;
   if (e.ctrlKey) {
@@ -485,7 +549,7 @@ document.addEventListener('keydown', (e) => {
   if (e.key === ':') { e.preventDefault(); openCmd(); return; }
   if (e.key === '?') { e.preventDefault(); showHelp(); return; }
   if (e.key === 'i' && editorVisible()) { e.preventDefault(); if (typing) stopTyping(); placeCaret(cursorLine); return; }
-  if (/^[1-7]$/.test(e.key)) { e.preventDefault(); open(BUFFERS[Number(e.key) - 1]); return; }
+  if (/^[1-7]$/.test(e.key)) { dismissIntro(); e.preventDefault(); open(BUFFERS[Number(e.key) - 1]); return; }
   if (pendingG) {
     pendingG = false;
     if (e.key === 't') { e.preventDefault(); step(1); return; }
@@ -508,7 +572,7 @@ function placeCaret(line) {
 
 /* ---------- layout: tabs, splitter, hide code, phone view ---------- */
 
-tabs.forEach((t) => t.addEventListener('click', () => open(t.dataset.buf)));
+tabs.forEach((t) => t.addEventListener('click', () => { dismissIntro(); open(t.dataset.buf); }));
 
 function setEditorWidth(px) {
   const max = Math.max(320, panes.clientWidth * 0.6);
@@ -578,7 +642,72 @@ window.addEventListener('hashchange', () => {
   if (t && (t.buf !== current || t.scrollTo)) open(t.buf, t);
 });
 
+/* ---------- capture the flag ---------- */
+
+// Flags are checked by SHA-256 hash, so the answers are not sitting in this file.
+const CHALLENGES = [
+  { name: 'Recon', hint: 'Not every buffer is listed. Vim has a command that shows them all.', hash: '5b78a99b3c6c582b58cc6c42989ed5e0d62d21782d78c98e15720a391b7dd7e9' },
+  { name: 'Crypto', hint: 'Some secrets are only encoded, not encrypted.', hash: 'f633a3187b0e3e9c9a0adf0296d301377a9031729c9b21b6a48b57d412b6a203' },
+  { name: 'Web', hint: 'Try to make the preview run your own code: edit a link or slip in some HTML.', hash: 'f55a6d298066c78a134b366dd482a88d2a84fc4e4aebddeda7a602c37eb7ff8b' },
+];
+const found = new Set(JSON.parse(store.get('rg-flags') || '[]'));
+
+// The third flag is shown when an injection attempt is blocked; it is stored scrambled
+function flag3() {
+  return [97, 125, 90, 77, 92, 85, 92, 52, 46, 13, 60, 22, 2, 28, 12, 8, 235, 227, 255, 255, 226]
+    .map((c, i) => String.fromCharCode(c ^ ((19 + i * 7) % 256))).join('');
+}
+
+async function sha256(t) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(t));
+  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function submitFlag(value) {
+  const say = (t, err = false) => { message(t, err); $('flag-msg').textContent = t; $('flag-msg').classList.toggle('error', err); };
+  const v = value.trim();
+  if (!v) return say('Usage: :flag rg{...}', true);
+  if (!window.crypto?.subtle) return say('Your browser can’t check flags here.', true);
+  const h = await sha256(v);
+  const i = CHALLENGES.findIndex((c) => c.hash === h);
+  if (i < 0) return say('Not a flag. Keep looking.', true);
+  if (found.has(i)) return say(`You already have the ${CHALLENGES[i].name} flag.`);
+  found.add(i);
+  store.set('rg-flags', JSON.stringify([...found]));
+  syncFlags();
+  say(found.size === CHALLENGES.length
+    ? 'All 3 flags found. Nice work. If you’re hiring, :e contact'
+    : `Correct: ${CHALLENGES[i].name} flag. ${found.size}/${CHALLENGES.length} found.`);
+}
+$('flag-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  submitFlag($('flag-input').value);
+  $('flag-input').value = '';
+});
+
+function syncFlags() {
+  $('flags').textContent = `flags ${found.size}/${CHALLENGES.length}`;
+  $('ctf-list').innerHTML = CHALLENGES.map((c, i) => `<li class="${found.has(i) ? 'done' : ''}"><b>${c.name}</b> ${found.has(i) ? '<span class="got">found</span>' : ''}<span>${c.hint}</span></li>`).join('');
+}
+
+function showCtf() { dismissIntro(); syncFlags(); $('flag-msg').textContent = ''; ctfEl.hidden = false; }
+$('flags').addEventListener('click', showCtf);
+ctfEl.addEventListener('click', (e) => { if (e.target === ctfEl) ctfEl.hidden = true; });
+
+/* ---------- first visit ---------- */
+
+function dismissIntro() {
+  if (intro.hidden) return;
+  intro.hidden = true;
+  store.set('rg-intro', 'seen');
+}
+$('intro-ok').addEventListener('click', dismissIntro);
+$('intro-ctf').addEventListener('click', showCtf);
+if (!store.get('rg-intro')) intro.hidden = false;
+
 /* ---------- start ---------- */
+
+syncFlags();
 
 syncCodeToggle();
 syncViewToggle();

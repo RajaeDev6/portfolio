@@ -16,6 +16,10 @@
 // which is what lets the preview update while code is being written or edited.
 // Every node remembers its source lines so the preview and the editor can point at each other.
 // No DOM code here, so the build script can run it in Node.
+//
+// Safety: every string is HTML-escaped, and links are checked before they are rendered.
+// Only https:// URLs are ever made into links, and the editor can restrict them further
+// (to the URLs in the original source) or switch them off entirely while code is edited.
 
 export const KINDS = ['profile', 'job', 'project', 'item', 'skills', 'entry', 'contact'];
 const STATEMENTS = ['module', 'title', 'heading'];
@@ -145,31 +149,55 @@ const esc = (s = '') => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&l
 const one = (b, k, i = 0) => b.props[k]?.[0]?.args[i];
 const all = (b, k) => (b.props[k] || []);
 const icon = (id) => `<svg class="icon" aria-hidden="true"><use href="#i-${id}"/></svg>`;
-const ext = (url) => /^https?:/.test(url || '');
 const src = (n) => ` data-l0="${n.start}" data-l1="${n.end}"`;
-const slug = (b) => esc(b.name.replace(/_/g, '-'));
+const slug = (b) => esc(b.name.replace(/[^\w-]/g, '').replace(/_/g, '-'));
+const ICONS = new Set(['github', 'linkedin', 'mail', 'cap', 'award', 'arrow', 'caret', 'x']);
+const safeIcon = (id, fallback) => (ICONS.has(id) ? id : fallback);
+const safeFile = (f) => (/^[a-z0-9-]+$/.test(f || '') ? f : null);
 
+// Render options, set for each toHTML() call:
+//   trusted  false while a visitor has edited the code: links render but do nothing
+//   allow    a Set of URLs that may become links (the URLs in the original source)
+//   buffers  the buffer names that :e targets may point at
+let ctx = { trusted: true, allow: null, buffers: null };
+
+export function safeUrl(url) {
+  if (!/^https:\/\/[^\s"'<>\\]+$/i.test(url || '')) return null;
+  if (ctx.allow && !ctx.allow.has(url)) return null;
+  return url;
+}
+
+// A link's href and extra attributes, or null when it must not be a working link
 function linkFor(target) {
-  if (!target) return { href: '#' };
+  if (!target) return null;
   if (target === 'mail') return { href: '#contact', attrs: ` data-email="${EMAIL.join('|')}"` };
-  const m = target.match(/^:e(?:dit)?\s+(\w+)/);
-  if (m) return { href: `#${m[1]}`, attrs: ` data-buf="${m[1]}"` };
-  return { href: target, attrs: ext(target) ? ' target="_blank" rel="noopener"' : '' };
+  const m = target.match(/^:e(?:dit)?\s+(\w+)$/);
+  if (m) return !ctx.buffers || ctx.buffers.includes(m[1]) ? { href: `#${m[1]}`, attrs: ` data-buf="${m[1]}"` } : null;
+  const url = safeUrl(target);
+  return url ? { href: url, attrs: ' target="_blank" rel="noopener"' } : null;
+}
+
+// An <a> that works, or a look-alike that does nothing when links are off or blocked
+function a(cls, link, inner, extra = '') {
+  if (link && (ctx.trusted || link.attrs?.includes('data-buf'))) {
+    return `<a class="${cls}" href="${esc(link.href)}"${link.attrs || ''}${extra}>${inner}</a>`;
+  }
+  return `<a class="${cls} is-inert" role="link" aria-disabled="true" data-inert${extra}>${inner}</a>`;
 }
 
 const BUTTON_ICONS = { 'Email me': 'mail', GitHub: 'github', LinkedIn: 'linkedin' };
 
 function button(p, i) {
-  const { href, attrs = '' } = linkFor(p.target);
   const label = p.args[0] || '';
-  return `<a class="btn${i === 0 ? ' btn-primary' : ''}" href="${esc(href)}"${attrs}>${BUTTON_ICONS[label] ? icon(BUTTON_ICONS[label]) : ''}${esc(label)}</a>`;
+  return a(`btn${i === 0 ? ' btn-primary' : ''}`, linkFor(p.target), `${BUTTON_ICONS[label] ? icon(BUTTON_ICONS[label]) : ''}${esc(label)}`);
 }
 
 function arrowLink(b) {
   const label = one(b, 'link', 0);
   const url = one(b, 'link', 1);
   if (!label || !url) return '';
-  return `<a class="link" href="${esc(url)}" target="_blank" rel="noopener">${esc(label)}${icon('arrow')}</a>`;
+  const u = safeUrl(url);
+  return a('link', u ? { href: u, attrs: ' target="_blank" rel="noopener"' } : null, `${esc(label)}${icon('arrow')}`);
 }
 
 function chips(list) {
@@ -177,7 +205,7 @@ function chips(list) {
 }
 
 function shot(p, size = 280) {
-  const f = esc(p.args[0] || '');
+  const f = safeFile(p.args[0]);
   if (!f) return '';
   return `<button type="button" class="shot" data-full="/assets/${f}.webp" aria-label="Enlarge screenshot"><img src="/assets/${f}-${size}.webp" srcset="/assets/${f}-200.webp 200w, /assets/${f}-280.webp 280w, /assets/${f}.webp 420w" sizes="160px" width="160" height="346" loading="lazy" alt="${esc(p.args[1] || '')}"></button>`;
 }
@@ -190,7 +218,10 @@ const render = {
     const name = one(b, 'name') || '';
     const [firstName, ...restName] = name.split(' ');
     const buttons = all(b, 'button').map(button);
-    const socials = all(b, 'social').filter((p) => p.args[1]).map((p) => `<a href="${esc(p.args[1])}" target="_blank" rel="noopener" aria-label="${esc(p.args[0])}">${icon(p.args[0])}</a>`);
+    const socials = all(b, 'social').filter((p) => p.args[1]).map((p) => {
+      const u = safeUrl(p.args[1]);
+      return a('social', u ? { href: u, attrs: ' target="_blank" rel="noopener"' } : null, icon(safeIcon(p.args[0], 'arrow')), ` aria-label="${esc(p.args[0])}"`);
+    });
     return `<div class="pv-hero"${src(b)}>
       ${name ? `<h1><span>${esc(firstName)}</span> ${esc(restName.join(' '))}</h1>` : ''}
       ${one(b, 'role') ? `<p class="role">${esc(one(b, 'role'))}</p>` : ''}
@@ -215,7 +246,7 @@ const render = {
     const shots = all(b, 'shot');
     return `<details class="project" id="${slug(b)}"${src(b)}>
       <summary>
-        ${shots[0] ? `<span class="project-cover">${shots.map((p) => `<img src="/assets/${esc(p.args[0])}-200.webp" width="96" height="208" loading="lazy" alt="">`).join('')}</span>` : ''}
+        ${shots.some((p) => safeFile(p.args[0])) ? `<span class="project-cover">${shots.filter((p) => safeFile(p.args[0])).map((p) => `<img src="/assets/${safeFile(p.args[0])}-200.webp" width="96" height="208" loading="lazy" alt="">`).join('')}</span>` : ''}
         <span class="project-sum">
           <span class="project-name">${esc(one(b, 'name'))}</span>
           ${one(b, 'tag') ? `<span class="tag">${esc(one(b, 'tag'))}</span>` : ''}
@@ -249,9 +280,11 @@ const render = {
   },
 
   entry(b) {
-    const inner = `<span class="entry-icon">${icon(one(b, 'icon') || 'cap')}</span><span><strong>${esc(one(b, 'name'))}</strong><small>${esc(one(b, 'sub'))}</small></span>`;
+    const inner = `<span class="entry-icon">${icon(safeIcon(one(b, 'icon'), 'cap'))}</span><span><strong>${esc(one(b, 'name'))}</strong><small>${esc(one(b, 'sub'))}</small></span>`;
     const href = one(b, 'href');
-    return href ? `<a class="entry" href="${esc(href)}" target="_blank" rel="noopener"${src(b)}>${inner}${icon('arrow')}</a>` : `<div class="entry"${src(b)}>${inner}</div>`;
+    if (!href) return `<div class="entry"${src(b)}>${inner}</div>`;
+    const u = safeUrl(href);
+    return a('entry', u ? { href: u, attrs: ' target="_blank" rel="noopener"' } : null, `${inner}${icon('arrow')}`, src(b));
   },
 
   contact(b) {
@@ -266,7 +299,8 @@ const render = {
 // Consecutive blocks of the same kind share a container
 const GROUPS = { item: 'items', entry: 'entries', job: 'jobs', project: 'projects' };
 
-export function toHTML(nodes) {
+export function toHTML(nodes, options = {}) {
+  ctx = { trusted: true, allow: null, buffers: null, ...options };
   let html = '';
   let group = null;
   const close = () => { if (group) { html += '</div>'; group = null; } };
@@ -277,6 +311,24 @@ export function toHTML(nodes) {
   }
   close();
   return html;
+}
+
+// Every https:// URL in a source text, so the editor can allow exactly those
+export function urlsIn(text) {
+  return new Set(text.match(/https:\/\/[^\s"'<>\\]+/g) || []);
+}
+
+// Spots common injection attempts in edited code, so the editor can say what it blocked
+const ATTACKS = [
+  [/javascript\s*:/i, 'a javascript: link'],
+  [/(?:data|vbscript)\s*:/i, 'a data: or vbscript: link'],
+  [/<\s*script/i, 'a <script> tag'],
+  [/<\s*(?:img|svg|iframe|object|embed)\b/i, 'an HTML tag'],
+  [/\bon\w+\s*=/i, 'an inline event handler'],
+];
+export function findInjection(text) {
+  const hit = ATTACKS.find(([re]) => re.test(text));
+  return hit ? hit[1] : null;
 }
 
 /* ---------- syntax highlighting for the editor ---------- */
