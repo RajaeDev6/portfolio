@@ -31,7 +31,14 @@ app.innerHTML = `
       ${BUFFERS.map((b, i) => `<button class="tab" role="tab" type="button" data-buf="${b}" aria-selected="false"><span class="tab-n">${i + 1}</span>${b}<span class="tab-ext">.rg</span></button>`).join('')}
     </div>
     <button type="button" class="code-toggle" id="code-toggle"></button>
-    <a class="site-link" href="/site/">Normal site</a>
+    <span class="site-wrap">
+      <a class="site-link" href="/site/" id="site-link">Normal site</a>
+      <div class="nudge" id="nudge" hidden role="note">
+        <svg class="nudge-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p><b>This is Rajae Givans’ portfolio</b>, built as a code editor. Prefer a plain page?</p>
+        <div class="nudge-actions"><a class="btn btn-primary" href="/site/">Open the normal site</a><button type="button" class="btn" id="nudge-close">Stay here</button></div>
+      </div>
+    </span>
     <div class="view-toggle" role="group" aria-label="View">
       <button type="button" data-view="preview">Preview</button>
       <button type="button" data-view="code">Code</button>
@@ -873,6 +880,17 @@ function dismissIntro() {
 $('intro-ok').addEventListener('click', dismissIntro);
 $('intro-ctf').addEventListener('click', showCtf);
 if (!store.get('rg-intro')) intro.hidden = false;
+
+// A pointer to the normal site, so nobody is lost in the editor. Shows until closed or used.
+const nudge = $('nudge');
+function closeNudge() { nudge.hidden = true; store.set('rg-nudge', 'closed'); }
+function showNudge() { if (!store.get('rg-nudge')) setTimeout(() => { nudge.hidden = false; }, 700); }
+// On phones, don't stack it on top of the first-visit note; wait until that's closed
+if (narrow.matches && !intro.hidden) { $('intro-ok').addEventListener('click', showNudge); $('intro-ctf').addEventListener('click', showNudge); }
+else showNudge();
+$('nudge-close').addEventListener('click', closeNudge);
+nudge.querySelector('a').addEventListener('click', () => store.set('rg-nudge', 'closed'));
+$('site-link').addEventListener('click', () => store.set('rg-nudge', 'closed'));
 
 /* ---------- start ---------- */
 
