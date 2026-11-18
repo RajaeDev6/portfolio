@@ -148,12 +148,12 @@ kbd { font-family: var(--mono); font-size: .88em; padding: 0 4px; border: 1px so
 .tabline { display: flex; align-items: stretch; background: var(--ed-bar); border-bottom: 1px solid var(--ed-line); min-width: 0; }
 .tabs { display: flex; overflow-x: auto; scrollbar-width: none; min-width: 0; flex: 1; }
 .tabs::-webkit-scrollbar { display: none; }
-.tab { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; background: none; border: 0; border-right: 1px solid var(--ed-line); color: var(--muted); font-family: var(--mono); font-size: 12px; line-height: 1; cursor: pointer; white-space: nowrap; transition: color .15s var(--ease), background-color .15s var(--ease); }
+.tab { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; background: none; border: 0; border-right: 1px solid var(--ed-line); color: var(--muted); font-family: var(--mono); font-size: 13px; cursor: pointer; white-space: nowrap; transition: color .15s var(--ease), background-color .15s var(--ease); }
 .tab:hover { color: var(--ink); background: #1a1e24; }
 .tab[aria-selected="true"] { color: var(--ink); background: var(--ed-bg); box-shadow: inset 0 2px 0 var(--accent); }
-.tab-n { display: none; }
+.tab-n { color: var(--ed-gutter); font-size: 11px; }
 .tab[aria-selected="true"] .tab-n { color: var(--accent-text); }
-.code-toggle { padding: 0 12px; border: 0; border-left: 1px solid var(--ed-line); background: none; color: var(--muted); font-family: var(--mono); font-size: 11.5px; cursor: pointer; white-space: nowrap; }
+.code-toggle { padding: 0 14px; border: 0; border-left: 1px solid var(--ed-line); background: none; color: var(--muted); font-family: var(--mono); font-size: 12px; cursor: pointer; white-space: nowrap; }
 .code-toggle:hover { color: var(--ink); background: #1a1e24; }
 .view-toggle { display: none; padding: 5px 8px; gap: 2px; border-left: 1px solid var(--ed-line); }
 .view-toggle button { padding: 4px 10px; border: 1px solid transparent; border-radius: 6px; background: none; color: var(--muted); font-family: var(--mono); font-size: 12px; cursor: pointer; }
@@ -357,7 +357,7 @@ a.entry:hover { border-color: var(--line-strong); }
 }
 
 /* ---------- normal-site link, edit notice, first-visit note, CTF ---------- */
-.site-link { display: inline-flex; align-items: center; margin: 4px 6px; padding: 0 10px; border-radius: 6px; background: var(--accent); color: #fff; font-family: var(--mono); font-size: 11.5px; font-weight: 600; white-space: nowrap; }
+.site-link { display: inline-flex; align-items: center; padding: 0 14px; border-left: 1px solid var(--ed-line); background: var(--accent); color: #fff; font-family: var(--mono); font-size: 12px; font-weight: 600; white-space: nowrap; }
 .site-link:hover { background: var(--accent-hover); }
 .preview { position: relative; grid-template-rows: auto auto 1fr; }
 .edit-note { padding: 8px 16px; background: #2a2414; border-bottom: 1px solid #4a3d1c; color: #e8d7a8; font-family: var(--sans); font-size: 13.5px; line-height: 20px; }
@@ -381,7 +381,7 @@ a.entry:hover { border-color: var(--line-strong); }
 .cmdline { cursor: text; }
 
 /* CTF: tab-bar button, mission strip, start and finish screens */
-.ctf-btn { margin: 4px 0 4px 6px; padding: 0 10px; border: 1px solid #2a3c4d; border-radius: 6px; background: #17212b; color: #9fd3f0; font-family: var(--mono); font-size: 11.5px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.ctf-btn { padding: 0 14px; border: 0; border-left: 1px solid var(--ed-line); background: #1b2733; color: #9fd3f0; font-family: var(--mono); font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; }
 .ctf-btn:hover { background: #213141; }
 .ctf-btn.complete { background: #22361a; color: #a8d58a; }
 .mission { display: flex; align-items: center; gap: 10px; padding: 8px 16px; border-bottom: 1px solid var(--line); background: #141c25; font-family: var(--sans); font-size: 14px; line-height: 20px; color: var(--sub); min-width: 0; }
@@ -413,7 +413,7 @@ a.entry:hover { border-color: var(--line-strong); }
 
 /* Encrypted buffers */
 .tab.locked { color: #6b737d; }
-.tab-lock { display: inline-flex; font-size: 11px; color: #6b737d; }
+.tab-lock { display: inline-flex; font-size: 12px; color: #6b737d; margin-left: -2px; }
 .tab.locked[aria-selected="true"] .tab-lock { color: var(--accent-text); }
 .locked { max-width: 520px !important; margin: 48px auto 0; padding: 36px 32px; text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; }
 .locked-icon { display: inline-grid; place-items: center; width: 56px; height: 56px; margin-bottom: 16px; border-radius: 16px; background: rgb(23 147 209 / 0.12); color: var(--accent-text); font-size: 28px; }
@@ -425,10 +425,10 @@ a.entry:hover { border-color: var(--line-strong); }
 .mission-unlocks { color: var(--muted); }
 @media (max-width: 899px) { .mission-unlocks { display: none; } .locked { margin-top: 16px; padding: 28px 20px; } }
 
-/* The detail the current CTF question is about */
-.pv .pv-target { position: relative; box-shadow: 0 0 0 1px #2f5f80; }
-.pv .pv-target::after { content: "CTF"; position: absolute; top: -9px; right: 14px; padding: 0 6px; border-radius: 4px; background: var(--accent); color: #fff; font-family: var(--mono); font-size: 10px; line-height: 16px; font-weight: 700; letter-spacing: .05em; }
-.pv-hero.pv-target { padding: 24px 24px 24px; margin-top: 16px; }
+.ctf-list .clue { display: block; margin-top: 4px; color: var(--ink); font-size: 15px; line-height: 23px; font-style: italic; }
+.ctf-list li.later { color: var(--muted); }
+.ctf-list li.later span { color: var(--muted); }
+.ctf-list .linkish { margin-top: 6px; font-size: 13.5px; }
   </style>
   <script type="module" src="/assets/app.js"></script>
 </head>
@@ -451,7 +451,7 @@ a.entry:hover { border-color: var(--line-strong); }
   <p class="static-note">This site is an editor written in rg, a small language I made. Turn on JavaScript to see it, or open the <a href="/site/">normal site</a>. The content is below too.</p>
 <!-- prerender:start -->
 <section class="static-section pv" id="about">
-<div class="pv-hero" data-l0="13" data-l1="34">
+<div class="pv-hero" data-l0="14" data-l1="35">
       <h1><span>Rajae</span> Givans</h1>
       <p class="role">Cybersecurity and software engineering student, based in Kingston, Jamaica.</p>
       <p class="bio">I build and deploy full-stack web apps, mobile apps and APIs in TypeScript, Go and Python, with a focus on backend development, secure design and AI features built on LLM APIs. I’ve shipped production features as a software engineer intern and contributed to open source.</p>
@@ -562,32 +562,32 @@ a.entry:hover { border-color: var(--line-strong); }
     </article></div>
 </section>
 <section class="static-section pv" id="security">
-<h2 class="pv-title" data-l0="3" data-l1="3">Security Projects</h2><div class="items"><article class="item" id="soc-shift" data-l0="5" data-l1="24">
+<h2 class="pv-title" data-l0="3" data-l1="3">Security Projects</h2><div class="items"><article class="item" id="soc-shift" data-l0="5" data-l1="26">
       <h3>SOC Shift</h3>
       <p class="tag">Security analyst training</p>
       <p class="item-text">Practice the day-to-day work of a security analyst. Classify each alert in a queue as a real threat, a false alarm or expected activity, rank the real threats, and map them to MITRE ATT&amp;CK tactics. Other shifts give you an inbox to sort phishing from legitimate email. Fifteen shifts get harder as you go, and each ends with a score and an explanation of every call.</p>
       <ul class="chips"><li>JavaScript</li><li>Firebase</li></ul><a class="link" href="https://socshift.vercel.app" target="_blank" rel="noopener">Open SOC Shift<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </article><article class="item" id="coresight" data-l0="26" data-l1="39">
+    </article><article class="item" id="coresight" data-l0="28" data-l1="41">
       <h3>CoreSight</h3>
       <p class="tag">Log search</p>
       <p class="item-text">Parses syslog, login and web access logs into a searchable index. You can filter with its own query operators, and it flags suspicious patterns such as repeated failed logins from one address.</p>
       <ul class="chips"><li>Python</li></ul><a class="link" href="https://github.com/RajaeDev6/coresight" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </article><article class="item" id="pingsweeper" data-l0="41" data-l1="53">
+    </article><article class="item" id="pingsweeper" data-l0="43" data-l1="55">
       <h3>PingSweeper</h3>
       <p class="tag">Network scanner</p>
       <p class="item-text">Sends ICMP echo requests (pings) to every address in a subnet at the same time using Go’s goroutines, then reports which hosts are up and how long each took to respond.</p>
       <ul class="chips"><li>Go</li></ul><a class="link" href="https://github.com/RajaeDev6/PingSweeper" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </article></div><h3 class="pv-heading" data-l0="55" data-l1="55">Labs from my degree</h3><div class="items"><article class="item" id="pentest" data-l0="57" data-l1="67">
+    </article></div><h3 class="pv-heading" data-l0="57" data-l1="57">Labs from my degree</h3><div class="items"><article class="item" id="pentest" data-l0="59" data-l1="69">
       <h3>Penetration test</h3>
       <p class="tag">GreenFields Financial Services · Team of 3</p>
       <p class="item-text">Scanned, exploited and reported on a deliberately vulnerable network, capturing unencrypted passwords and presenting a fix plan in an executive summary.</p>
       <ul class="chips"><li>Kali Linux</li><li>Wireshark</li></ul>
-    </article><article class="item" id="vuln-assessment" data-l0="69" data-l1="78">
+    </article><article class="item" id="vuln-assessment" data-l0="71" data-l1="80">
       <h3>Vulnerability assessment</h3>
       <p class="tag">University lab</p>
       <p class="item-text">Inventoried services, ports and software versions on a Windows system, researched known CVEs in NVD and MITRE, and wrote up the risks and fixes.</p>
       <ul class="chips"><li>Nmap</li><li>PowerShell</li><li>CVE research</li></ul>
-    </article><article class="item" id="network-lab" data-l0="80" data-l1="90">
+    </article><article class="item" id="network-lab" data-l0="82" data-l1="92">
       <h3>Network security lab</h3>
       <p class="tag">University lab</p>
       <p class="item-text">Analyzed DNS, web and ICMP traffic in Wireshark, scanned hosts for open ports, and configured firewall rules to block unwanted connections.</p>

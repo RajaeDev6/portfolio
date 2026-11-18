@@ -4,7 +4,7 @@ module experience
 title "Experience"
 
 job jaia {
-  -- flag: rg{shipped_to_production}
+  -- }noitcudorp_ot_deppihs{gr
   role    "Software Engineer Intern"
   org     "Jamaica Artificial Intelligence"
        .. "Association"

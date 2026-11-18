@@ -4,7 +4,9 @@ module security
 title "Security Projects"
 
 item soc_shift {
-  -- flag: rg{soc_analyst_training}
+  -- 72 67 7b 73 6f 63 5f 61
+  -- 6e 61 6c 79 73 74 5f 74
+  -- 72 61 69 6e 69 6e 67 7d
   name    "SOC Shift"
   tag     "Security analyst training"
   text    "Practice the day-to-day work of a"

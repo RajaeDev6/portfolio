@@ -4,16 +4,17 @@
 -- output: click in here and edit it.
 --
 -- each file hides a secret next to
--- something worth knowing about me.
--- find it to open the next file.
--- tip: press / to search the code,
--- or click the preview to jump to it.
+-- something worth knowing about me,
+-- and it isn't in plain text.
+-- tools: / search, :decode :hex
+-- :rot13 :rev. click the preview to
+-- jump to the code behind it.
 
 module about
 
 profile rajae {
   name    "Rajae Givans"
-  -- flag: rg{security_meets_software}
+  -- cmd7c2VjdXJpdHlfbWVldHNfc29mdHdhcmV9
   role    "Cybersecurity and software"
        .. "engineering student, based in"
        .. "Kingston, Jamaica."

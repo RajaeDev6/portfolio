@@ -93,7 +93,8 @@ app.innerHTML = `
         <dt><kbd>:e projects</kbd></dt><dd>open a section by name</dd>
         <dt><kbd>:e!</kbd></dt><dd>undo your edits</dd>
         <dt><kbd>:ctf</kbd></dt><dd>the capture-the-flag challenges</dd>
-        <dt><kbd>/flag</kbd>, <kbd>n</kbd></dt><dd>search the code, jump to the next match</dd>
+        <dt><kbd>/word</kbd>, <kbd>n</kbd></dt><dd>search the code, jump to the next match</dd>
+        <dt><kbd>:decode</kbd> <kbd>:hex</kbd> <kbd>:rot13</kbd> <kbd>:rev</kbd></dt><dd>decode base64, hex, ROT13 or reversed text: the line under the cursor, or whatever you type after it</dd>
       </dl>
       <p class="help-text">Not into code? The <a href="/site/">normal site</a> has the same content as a plain page.</p>
       <p class="help-foot">Press <kbd>Esc</kbd> to close.</p>
@@ -103,12 +104,12 @@ app.innerHTML = `
     <div class="help-box start-box">
       <p class="start-kicker">rajaedev.space</p>
       <h2 class="start-title" id="intro-title">Capture the flag</h2>
-      <p class="help-text">This portfolio is a Vim editor with a small capture-the-flag. Each file hides a flag, written like <code>rg{...}</code>, next to something worth knowing about me. Find it to unlock the next file. The last one unlocks my contact details.</p>
+      <p class="help-text">This portfolio is a Vim editor with a small capture-the-flag. Each file hides an encoded flag next to something worth knowing about me. Crack the clue, find the flag, decode it, and the next file opens. The last one unlocks my contact details.</p>
       <p class="help-text">Just want to read my portfolio? The <a href="/site/">normal site</a> has everything, no puzzles.</p>
       <dl class="start-keys">
         <dt>click the preview</dt><dd>jumps to the code behind it</dd>
-        <dt><kbd>/flag</kbd></dt><dd>searches the code (press <kbd>/</kbd>, type, Enter)</dd>
-        <dt><kbd>:</kbd></dt><dd>opens the command line (try <kbd>:help</kbd>)</dd>
+        <dt><kbd>/</kbd></dt><dd>searches the code (type a word, press Enter)</dd>
+        <dt><kbd>:decode</kbd> <kbd>:hex</kbd> <kbd>:rot13</kbd> <kbd>:rev</kbd></dt><dd>decode the line under the cursor</dd>
       </dl>
       <div class="intro-actions">
         <button type="button" class="btn btn-primary" id="intro-start">Start the CTF</button>
@@ -133,7 +134,7 @@ app.innerHTML = `
   <div class="overlay" id="ctf" hidden role="dialog" aria-modal="true" aria-label="Capture the flag">
     <div class="help-box ctf-box">
       <p class="help-title">Capture the flag</p>
-      <p class="help-text">Each file hides a flag like <code>rg{...}</code> next to the answer to a question about me. Submit it below or with <kbd>:flag rg{...}</kbd> to unlock the next file. Stuck? The <a href="/site/">normal site</a> has everything without the puzzles.</p>
+      <p class="help-text">Each file hides an encoded flag next to the answer to its clue. Decode it with <kbd>:decode</kbd>, <kbd>:hex</kbd>, <kbd>:rot13</kbd> or <kbd>:rev</kbd> and it’s checked automatically, or submit a flag below or with <kbd>:flag rg{...}</kbd>. Stuck? The <a href="/site/">normal site</a> has everything without the puzzles.</p>
       <ol class="ctf-list" id="ctf-list"></ol>
       <form class="flag-form" id="flag-form"><input id="flag-input" placeholder="rg{...}" autocomplete="off" spellcheck="false" aria-label="Flag"><button type="submit" class="btn btn-primary">Submit</button></form>
       <p class="flag-msg" id="flag-msg" aria-live="polite"></p>
@@ -228,7 +229,7 @@ function drawPreview(value, { done = true } = {}) {
   const ms = (performance.now() - t0).toFixed(1);
   const blocks = nodes.filter((n) => n.name).length;
   $('run-status').textContent = done ? `rg run ${current}.rg · ${blocks} block${blocks === 1 ? '' : 's'} · ${ms}ms` : 'rg run · interpreting…';
-  if (typeof markTarget === 'function' && done) { markTarget(); syncFlags(); }
+  if (done && typeof syncFlags === 'function') syncFlags();
   previewEl.querySelectorAll('[data-email]').forEach((a) => {
     const [user, domain] = a.dataset.email.split('|');
     a.href = `mailto:${user}@${domain}`;
@@ -548,6 +549,10 @@ function run(cmd) {
     case 'bp': case 'bprev': case 'bprevious': case 'tabp': case 'tabprevious': return step(-1);
     case 'ls': case 'buffers': return message(BUFFERS.map((b, i) => `${i + 1} ${b}.rg${b in edits ? ' [+]' : ''}`).join('   '));
     case 'ctf': return showCtf();
+    case 'decode': case 'b64': case 'base64': return decodeWith('base64', args.join(' '));
+    case 'hex': return decodeWith('hex', args.join(' '));
+    case 'rot13': return decodeWith('rot13', args.join(' '));
+    case 'rev': case 'reverse': return decodeWith('rev', args.join(' '));
     case 'flag': return submitFlag(args.join(' '));
     case 'site': case 'normal': location.href = '/site/'; return;
     case 'h': case 'help': return showHelp();
@@ -706,37 +711,91 @@ window.addEventListener('hashchange', () => {
 
 /* ---------- capture the flag ---------- */
 
-// Each flag sits in the code next to a detail worth knowing, and finding it opens the
-// next file, so playing walks through the portfolio in order. Flags are checked by
-// SHA-256 hash, so the answers are not written in this file.
+// Each file hides an encoded flag next to a detail worth noticing. The clue points at the
+// detail without naming it; decoding the line beside it gives the flag, which opens the next
+// file, so solving walks through the portfolio in order. Flags are checked by SHA-256 hash.
 const CHALLENGES = [
   {
-    name: 'What I do', where: 'about', block: 'rajae', unlocks: ['experience'],
-    question: 'What do I do? The flag is right next to my role.',
-    tip: 'Click my role in the preview to jump to its code, or press <kbd>/</kbd>, type <kbd>flag</kbd> and Enter.',
+    where: 'about', unlocks: ['experience'],
+    clue: 'I stand where two fields meet. Beside my title, a line is written in base sixty-four.',
+    hints: [
+      'The title is my role: the line that says what I study.',
+      'Click my role in the preview to jump to its code. Put the cursor on the odd line above it (j / k) and run :decode.',
+    ],
     hash: '4f2fe91023d1ed9b9592df53852f6d11f5bd6938cff6d1da9b36b8a546ad9cd0',
   },
   {
-    name: 'Experience', where: 'experience', block: 'jaia', unlocks: ['projects'],
-    question: 'Where did I work as a software engineer intern?',
-    tip: 'Click the internship in the preview to jump to its code, or search with <kbd>/flag</kbd>.',
+    where: 'experience', unlocks: ['projects'],
+    clue: '4a 41 49 41. I spent a summer there, and the line beside it reads right to left.',
+    hints: [
+      'The numbers are hex. Try :hex 4a 41 49 41, then search for the answer with /.',
+      'Put the cursor on the backwards line and run :rev.',
+    ],
     hash: 'aaa84e22db90106eb3cc62052131406f77f3d86f773ccba67f0dbe5bf1720f66',
   },
   {
-    name: 'Projects', where: 'projects', block: 'shop_weh', unlocks: ['security'],
-    question: 'Which of my apps finds the cheapest groceries in Jamaica?',
-    tip: 'Click its card in the preview to see the full write-up and jump to its code, or search with <kbd>/flag</kbd>.',
+    where: 'projects', unlocks: ['security'],
+    clue: 'Fubc Jru. Turn it thirteen places, then turn the line beside it too.',
+    hints: [
+      'That’s ROT13. Try :rot13 Fubc Jru.',
+      'Click that project’s card to jump to its code, put the cursor on the odd line and run :rot13.',
+    ],
     hash: '30f7c04a9c9c87335717e8f832ef9468b99f32203e20f925104ea85f7ffa399b',
   },
   {
-    name: 'Security', where: 'security', block: 'soc_shift', unlocks: ['skills', 'education', 'contact'],
-    question: 'Which of my projects trains security analysts?',
-    tip: 'Click it in the preview to jump to its code, or search with <kbd>/flag</kbd>.',
+    where: 'security', unlocks: ['skills', 'education', 'contact'],
+    clue: 'Three letters watch the network day and night. Whatever trains them keeps the last flag in hex.',
+    hints: [
+      'SOC: Security Operations Center. Which of my projects trains people to work in one?',
+      'Click it in the preview to jump to its code, put the cursor on one of the hex lines and run :hex.',
+    ],
     hash: '10a872a71b9d49fa051c7579518509dfc58abc7f241c3f8fc2ceea8dc03c2fd5',
   },
 ];
 const found = new Set(JSON.parse(store.get('rg-flags') || '[]').filter((i) => i < CHALLENGES.length));
+const hintsShown = CHALLENGES.map(() => 0);
 const nextChallenge = () => CHALLENGES.findIndex((_, n) => !found.has(n));
+
+/* decoders: the line under the cursor, or the text after the command */
+
+const DECODERS = {
+  base64: (t) => { const out = atob(t.replace(/\s+/g, '')); if (!/^[\x20-\x7e]+$/.test(out)) throw new Error(); return out; },
+  hex: (t) => {
+    const clean = t.replace(/0x/gi, '').replace(/[^0-9a-f]/gi, '');
+    if (!clean || clean.length % 2) throw new Error();
+    return clean.match(/../g).map((h) => String.fromCharCode(parseInt(h, 16))).join('');
+  },
+  rot13: (t) => t.replace(/[a-z]/gi, (c) => String.fromCharCode((c <= 'Z' ? 65 : 97) + ((c.toLowerCase().charCodeAt(0) - 97 + 13) % 26))),
+  rev: (t) => [...t].reverse().join(''),
+};
+
+// The text on the cursor line: a "string", or a comment (joined with the comment lines
+// right next to it, so a hex value split over several lines decodes in one go)
+function payloadAtCursor() {
+  const ls = (ta.value || text()).split('\n');
+  const at = ta === document.activeElement ? lineOfCaret() : cursorLine;
+  const line = ls[at] || '';
+  const str = line.match(/"([^"]*)"/);
+  if (str && !/^\s*--/.test(line)) return str[1];
+  if (!/^\s*--/.test(line)) return null;
+  let a = at;
+  let b = at;
+  while (a > 0 && /^\s*--/.test(ls[a - 1]) && /^\s+--/.test(ls[a - 1]) === /^\s+--/.test(line)) a--;
+  while (b < ls.length - 1 && /^\s*--/.test(ls[b + 1]) && /^\s+--/.test(ls[b + 1]) === /^\s+--/.test(line)) b++;
+  return ls.slice(a, b + 1).map((l) => l.replace(/^\s*--\s?/, '')).join(' ').trim();
+}
+
+function decodeWith(kind, arg) {
+  const input = arg.trim() || payloadAtCursor();
+  if (!input) return message(`Put the cursor on a line to decode, or type :${kind === 'base64' ? 'decode' : kind} followed by some text.`, true);
+  let out;
+  try { out = DECODERS[kind](input); } catch {
+    return message(`That doesn’t look like ${kind === 'rev' ? 'text' : kind}. Try another decoder.`, true);
+  }
+  message(`${kind} → ${out}`);
+  const flag = out.match(/rg\{[^}]+\}/);
+  if (flag) submitFlag(flag[0], { quietMiss: true });
+}
 
 // Which flag opens each buffer; about.rg is always open
 const LOCKS = Object.fromEntries(CHALLENGES.flatMap((c, i) => c.unlocks.map((b) => [b, i])));
@@ -748,7 +807,7 @@ function scramble(buf) {
   let i = 0;
   const body = SOURCES[buf].split('\n').slice(1).join('\n')
     .replace(/[A-Za-z0-9]/g, (ch) => GLYPHS[(ch.charCodeAt(0) * 17 + (i++) * 29) % 64]);
-  return `-- ${buf}.rg  [locked]\n-- find the flag in ${CHALLENGES[LOCKS[buf]].where}.rg to open it\n${body}`;
+  return `-- ${buf}.rg  [locked]\n-- solve the puzzle in ${CHALLENGES[LOCKS[buf]].where}.rg to open it\n${body}`;
 }
 
 const LOCK_ICON = '<svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>';
@@ -771,14 +830,14 @@ function showLocked(buf) {
     <span class="locked-icon">${LOCK_ICON}</span>
     <p class="locked-kicker">${buf}.rg</p>
     <h2>Locked for now</h2>
-    <p>Find the flag in <b>${c.where}.rg</b> to open this file. ${c.question}</p>
+    <p>Solve the puzzle in <b>${c.where}.rg</b> to open this file.</p>
     <div class="cta">
       <a class="btn btn-primary" href="#${c.where}" data-buf="${c.where}">Go to ${c.where}.rg</a>
       <a class="btn" href="/site/#${buf}">Read it on the normal site</a>
     </div>
   </div>`;
   $('run-status').textContent = `rg run ${buf}.rg · locked`;
-  message(`"${buf}.rg" is locked. Find the flag in ${c.where}.rg first, or read it on the normal site (:site).`);
+  message(`"${buf}.rg" is locked. Solve the puzzle in ${c.where}.rg first, or read it on the normal site (:site).`);
 }
 
 // Tabs show a lock until their flag is found
@@ -792,27 +851,10 @@ function syncLocks() {
   });
 }
 
-// Mark the detail the current question is about, so it stands out in the preview
-function markTarget() {
-  previewEl.querySelector('.pv-target')?.classList.remove('pv-target');
-  const i = nextChallenge();
-  if (i < 0 || CHALLENGES[i].where !== current || isLocked(current)) return;
-  const node = parse(text()).nodes.find((n) => n.name === CHALLENGES[i].block);
-  const el = node && previewEl.querySelector(`[data-l0="${node.start}"]`);
-  if (el) el.classList.add('pv-target');
-}
-
-// Take the visitor to the current question's file and detail
+// Take the visitor to the file the current puzzle is in
 function goToChallenge() {
   const i = nextChallenge();
-  if (i < 0) return;
-  open(CHALLENGES[i].where);
-  if (typing) stopTyping();
-  const el = previewEl.querySelector('.pv-target');
-  if (el) {
-    if (el.tagName === 'DETAILS') el.open = true;
-    el.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' });
-  }
+  if (i >= 0) open(CHALLENGES[i].where);
 }
 
 async function sha256(t) {
@@ -820,14 +862,14 @@ async function sha256(t) {
   return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
-async function submitFlag(value) {
+async function submitFlag(value, { quietMiss = false } = {}) {
   const say = (t, err = false) => { message(t, err); $('flag-msg').textContent = t; $('flag-msg').classList.toggle('error', err); };
   const v = value.trim();
   if (!v) return say('Usage: :flag rg{...}', true);
   if (!window.crypto?.subtle) return say('Your browser can’t check flags here.', true);
   const h = await sha256(v);
   const i = CHALLENGES.findIndex((c) => c.hash === h);
-  if (i < 0) return say('Not a flag. Keep looking.', true);
+  if (i < 0) return quietMiss ? undefined : say('Not a flag. Keep looking.', true);
   if (found.has(i)) return say('You already found that one.');
   found.add(i);
   store.set('rg-flags', JSON.stringify([...found]));
@@ -837,7 +879,7 @@ async function submitFlag(value) {
   ctfEl.hidden = true;
   const next = CHALLENGES[nextChallenge()];
   open(next.where);
-  say(`Correct. ${next.where}.rg is open. Next: ${next.question}`);
+  say(`Flag found. ${next.where}.rg is open. Next clue: ${next.clue}`);
 }
 
 // All flags: show where to reach me and open the contact buffer behind it
@@ -858,20 +900,32 @@ $('flag-form').addEventListener('submit', (e) => {
 
 function syncFlags() {
   const total = CHALLENGES.length;
+  const i = nextChallenge();
   $('ctf-btn').textContent = `CTF ${found.size}/${total}`;
   $('ctf-btn').classList.toggle('complete', found.size === total);
-  $('ctf-list').innerHTML = CHALLENGES.map((c, i) => `<li class="${found.has(i) ? 'done' : ''}"><b>${c.where}.rg</b>${found.has(i) ? '<span class="got">found</span>' : ''}<span>${c.question}</span><span class="tip">${c.tip}</span></li>`).join('');
+  $('ctf-list').innerHTML = CHALLENGES.map((c, n) => {
+    if (found.has(n)) return `<li class="done"><b>${c.where}.rg</b><span class="got">found</span></li>`;
+    if (n !== i) return `<li class="later"><b>${c.where}.rg</b><span>Locked until the puzzle before it is solved.</span></li>`;
+    const shown = c.hints.slice(0, hintsShown[n]).map((h) => `<span class="tip">${h}</span>`).join('');
+    const more = hintsShown[n] < c.hints.length ? `<button type="button" class="linkish" data-hint="${n}">Show a hint (${hintsShown[n] + 1} of ${c.hints.length})</button>` : '';
+    return `<li class="current"><b>${c.where}.rg</b><span class="clue">${c.clue}</span>${shown}${more}</li>`;
+  }).join('');
   syncLocks();
-  const i = nextChallenge();
   $('mission').classList.toggle('complete', i < 0);
   if (i < 0) {
     $('mission-text').innerHTML = `<b>All ${total} flags found.</b> Thanks for playing.`;
     $('mission-btn').textContent = 'Contact me';
   } else {
-    $('mission-text').innerHTML = `<b>Flag ${i + 1} of ${total}</b> · ${CHALLENGES[i].question}`;
-    $('mission-btn').textContent = current === CHALLENGES[i].where ? 'Hint' : `Go to ${CHALLENGES[i].where}.rg`;
+    $('mission-text').innerHTML = `<b>Flag ${i + 1} of ${total}</b> · ${CHALLENGES[i].clue}`;
+    $('mission-btn').textContent = current === CHALLENGES[i].where ? 'Hints' : `Go to ${CHALLENGES[i].where}.rg`;
   }
 }
+$('ctf-list').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-hint]');
+  if (!b) return;
+  hintsShown[Number(b.dataset.hint)]++;
+  syncFlags();
+});
 $('mission-btn').addEventListener('click', () => {
   const i = nextChallenge();
   if (i < 0) { $('done-email').href = `mailto:${['rgivans9', 'gmail.com'].join('@')}`; $('done').hidden = false; open('contact'); return; }
