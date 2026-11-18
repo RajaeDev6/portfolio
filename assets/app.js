@@ -35,7 +35,7 @@ app.innerHTML = `
       <a class="site-link" href="/site/" id="site-link">Normal portfolio</a>
       <div class="nudge" id="nudge" hidden role="note">
         <svg class="nudge-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <p><b>This is Rajae Givans’ portfolio</b>, built as a code editor. Prefer a plain page?</p>
+        <p><b>This is Rajae Givans’ interactive portfolio</b>, built as a code editor. You can switch to the normal portfolio anytime.</p>
         <div class="nudge-actions"><a class="btn btn-primary" href="/site/">Open the normal portfolio</a><button type="button" class="btn" id="nudge-close">Stay here</button></div>
       </div>
     </span>
@@ -70,9 +70,9 @@ app.innerHTML = `
       <div class="edit-note" id="edit-note" hidden>You’re editing a copy. Changes only show in your browser and reset when you reload, and links are switched off. <button type="button" id="edit-undo">Undo my edits</button></div>
       <div class="preview-body pv" id="preview" tabindex="-1"></div>
       <div class="intro" id="intro" hidden role="note">
-        <p class="wide-only"><b>This is my portfolio as a code editor, with a CTF hidden in it.</b> The left side is the source, the right side is what it renders. Click the tabs to look around, or open the challenge board and start hunting. No Vim experience needed: the board shows the few keys you’ll use.</p>
+        <p class="wide-only"><b>This is my interactive portfolio: a code editor with a CTF hidden in it.</b> The left side is the source, the right side is what it renders. Click the tabs to look around, or open the challenge board and start hunting. No Vim experience needed: the board shows the few keys you’ll use. Prefer a simple page? Switch to the normal portfolio.</p>
         <div class="narrow-only">
-          <p><b>I’m Rajae Givans, and this is my portfolio.</b></p>
+          <p><b>I’m Rajae Givans, and this is my interactive portfolio.</b> Prefer a simple page? Switch to the normal portfolio.</p>
           <ul class="intro-steps"><li>Scroll down to read it.</li><li>Tap the tabs at the top (about, experience, projects…) to switch sections.</li><li>Tap <b>Code</b> to see the code behind it.</li></ul>
         </div>
         <div class="intro-actions wide-only"><button type="button" class="btn btn-primary intro-ctf">Challenge board</button><button type="button" class="btn intro-ok">Look around</button><a class="btn" href="/site/">Normal portfolio</a></div>
