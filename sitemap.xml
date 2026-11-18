@@ -3,10 +3,16 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://rajaedev.space/</loc>
-    <lastmod>2026-11-13</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image><image:loc>https://rajaedev.space/assets/og-image.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://rajaedev.space/projects</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
     <image:image><image:loc>https://rajaedev.space/assets/shopweh-list.webp</image:loc></image:image>
     <image:image><image:loc>https://rajaedev.space/assets/shopweh-cheapest.webp</image:loc></image:image>
     <image:image><image:loc>https://rajaedev.space/assets/estoretrust-home.webp</image:loc></image:image>

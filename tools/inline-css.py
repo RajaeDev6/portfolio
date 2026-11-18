@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Inline assets/styles.css into index.html and update the CSP hash in _headers.
+"""Inline assets/styles.css into each page and update the CSP hash in _headers.
 
 The stylesheet is inlined so it doesn't block the first render. Edit
 assets/styles.css, then run:  python3 tools/inline-css.py
@@ -10,12 +10,14 @@ root = pathlib.Path(__file__).resolve().parent.parent
 css = (root / "assets/styles.css").read_text().strip()
 body = "\n" + css + "\n  "
 
-html_path = root / "index.html"
-html = html_path.read_text()
-html, n = re.subn(r"<style>.*?</style>", lambda _: f"<style>{body}</style>", html, count=1, flags=re.S)
-if n != 1:
-    raise SystemExit("index.html: no <style> block found")
-html_path.write_text(html)
+# Every page inlines the same stylesheet, so one CSP hash covers them all
+for page in ("index.html", "projects.html"):
+    html_path = root / page
+    html = html_path.read_text()
+    html, n = re.subn(r"<style>.*?</style>", lambda _: f"<style>{body}</style>", html, count=1, flags=re.S)
+    if n != 1:
+        raise SystemExit(f"{page}: no <style> block found")
+    html_path.write_text(html)
 
 digest = base64.b64encode(hashlib.sha256(body.encode()).digest()).decode()
 headers_path = root / "_headers"

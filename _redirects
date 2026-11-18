@@ -1,2 +1,5 @@
 # Send the old Netlify subdomain to the custom domain so search engines index one address
 https://rajaedev.netlify.app/* https://rajaedev.space/:splat 301!
+
+# Serve the projects page at a clean URL
+/projects  /projects.html  200

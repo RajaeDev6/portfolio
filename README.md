@@ -17,7 +17,7 @@ Live Demo: [Rajae's portfolio](https://rajaedev.space)
 
 No frameworks or build tools - the site is lightweight and loads quickly by design.
 
-Styles live in `assets/styles.css`. After editing it, run `python3 tools/inline-css.py` to copy it into `index.html` and update the CSP hash in `_headers`.
+Styles live in `assets/styles.css`. After editing it, run `python3 tools/inline-css.py` to copy it into `index.html` and `projects.html` and update the CSP hash in `_headers`.
 
 ---
 
@@ -27,16 +27,19 @@ Styles live in `assets/styles.css`. After editing it, run `python3 tools/inline-
 Works smoothly across desktop, tablet, and mobile.  
 Includes a clean mobile hamburger menu with auto-close behavior.
 
-### **2. Projects Section**
-Featured, with screenshots:
+### **2. Security**
+The home page has a Security section: SOC Shift (alert-triage training game), CoreSight (log analysis engine) and PingSweeper (subnet scanner), next to the security habits that carry into the apps (row-level security, private storage with signed URLs, opt-in location, a strict CSP on this site).
+
+### **3. Projects**
+The home page shows four short picks (Shop Weh, EStore Trust, Chichi Bus, Sequik) that link to `projects.html` (served at `/projects`). That page has the full write-ups and screenshots:
 - Shop Weh: grocery price comparison for Jamaica ([shopweh.store](https://shopweh.store))
 - EStore Trust: scam checker for Jamaican Instagram shops ([estoretrust.vercel.app](https://estoretrust.vercel.app))
 - Sequik: rent tracker for landlords ([sequik.netlify.app](https://sequik.netlify.app))
 - Chichi Bus: crowdsourced JUTC bus tracker ([chichibus.vercel.app](https://chichibus.vercel.app))
+- Security tools and labs from my degree (penetration test, vulnerability assessment, network security)
+- Kaaty, The Forgotten Maze, Request Inspector, Due & ExpenseTrakr and Public Eye JA in a compact, expandable list
 
-The rest sit in a compact list: one row per project, which opens to show the details. These include SOC Shift, Kaaty, The Forgotten Maze, Request Inspector, Due & ExpenseTrakr, plus earlier work (PingSweeper, CoreSight, Public Eye JA).
-
-### **3. Experience, Skills & Education**
+### **4. Experience, Skills & Education**
 - Software Engineer Intern at the Jamaica Artificial Intelligence Association
 - Contributed to open source (Talawa API)
 
@@ -50,11 +53,11 @@ The rest sit in a compact list: one row per project, which opens to show the det
 ### **Security headers**
 `_headers` sets a strict Content-Security-Policy (no inline scripts or styles), HSTS, `nosniff`, a referrer policy, a permissions policy and frame blocking for Netlify.
 
-### **4. Restrained Motion**
+### **5. Restrained Motion**
 The hero rises slightly on load; everything else is static. Motion is turned off for visitors who prefer reduced motion.
 
-### **5. Minimalist Aesthetic**
-Dark theme with cool grays and a teal accent. Type and icons follow EStore Trust (Nunito Sans, Hugeicons), with 20px cards, 10px inner tiles, and pill-shaped buttons and chips.
+### **6. Minimalist Aesthetic**
+Dark theme with cool grays and a teal accent, with a plain-text `now.txt` note beside the hero. Type and icons follow EStore Trust (Nunito Sans, Hugeicons), with 20px cards, 10px inner tiles, and pill-shaped buttons and chips.
 
 ---
 
@@ -97,7 +100,6 @@ simple, functional, and intentional.
 
 Some future enhancements I’m considering:
 
-- **Dedicated project pages** for deeper breakdowns  
 - **Add a downloadable resume button**  
 - **Add a blog section** for technical writeups (Go, Linux, cyber labs, etc.)
 
