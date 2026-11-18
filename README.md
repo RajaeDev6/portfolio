@@ -28,7 +28,7 @@ Works smoothly across desktop, tablet, and mobile.
 Includes a clean mobile hamburger menu with auto-close behavior.
 
 ### **2. Security**
-The home page has a Security section: SOC Shift (SOC analyst training platform), CoreSight (log analysis engine) and PingSweeper (subnet scanner), next to the security habits that carry into the apps (row-level security, private storage with signed URLs, opt-in location, a strict CSP on this site).
+The home page has a Security section: SOC Shift (SOC analyst training platform), CoreSight (log analysis engine) and PingSweeper (subnet scanner).
 
 ### **3. Projects**
 The home page shows four short picks (Shop Weh, EStore Trust, Chichi Bus, Sequik) that link to `projects.html` (served at `/projects`). That page has the full write-ups and screenshots:
