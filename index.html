@@ -89,20 +89,20 @@
   <!-- Inlined from assets/styles.css by tools/inline-css.py: edit that file, then run the script -->
   <style>
 /*
- * The site is a Vim-style editor (left) and a live preview (right).
- * Editor: JetBrains Mono on a dark colour scheme. Preview: Nunito Sans, readable page styles.
- * One blue accent throughout. No glow, no blinking: the caret is a steady block.
+ * A narrow Vim-style editor (left) next to a large live preview (right).
+ * Editor: JetBrains Mono on a dark colour scheme, editable. Preview: Nunito Sans, a browser tab.
+ * One blue accent. No glow, no blinking: the caret is a steady block.
  */
 @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 100 800; font-display: swap; src: url(/assets/fonts/jetbrains-mono-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: 'Nunito Sans'; font-style: normal; font-weight: 200 1000; font-display: swap; src: url(/assets/fonts/nunito-sans-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 
 :root {
-  /* editor */
-  --ed-bg: #0e1013;
-  --ed-bar: #15181d;
-  --ed-line: #1c2027;
-  --ed-cur: #161a20;
-  --ed-gutter: #4a525d;
+  --ed-bg: #0d0f12;
+  --ed-bar: #14171c;
+  --ed-line: #1d2128;
+  --ed-cur: rgb(255 255 255 / 0.035);
+  --ed-link: rgb(23 147 209 / 0.14);
+  --ed-gutter: #46505b;
   --ed-text: #c9ced6;
   --t-kind: #4fb0e3;
   --t-name: #e6c07b;
@@ -111,19 +111,20 @@
   --t-comment: #5c6370;
   --t-op: #56b6c2;
   --t-punct: #7f8894;
-  /* preview */
-  --pv-bg: #13161b;
-  --surface: #191d23;
-  --line: #262b33;
-  --ink: #eceef1;
-  --sub: #b0b6bd;
-  --muted: #8a9199;
+  --pv-bg: #111419;
+  --surface: #171b21;
+  --surface-2: #1d2229;
+  --line: #262c35;
+  --line-strong: #343c47;
+  --ink: #eef0f3;
+  --sub: #b3b9c1;
+  --muted: #8a929b;
   --accent: #1793d1;
   --accent-text: #4fb0e3;
   --accent-hover: #2aa3e0;
   --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   --sans: 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
-  --r: 12px;
+  --r: 14px;
   --ease: cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
@@ -137,10 +138,12 @@ button { font: inherit; color: inherit; }
 .icon { width: 1em; height: 1em; fill: none; stroke-width: 1.5; flex-shrink: 0; }
 .sprite { position: absolute; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
-kbd { font-family: var(--mono); font-size: .9em; padding: 0 4px; border: 1px solid #333a44; border-radius: 4px; background: #1a1e24; }
+kbd { font-family: var(--mono); font-size: .88em; padding: 0 4px; border: 1px solid #333a44; border-radius: 4px; background: #1a1e24; }
+[hidden] { display: none !important; }
 
-/* ---------- editor shell ---------- */
+/* ---------- shell ---------- */
 .vim { height: 100vh; height: 100dvh; display: grid; grid-template-rows: auto 1fr auto auto; font-family: var(--mono); font-size: 13px; overflow: hidden; }
+.vim.resizing { cursor: col-resize; user-select: none; }
 
 .tabline { display: flex; align-items: stretch; background: var(--ed-bar); border-bottom: 1px solid var(--ed-line); min-width: 0; }
 .tabs { display: flex; overflow-x: auto; scrollbar-width: none; min-width: 0; flex: 1; }
@@ -150,24 +153,31 @@ kbd { font-family: var(--mono); font-size: .9em; padding: 0 4px; border: 1px sol
 .tab[aria-selected="true"] { color: var(--ink); background: var(--ed-bg); box-shadow: inset 0 2px 0 var(--accent); }
 .tab-n { color: var(--ed-gutter); font-size: 11px; }
 .tab[aria-selected="true"] .tab-n { color: var(--accent-text); }
-
+.code-toggle { padding: 0 14px; border: 0; border-left: 1px solid var(--ed-line); background: none; color: var(--muted); font-family: var(--mono); font-size: 12px; cursor: pointer; white-space: nowrap; }
+.code-toggle:hover { color: var(--ink); background: #1a1e24; }
 .view-toggle { display: none; padding: 5px 8px; gap: 2px; border-left: 1px solid var(--ed-line); }
 .view-toggle button { padding: 4px 10px; border: 1px solid transparent; border-radius: 6px; background: none; color: var(--muted); font-family: var(--mono); font-size: 12px; cursor: pointer; }
 .view-toggle button[aria-pressed="true"] { color: var(--ink); background: var(--ed-bg); border-color: var(--ed-line); }
 
-.panes { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: 0; }
-@media (min-width: 1280px) { .panes { grid-template-columns: minmax(0, 11fr) minmax(0, 10fr); } }
+.panes { --ed-w: 420px; display: grid; grid-template-columns: var(--ed-w) 6px minmax(0, 1fr); min-height: 0; }
+.code-hidden .panes { grid-template-columns: 0 0 minmax(0, 1fr); }
+.code-hidden .editor, .code-hidden .splitter { visibility: hidden; }
 
-/* code */
-.editor { overflow: auto; background: var(--ed-bg); border-right: 1px solid var(--ed-line); cursor: text; overscroll-behavior: contain; }
-.code { padding: 6px 0 24px; line-height: 22px; color: var(--ed-text); }
-.ln { display: grid; grid-template-columns: 4.5ch 1fr; }
-.ln.cur { background: var(--ed-cur); }
-.gutter { padding-right: 1.5ch; text-align: right; color: var(--ed-gutter); user-select: none; }
-.ln.cur .gutter { color: #c9ced6; }
-.tilde .gutter { color: #2f5f80; text-align: left; padding-left: 1ch; }
-.src { padding-right: 16px; white-space: pre-wrap; overflow-wrap: anywhere; min-width: 0; }
-.caret { background: #c9ced6; color: var(--ed-bg); }
+/* ---------- editor ---------- */
+.editor { overflow: auto; background: var(--ed-bg); overscroll-behavior: contain; min-width: 0; }
+.code-wrap { position: relative; display: grid; grid-template-columns: 4.5ch max-content; min-width: 100%; width: max-content; min-height: 100%; padding: 8px 0 32px; line-height: 22px; }
+.band { position: absolute; top: 0; left: 0; right: 0; height: 22px; pointer-events: none; transition: transform .12s var(--ease), height .12s var(--ease); }
+.band-cur { background: var(--ed-cur); }
+.band-link { background: var(--ed-link); box-shadow: inset 2px 0 0 var(--accent); }
+.gutter-col { display: flex; flex-direction: column; color: var(--ed-gutter); text-align: right; padding-right: 1.5ch; user-select: none; position: relative; }
+.gutter-col .cur { color: #c9ced6; }
+.gutter-col .tilde { color: #2f5f80; text-align: left; padding-left: 1ch; }
+.text-col { position: relative; display: grid; }
+.hl, .ta { grid-area: 1 / 1; margin: 0; padding: 0 24px 0 0; font: inherit; line-height: 22px; white-space: pre; tab-size: 2; letter-spacing: 0; }
+.hl { color: var(--ed-text); pointer-events: none; position: relative; z-index: 1; }
+.ta { position: relative; z-index: 2; width: 100%; height: 100%; min-height: 100%; border: 0; outline: none; resize: none; overflow: hidden; background: transparent; color: transparent; caret-color: #e6e8eb; font-family: var(--mono); font-size: 13px; }
+.ta::selection { background: rgb(79 176 227 / 0.3); color: transparent; }
+.caret { background: #c9ced6; }
 .t-kind { color: var(--t-kind); font-weight: 600; }
 .t-name { color: var(--t-name); }
 .t-key { color: var(--t-key); }
@@ -177,135 +187,173 @@ kbd { font-family: var(--mono); font-size: .9em; padding: 0 4px; border: 1px sol
 .t-punct { color: var(--t-punct); }
 .t-word { color: var(--ed-text); }
 
-/* preview */
-.preview { display: grid; grid-template-rows: auto 1fr; min-height: 0; background: var(--pv-bg); }
-.preview-bar { display: flex; align-items: center; gap: 8px; padding: 9px 20px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; }
-.preview-bar b { color: var(--ink); font-weight: 500; }
-.prompt { color: var(--accent-text); }
-.run-status { margin-left: auto; color: var(--muted); overflow: hidden; text-overflow: ellipsis; }
-.preview-body { overflow: auto; padding: 40px clamp(20px, 4vw, 56px) 64px; overscroll-behavior: contain; }
-.preview-body:focus { outline: none; }
+.splitter { background: var(--ed-line); cursor: col-resize; position: relative; touch-action: none; }
+.splitter::after { content: ""; position: absolute; top: 50%; left: 2px; width: 2px; height: 32px; margin-top: -16px; border-radius: 2px; background: #3a424d; }
+.splitter:hover, .splitter:focus-visible, .resizing .splitter { background: #26303b; }
 
-/* status line + command line */
-.statusline { display: flex; align-items: center; gap: 12px; padding: 0 12px 0 0; background: var(--ed-bar); border-top: 1px solid var(--ed-line); height: 26px; white-space: nowrap; color: var(--sub); font-size: 12px; min-width: 0; }
+/* ---------- preview: a browser tab ---------- */
+.preview { display: grid; grid-template-rows: auto 1fr; min-height: 0; background: var(--pv-bg); min-width: 0; }
+.browser-bar { display: flex; align-items: center; gap: 12px; padding: 8px 16px; border-bottom: 1px solid var(--line); background: #13171c; white-space: nowrap; min-width: 0; }
+.addr { display: inline-flex; align-items: center; min-width: 0; padding: 4px 12px; border-radius: 8px; background: #1b2027; border: 1px solid var(--line); font-size: 12px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; }
+.addr-host { color: var(--muted); }
+.run-status { margin-left: auto; font-size: 11.5px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; }
+.preview-body { overflow: auto; overscroll-behavior: contain; container-type: inline-size; padding: 48px clamp(20px, 5vw, 64px) 72px; }
+.preview-body:focus { outline: none; }
+.preview-body > * { max-width: 880px; margin-left: auto; margin-right: auto; }
+
+/* ---------- status + command line ---------- */
+.statusline { display: flex; align-items: center; gap: 12px; padding: 0 12px 0 0; background: var(--ed-bar); border-top: 1px solid var(--ed-line); height: 26px; white-space: nowrap; color: var(--sub); font-size: 12px; min-width: 0; overflow: hidden; }
 .mode { align-self: stretch; display: inline-flex; align-items: center; padding: 0 12px; background: var(--accent); color: #fff; font-weight: 700; letter-spacing: .04em; }
 .mode[data-mode="insert"] { background: #5f8f43; }
 .mode[data-mode="command"] { background: #9c7428; }
 .file { color: var(--ink); }
 .modified { color: var(--muted); }
-.skip { padding: 0 8px; height: 20px; border: 1px solid #333a44; border-radius: 4px; background: none; color: var(--ink); font-family: var(--mono); font-size: 11px; cursor: pointer; }
-.skip:hover { border-color: var(--accent); }
-.skip[hidden] { display: none; }
+.sl-btn { padding: 0 8px; height: 20px; border: 1px solid #333a44; border-radius: 4px; background: none; color: var(--ink); font-family: var(--mono); font-size: 11px; cursor: pointer; }
+.sl-btn:hover { border-color: var(--accent); }
 .fill { flex: 1; }
 .hint, .ft, .pos { color: var(--muted); }
 .pos { min-width: 6ch; text-align: right; }
 .cmdline { height: 26px; display: flex; align-items: center; padding: 0 12px; background: var(--ed-bg); font-size: 12.5px; color: var(--sub); min-width: 0; }
 .cmdline form { display: flex; align-items: center; flex: 1; }
-.cmdline form[hidden], .msg[hidden] { display: none; }
 .cmdline label { color: var(--ink); }
 .cmdline input { flex: 1; min-width: 0; background: none; border: 0; outline: none; color: var(--ink); font-family: var(--mono); font-size: 12.5px; padding: 0 2px; }
 .msg { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .msg.error { color: #e06c75; }
 
-/* help */
-.help { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 20px; background: rgb(0 0 0 / 0.55); }
-.help[hidden] { display: none; }
-.help-box { width: min(440px, 100%); padding: 24px; background: var(--ed-bar); border: 1px solid #2c323b; border-radius: 10px; font-size: 13px; line-height: 22px; }
-.help-title { color: var(--ink); font-weight: 700; margin-bottom: 12px; }
-.help dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; }
-.help dt { color: var(--ink); }
-.help dd { color: var(--sub); }
+/* ---------- overlays ---------- */
+.overlay { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 20px; background: rgb(0 0 0 / 0.6); }
+.help-box { width: min(460px, 100%); padding: 24px; background: var(--ed-bar); border: 1px solid #2c323b; border-radius: 12px; font-size: 13px; line-height: 22px; }
+.help-title { color: var(--ink); font-weight: 700; margin-bottom: 8px; }
+.help-text { color: var(--sub); font-family: var(--sans); font-size: 14px; line-height: 22px; margin-bottom: 16px; }
+.help-box dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; }
+.help-box dt { color: var(--ink); }
+.help-box dd { color: var(--sub); }
 .help-foot { margin-top: 16px; color: var(--muted); }
+.lightbox { cursor: zoom-out; }
+.lightbox img { max-height: 88vh; width: auto; border-radius: 16px; border: 1px solid var(--line); background: var(--surface); }
+.lightbox-close { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); font-size: 18px; cursor: pointer; }
 
-/* phones: one pane at a time, preview first */
+/* ---------- phones: one pane at a time, preview first ---------- */
 @media (max-width: 899px) {
   .view-toggle { display: flex; }
-  .panes { grid-template-columns: minmax(0, 1fr); }
+  .code-toggle, .splitter { display: none; }
+  .panes, .code-hidden .panes { grid-template-columns: minmax(0, 1fr); }
+  .code-hidden .editor { visibility: visible; }
   .vim[data-view="preview"] .editor { display: none; }
   .vim[data-view="code"] .preview { display: none; }
-  .editor { border-right: 0; }
   .hint, .ft { display: none; }
-  .preview-body { padding: 28px 20px 48px; }
+  .preview-body { padding: 32px 20px 56px; }
 }
 
 /* ---------- preview content (also the no-JavaScript page) ---------- */
 .pv { color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 26px; }
-.pv-title { font-size: 30px; line-height: 38px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 24px; }
-.pv-heading { font-size: 20px; line-height: 28px; font-weight: 800; margin: 40px 0 16px; }
+.pv [data-l0] { border-radius: var(--r); transition: box-shadow .15s var(--ease), background-color .15s var(--ease); }
+.vim:not(.code-hidden) .pv [data-l0]:hover { box-shadow: 0 0 0 1px var(--line-strong); }
+.pv .pv-active { box-shadow: 0 0 0 1px var(--accent) !important; }
+.pv-title { font-size: 34px; line-height: 40px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 28px; padding: 2px 0; }
+.pv-heading { font-size: 20px; line-height: 28px; font-weight: 800; margin-top: 48px; margin-bottom: 16px; }
 
-.pv-hero { padding-top: 24px; max-width: 40rem; }
-.pv-hero h1 { font-size: 46px; line-height: 1.05; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 18px; }
-@media (min-width: 1280px) { .pv-hero h1 { font-size: 58px; } }
+.pv-hero { padding: 40px 0 8px; max-width: 42rem; }
+.pv-hero h1 { font-size: clamp(44px, 8cqi, 76px); line-height: 1.02; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 20px; }
 .pv-hero h1 span { color: var(--accent-text); }
-.role { font-size: 20px; line-height: 30px; font-weight: 700; margin-bottom: 12px; text-wrap: balance; }
-.bio { color: var(--sub); }
-.cta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 28px; }
-.btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; font-size: 15px; font-weight: 700; border: 1px solid var(--line); background: var(--surface); transition: border-color .15s var(--ease), background-color .15s var(--ease); }
+.role { font-size: 21px; line-height: 31px; font-weight: 700; margin-bottom: 14px; text-wrap: balance; }
+.bio { color: var(--sub); font-size: 17px; line-height: 28px; }
+.cta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 32px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border-radius: 999px; font-size: 15px; font-weight: 700; border: 1px solid var(--line); background: var(--surface); transition: border-color .15s var(--ease), background-color .15s var(--ease), transform .15s var(--ease); }
 .btn .icon { font-size: 18px; }
-.btn:hover { border-color: var(--muted); }
+.btn:hover { border-color: var(--line-strong); transform: translateY(-1px); }
 .btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
 .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 .socials { display: inline-flex; gap: 2px; }
-.socials a { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; font-size: 21px; color: var(--muted); transition: color .15s var(--ease), background-color .15s var(--ease); }
+.socials a { display: inline-grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; font-size: 21px; color: var(--muted); transition: color .15s var(--ease), background-color .15s var(--ease); }
 .socials a:hover { color: var(--ink); background: var(--surface); }
 
-.link { display: inline-flex; align-items: center; gap: 4px; margin-top: 12px; font-size: 15px; font-weight: 700; color: var(--accent-text); }
+.link { display: inline-flex; align-items: center; gap: 4px; margin-top: 14px; font-size: 15px; font-weight: 700; color: var(--accent-text); }
 .link .icon { font-size: 15px; transition: transform .15s var(--ease); }
 .link:hover .icon { transform: translate(2px, -2px); }
-.tag { color: var(--accent-text); font-weight: 700; font-size: 14px; margin: 2px 0 10px; }
-.stack { margin-top: 12px; font-family: var(--mono); font-size: 12px; line-height: 18px; color: var(--muted); }
-.pv ul { padding-left: 20px; color: var(--sub); }
-.pv li + li { margin-top: 4px; }
+.tag { display: block; color: var(--accent-text); font-weight: 700; font-size: 14px; line-height: 20px; margin: 2px 0 8px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0 !important; margin-top: 14px; }
+.chips li { margin: 0 !important; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface-2); font-family: var(--mono); font-size: 11.5px; line-height: 20px; color: var(--sub); }
+.pv ul:not(.chips) { padding-left: 20px; color: var(--sub); }
+.pv ul:not(.chips) li + li { margin-top: 4px; }
 .pv li::marker { color: var(--muted); }
 
-.jobs { display: grid; gap: 32px; }
+/* experience: a timeline */
+.jobs { position: relative; display: grid; gap: 12px; padding-left: 28px; }
+.jobs::before { content: ""; position: absolute; left: 6px; top: 12px; bottom: 12px; width: 2px; background: var(--line); border-radius: 2px; }
+.job { position: relative; padding: 16px 20px 20px; }
+.job-dot { position: absolute; left: -28px; top: 24px; width: 14px; height: 14px; border-radius: 50%; background: var(--pv-bg); border: 2px solid var(--accent); }
 .job-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 16px; }
-.job h3 { font-size: 19px; line-height: 26px; font-weight: 800; }
-.when { font-size: 14px; color: var(--muted); }
-.org { color: var(--accent-text); font-weight: 600; margin: 2px 0 10px; }
+.job h3 { font-size: 20px; line-height: 28px; font-weight: 800; }
+.when { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.org { color: var(--accent-text); font-weight: 700; margin: 2px 0 10px; }
 
-.project { display: grid; gap: 24px; padding: 28px 0; border-top: 1px solid var(--line); }
-.pv-title + .project { border-top: 0; padding-top: 0; }
-@media (min-width: 1100px) { .project { grid-template-columns: 1fr auto; align-items: start; } }
-.project h3 { font-size: 22px; line-height: 30px; font-weight: 900; }
-.project-copy > p:not(.tag):not(.stack) { color: var(--sub); }
-.project ul { margin-top: 10px; }
-.shots { display: flex; gap: 10px; }
-.shots img { width: 140px; height: auto; aspect-ratio: 420 / 909; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); }
-@media (max-width: 480px) { .shots img { width: calc(50% - 5px); } }
+/* projects: cards that open into the full write-up */
+.projects { display: grid; gap: 16px; }
+@container (min-width: 720px) { .projects { grid-template-columns: repeat(2, minmax(0, 1fr)); } .project[open] { grid-column: 1 / -1; } }
+.project { background: var(--surface); border: 1px solid var(--line); overflow: hidden; scroll-margin-top: 16px; }
+.project summary { list-style: none; cursor: pointer; display: flex; flex-direction: column; height: 100%; }
+.project summary::-webkit-details-marker { display: none; }
+.project-cover { display: flex; justify-content: center; align-items: flex-end; gap: 10px; height: 168px; padding-top: 24px; overflow: hidden; background: linear-gradient(180deg, #1a2531, #161c23); border-bottom: 1px solid var(--line); }
+.project-cover img { width: 92px; height: auto; aspect-ratio: 420 / 909; border-radius: 10px 10px 0 0; border: 1px solid #2c3540; border-bottom: 0; transition: transform .25s var(--ease); }
+.project-cover img + img { transform: translateY(12px); }
+.project summary:hover .project-cover img { transform: translateY(-6px); }
+.project summary:hover .project-cover img + img { transform: translateY(4px); }
+.project-sum { display: flex; flex-direction: column; flex: 1; padding: 20px 22px 18px; }
+.project-name { font-size: 21px; line-height: 28px; font-weight: 900; }
+.project-text { color: var(--sub); font-size: 15px; line-height: 24px; }
+.more { display: inline-flex; align-items: center; gap: 6px; margin-top: auto; padding-top: 14px; font-size: 14px; font-weight: 700; color: var(--accent-text); }
+.more .icon { transition: transform .2s var(--ease); }
+.more-open, .project[open] .more-closed { display: none; }
+.project[open] .more-open { display: inline; }
+.project[open] .more .icon { transform: rotate(180deg); }
+.project[open] .project-cover { display: none; }
+.project-body { display: grid; gap: 24px; padding: 0 22px 24px; }
+@container (min-width: 720px) { .project-body { grid-template-columns: 1fr auto; align-items: start; } }
+.shots { display: flex; gap: 12px; }
+.shot { padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: 12px; }
+.shot img { width: 160px; height: auto; aspect-ratio: 420 / 909; border-radius: 12px; border: 1px solid var(--line); background: var(--surface-2); transition: transform .2s var(--ease); }
+.shot:hover img { transform: translateY(-3px); }
+@container (max-width: 480px) { .shot img { width: calc(50cqi - 32px); } }
 
+/* security and smaller projects */
 .items { display: grid; gap: 14px; }
-@media (min-width: 1100px) { .items { grid-template-columns: repeat(2, 1fr); } }
-.item { display: flex; flex-direction: column; padding: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
-.item h3 { font-size: 18px; line-height: 26px; font-weight: 800; }
-.item p:not(.tag):not(.stack) { color: var(--sub); font-size: 15px; line-height: 24px; }
-.item .stack { margin-top: auto; padding-top: 12px; }
+@container (min-width: 720px) { .items { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.item { display: flex; flex-direction: column; padding: 22px; background: var(--surface); border: 1px solid var(--line); scroll-margin-top: 16px; }
+.item h3 { font-size: 19px; line-height: 26px; font-weight: 800; }
+.item-text { color: var(--sub); font-size: 15px; line-height: 24px; }
+.item .chips { margin-top: auto; padding-top: 14px !important; }
 
-.skills { display: grid; gap: 10px 28px; }
-@media (min-width: 700px) { .skills { grid-template-columns: 150px 1fr; } }
-.skills dt { font-weight: 800; }
-.skills dd { color: var(--sub); margin-bottom: 8px; }
-@media (min-width: 700px) { .skills dd { margin-bottom: 0; } }
+/* skills */
+.skills { display: grid; gap: 14px; }
+@container (min-width: 640px) { .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.skill-group { padding: 18px 20px; background: var(--surface); border: 1px solid var(--line); }
+.skill-group h3 { font-size: 15px; font-weight: 800; }
+.skill-group .chips { margin-top: 10px; }
 
+/* education */
 .entries { display: grid; gap: 14px; }
-.entry { display: flex; align-items: center; gap: 16px; padding: 18px 20px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
-.entry > .icon { font-size: 24px; color: var(--accent-text); }
-.entry span { display: flex; flex-direction: column; }
+.entry { display: flex; align-items: center; gap: 16px; padding: 18px 20px; background: var(--surface); border: 1px solid var(--line); }
+.entry-icon { display: grid; place-items: center; width: 44px; height: 44px; flex: none; border-radius: 12px; background: rgb(23 147 209 / 0.12); color: var(--accent-text); font-size: 22px; }
+.entry > span:nth-child(2) { display: flex; flex-direction: column; flex: 1; }
 .entry strong { font-weight: 800; line-height: 24px; }
 .entry small { font-size: 14px; color: var(--muted); }
-a.entry { transition: border-color .15s var(--ease); }
-a.entry:hover { border-color: #3a404a; }
+.entry > .icon { color: var(--muted); }
+a.entry:hover { border-color: var(--line-strong); }
 
-.pv-contact .lead { font-size: 19px; line-height: 30px; color: var(--sub); max-width: 34rem; }
+/* contact */
+.pv-contact { padding: 32px; background: linear-gradient(160deg, #182432, #151a21); border: 1px solid var(--line); }
+.pv-contact .lead { font-size: 22px; line-height: 33px; font-weight: 700; max-width: 32rem; }
 
 /* no-JavaScript page: sections stacked */
-.static { max-width: 760px; margin: auto; padding: 32px 20px 64px; background: var(--pv-bg); min-height: 100vh; }
+.static { max-width: 880px; margin: auto; padding: 32px 20px 64px; background: var(--pv-bg); min-height: 100vh; container-type: inline-size; }
 .static-note { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-bottom: 24px; }
-.static-section { padding: 32px 0; border-top: 1px solid var(--line); }
+.static-section { padding: 40px 0; border-top: 1px solid var(--line); }
 .static-section:first-of-type { border-top: 0; }
+.static .project-body { display: grid; }
 
 @media (prefers-reduced-motion: reduce) {
-  .link .icon { transition: none; }
+  .band, .link .icon, .btn, .project-cover img, .shot img, .more .icon { transition: none; }
 }
   </style>
   <script type="module" src="/assets/app.js"></script>
@@ -320,13 +368,15 @@ a.entry:hover { border-color: #3a404a; }
   <symbol id="i-cap" viewBox="0 0 24 24"><path d="M1.99805 7.99928C1.99805 9.34126 10.0943 13 11.9857 13C13.8772 13 21.9734 9.34126 21.9734 7.99928C21.9734 6.6573 13.8772 2.99854 11.9857 2.99854C10.0943 2.99854 1.99805 6.6573 1.99805 7.99928Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.99219 11L7.24348 16.8002C7.32919 17.1975 7.52703 17.5687 7.85696 17.8054C10.0787 19.3998 13.8908 19.3998 16.1126 17.8054C16.4426 17.5687 16.6404 17.1975 16.7261 16.8002L17.9774 11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.4774 9.49951V16.5006M20.4774 16.5006C19.6864 17.9471 19.3366 18.7221 18.9813 20.0011C18.9042 20.4562 18.9654 20.6855 19.2786 20.8891C19.4059 20.9718 19.5588 21.0012 19.7104 21.0012H21.229C21.3904 21.0012 21.5533 20.9675 21.6863 20.8757C21.9774 20.6747 22.0523 20.4541 21.9734 20.0011C21.662 18.8135 21.2653 18.0016 20.4774 16.5006Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-award" viewBox="0 0 24 24"><path d="M11.5 22C7.49306 22 5.48959 22 4.2448 20.5355C3 19.0711 3 16.714 3 12C3 7.28596 3 4.92893 4.2448 3.46447C5.48959 2 7.49306 2 11.5 2C15.5069 2 17.5104 2 18.7552 3.46447C19.7572 4.64332 19.9527 6.40054 19.9908 9.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 8H15M8 13H11" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M19.6092 18.1054C20.4521 17.4918 21 16.4974 21 15.375C21 13.511 19.489 12 17.625 12H17.375C15.511 12 14 13.511 14 15.375C14 16.4974 14.5479 17.4918 15.3908 18.1054M19.6092 18.1054C19.0523 18.5108 18.3666 18.75 17.625 18.75H17.375C16.6334 18.75 15.9477 18.5108 15.3908 18.1054M19.6092 18.1054L20.192 19.9404C20.4143 20.6403 20.5255 20.9903 20.4951 21.2082C20.4318 21.6617 20.0619 21.9984 19.6252 22C19.4154 22.0008 19.101 21.8358 18.4723 21.5059C18.2027 21.3644 18.0679 21.2936 17.93 21.252C17.649 21.1673 17.351 21.1673 17.07 21.252C16.9321 21.2936 16.7973 21.3644 16.5277 21.5059C15.899 21.8358 15.5846 22.0008 15.3748 22C14.9381 21.9984 14.5682 21.6617 14.5049 21.2082C14.4745 20.9903 14.5857 20.6403 14.808 19.9404L15.3908 18.1054" stroke="currentColor"/></symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M9 6.65032C9 6.65032 15.9383 6.10759 16.9154 7.08463C17.8924 8.06167 17.3496 15 17.3496 15M16.5 7.5L6.5 17.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-caret" viewBox="0 0 24 24"><path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18.9991 19L5 5.00098" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 5L5.00092 18.999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </svg>
 
 <main id="app" class="static">
   <p class="static-note">This site is an editor written in rg, a small language I made. Turn on JavaScript to see it; here is the plain version.</p>
 <!-- prerender:start -->
 <section class="static-section pv" id="about">
-<div class="pv-hero">
+<div class="pv-hero" data-l0="7" data-l1="27">
       <h1><span>Rajae</span> Givans</h1>
       <p class="role">Cybersecurity and software engineering student, based in Kingston, Jamaica.</p>
       <p class="bio">I build and deploy full-stack web apps, mobile apps and APIs in TypeScript, Go and Python, with a focus on backend development, secure design and AI features built on LLM APIs. I’ve shipped production features as a software engineer intern and contributed to open source.</p>
@@ -334,111 +384,149 @@ a.entry:hover { border-color: #3a404a; }
     </div>
 </section>
 <section class="static-section pv" id="experience">
-<h2 class="pv-title">Experience</h2><div class="jobs"><article class="job">
+<h2 class="pv-title" data-l0="3" data-l1="3">Experience</h2><div class="jobs"><article class="job" data-l0="5" data-l1="17">
+      <span class="job-dot" aria-hidden="true"></span>
       <div class="job-head"><h3>Software Engineer Intern</h3><span class="when">May – Aug 2026</span></div>
       <p class="org">Jamaica Artificial Intelligence Association</p>
       <ul><li>Built features for the admin dashboard of the association’s membership app.</li><li>Added bulk account activation and a CSV export of member data.</li><li>Built group join requests with status tracking.</li></ul>
-    </article><article class="job">
+    </article><article class="job" data-l0="19" data-l1="34">
+      <span class="job-dot" aria-hidden="true"></span>
       <div class="job-head"><h3>Open-source contributor</h3><span class="when">Dec 2025</span></div>
       <p class="org">Talawa API, Palisadoes Foundation</p>
       <ul><li>Wrote automated tests for a GraphQL API that confirm only authorized users (admins, organization admins, members) can view protected data.</li><li>Worked through code review with the maintainers on GitHub and revised the tests based on their feedback.</li></ul><a class="link" href="https://github.com/RajaeDev6/talawa-api" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </article></div>
 </section>
 <section class="static-section pv" id="projects">
-<h2 class="pv-title">Projects</h2><article class="project" id="shop-weh">
-      <div class="project-copy">
-        <h3>Shop Weh</h3>
-        <p class="tag">Grocery prices in Jamaica</p>
-        <p>Add your grocery list and Shop Weh shows which store has it cheapest, and how much you save.</p>
-        <ul><li>Prices from stores across Jamaica, updated every day</li><li>Collects prices from government price surveys and store websites</li><li>Ranks stores by how much of your list they carry, not just price</li><li>Works on your phone like an app</li></ul>
-        <p class="stack">Next.js · TypeScript · Firebase · GitHub Actions</p><a class="link" href="https://shopweh.store" target="_blank" rel="noopener">Visit shopweh.store<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+<h2 class="pv-title" data-l0="3" data-l1="3">Projects</h2><div class="projects"><details class="project" id="shop-weh" data-l0="5" data-l1="32">
+      <summary>
+        <span class="project-cover"><img src="/assets/shopweh-list-200.webp" width="96" height="208" loading="lazy" alt=""><img src="/assets/shopweh-cheapest-200.webp" width="96" height="208" loading="lazy" alt=""></span>
+        <span class="project-sum">
+          <span class="project-name">Shop Weh</span>
+          <span class="tag">Grocery prices in Jamaica</span>
+          <span class="project-text">Add your grocery list and Shop Weh shows which store has it cheapest, and how much you save.</span>
+          <span class="more" aria-hidden="true"><span class="more-closed">Details</span><span class="more-open">Close</span><svg class="icon" aria-hidden="true"><use href="#i-caret"/></svg></span>
+        </span>
+      </summary>
+      <div class="project-body">
+        <div>
+          <ul><li>Prices from stores across Jamaica, updated every day</li><li>Collects prices from government price surveys and store websites</li><li>Ranks stores by how much of your list they carry, not just price</li><li>Works on your phone like an app</li></ul>
+          <ul class="chips"><li>Next.js</li><li>TypeScript</li><li>Firebase</li><li>GitHub Actions</li></ul>
+          <a class="link" href="https://shopweh.store" target="_blank" rel="noopener">Visit shopweh.store<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="shots"><button type="button" class="shot" data-full="/assets/shopweh-list.webp" aria-label="Enlarge screenshot"><img src="/assets/shopweh-list-280.webp" srcset="/assets/shopweh-list-200.webp 200w, /assets/shopweh-list-280.webp 280w, /assets/shopweh-list.webp 420w" sizes="160px" width="160" height="346" loading="lazy" alt="Shop Weh grocery list screen with rice, sugar, cornmeal and flour and a Find the cheapest store button"></button><button type="button" class="shot" data-full="/assets/shopweh-cheapest.webp" aria-label="Enlarge screenshot"><img src="/assets/shopweh-cheapest-280.webp" srcset="/assets/shopweh-cheapest-200.webp 200w, /assets/shopweh-cheapest-280.webp 280w, /assets/shopweh-cheapest.webp 420w" sizes="160px" width="160" height="346" loading="lazy" alt="Shop Weh cheapest store result showing the total in Jamaican dollars and the possible saving"></button></div>
       </div>
-      <div class="shots"><img src="/assets/shopweh-list-280.webp" srcset="/assets/shopweh-list-200.webp 200w, /assets/shopweh-list-280.webp 280w, /assets/shopweh-list.webp 420w" sizes="140px" width="140" height="303" loading="lazy" alt="Shop Weh grocery list screen with rice, sugar, cornmeal and flour and a Find the cheapest store button"><img src="/assets/shopweh-cheapest-280.webp" srcset="/assets/shopweh-cheapest-200.webp 200w, /assets/shopweh-cheapest-280.webp 280w, /assets/shopweh-cheapest.webp 420w" sizes="140px" width="140" height="303" loading="lazy" alt="Shop Weh cheapest store result showing the total in Jamaican dollars and the possible saving"></div>
-    </article><article class="project" id="estore-trust">
-      <div class="project-copy">
-        <h3>EStore Trust</h3>
-        <p class="tag">Check an Instagram shop before you pay</p>
-        <p>Search for an Instagram business and see its trust score, the checks behind it, buyer reviews and any scam reports.</p>
-        <ul><li>Automatic checks of each shop, with every result shown</li><li>Owners can verify their shop to earn a higher trust level</li><li>Proof of order is checked, with addresses blurred and kept private</li><li>Accounts are phone-verified so reviews come from real buyers</li></ul>
-        <p class="stack">Next.js · TypeScript · Supabase · OpenAI</p><a class="link" href="https://estoretrust.vercel.app" target="_blank" rel="noopener">Open EStore Trust<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </details><details class="project" id="estore-trust" data-l0="34" data-l1="65">
+      <summary>
+        <span class="project-cover"><img src="/assets/estoretrust-home-200.webp" width="96" height="208" loading="lazy" alt=""><img src="/assets/estoretrust-store-200.webp" width="96" height="208" loading="lazy" alt=""></span>
+        <span class="project-sum">
+          <span class="project-name">EStore Trust</span>
+          <span class="tag">Check an Instagram shop before you pay</span>
+          <span class="project-text">Search for an Instagram business and see its trust score, the checks behind it, buyer reviews and any scam reports.</span>
+          <span class="more" aria-hidden="true"><span class="more-closed">Details</span><span class="more-open">Close</span><svg class="icon" aria-hidden="true"><use href="#i-caret"/></svg></span>
+        </span>
+      </summary>
+      <div class="project-body">
+        <div>
+          <ul><li>Automatic checks of each shop, with every result shown</li><li>Owners can verify their shop to earn a higher trust level</li><li>Proof of order is checked, with addresses blurred and kept private</li><li>Accounts are phone-verified so reviews come from real buyers</li></ul>
+          <ul class="chips"><li>Next.js</li><li>TypeScript</li><li>Supabase</li><li>OpenAI</li></ul>
+          <a class="link" href="https://estoretrust.vercel.app" target="_blank" rel="noopener">Open EStore Trust<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="shots"><button type="button" class="shot" data-full="/assets/estoretrust-home.webp" aria-label="Enlarge screenshot"><img src="/assets/estoretrust-home-280.webp" srcset="/assets/estoretrust-home-200.webp 200w, /assets/estoretrust-home-280.webp 280w, /assets/estoretrust-home.webp 420w" sizes="160px" width="160" height="346" loading="lazy" alt="EStore Trust home screen with a search bar for Instagram profiles, most popular shops and a list of scanned businesses"></button><button type="button" class="shot" data-full="/assets/estoretrust-store.webp" aria-label="Enlarge screenshot"><img src="/assets/estoretrust-store-280.webp" srcset="/assets/estoretrust-store-200.webp 200w, /assets/estoretrust-store-280.webp 280w, /assets/estoretrust-store.webp 420w" sizes="160px" width="160" height="346" loading="lazy" alt="EStore Trust business page for BYCHARI showing a trust score of 78 out of 100 and the checks behind it"></button></div>
       </div>
-      <div class="shots"><img src="/assets/estoretrust-home-280.webp" srcset="/assets/estoretrust-home-200.webp 200w, /assets/estoretrust-home-280.webp 280w, /assets/estoretrust-home.webp 420w" sizes="140px" width="140" height="303" loading="lazy" alt="EStore Trust home screen with a search bar for Instagram profiles, most popular shops and a list of scanned businesses"><img src="/assets/estoretrust-store-280.webp" srcset="/assets/estoretrust-store-200.webp 200w, /assets/estoretrust-store-280.webp 280w, /assets/estoretrust-store.webp 420w" sizes="140px" width="140" height="303" loading="lazy" alt="EStore Trust business page for BYCHARI showing a trust score of 78 out of 100 and the checks behind it"></div>
-    </article><article class="project" id="chichi-bus">
-      <div class="project-copy">
-        <h3>Chichi Bus</h3>
-        <p class="tag">When is the next JUTC bus?</p>
-        <p>JUTC doesn’t share live bus locations, so riders share them with each other. Tap “I see a bus” and everyone on that route gets an estimate of when it will reach them.</p>
-        <ul><li>All 159 JUTC routes and 208 stops, mapped on real roads</li><li>Your location is only shared when you choose to</li><li>Works offline once the routes are loaded</li><li>Route and stop data collected from the official JUTC route guide</li></ul>
-        <p class="stack">Preact · Firebase · Leaflet · OpenStreetMap</p><a class="link" href="https://chichibus.vercel.app" target="_blank" rel="noopener">Open Chichi Bus<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </details><details class="project" id="chichi-bus" data-l0="67" data-l1="97">
+      <summary>
+        <span class="project-cover"><img src="/assets/chichibus-route-200.webp" width="96" height="208" loading="lazy" alt=""><img src="/assets/chichibus-my-routes-200.webp" width="96" height="208" loading="lazy" alt=""></span>
+        <span class="project-sum">
+          <span class="project-name">Chichi Bus</span>
+          <span class="tag">When is the next JUTC bus?</span>
+          <span class="project-text">JUTC doesn’t share live bus locations, so riders share them with each other. Tap “I see a bus” and everyone on that route gets an estimate of when it will reach them.</span>
+          <span class="more" aria-hidden="true"><span class="more-closed">Details</span><span class="more-open">Close</span><svg class="icon" aria-hidden="true"><use href="#i-caret"/></svg></span>
+        </span>
+      </summary>
+      <div class="project-body">
+        <div>
+          <ul><li>All 159 JUTC routes and 208 stops, mapped on real roads</li><li>Your location is only shared when you choose to</li><li>Works offline once the routes are loaded</li><li>Route and stop data collected from the official JUTC route guide</li></ul>
+          <ul class="chips"><li>Preact</li><li>Firebase</li><li>Leaflet</li><li>OpenStreetMap</li></ul>
+          <a class="link" href="https://chichibus.vercel.app" target="_blank" rel="noopener">Open Chichi Bus<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="shots"><button type="button" class="shot" data-full="/assets/chichibus-route.webp" aria-label="Enlarge screenshot"><img src="/assets/chichibus-route-280.webp" srcset="/assets/chichibus-route-200.webp 200w, /assets/chichibus-route-280.webp 280w, /assets/chichibus-route.webp 420w" sizes="160px" width="160" height="346" loading="lazy" alt="Chichi Bus route 8 map from Naggo Head to downtown Kingston with timetable and I see a bus button"></button><button type="button" class="shot" data-full="/assets/chichibus-my-routes.webp" aria-label="Enlarge screenshot"><img src="/assets/chichibus-my-routes-280.webp" srcset="/assets/chichibus-my-routes-200.webp 200w, /assets/chichibus-my-routes-280.webp 280w, /assets/chichibus-my-routes.webp 420w" sizes="160px" width="160" height="346" loading="lazy" alt="Chichi Bus My routes screen with a map of nearby stops and followed routes"></button></div>
       </div>
-      <div class="shots"><img src="/assets/chichibus-route-280.webp" srcset="/assets/chichibus-route-200.webp 200w, /assets/chichibus-route-280.webp 280w, /assets/chichibus-route.webp 420w" sizes="140px" width="140" height="303" loading="lazy" alt="Chichi Bus route 8 map from Naggo Head to downtown Kingston with timetable and I see a bus button"><img src="/assets/chichibus-my-routes-280.webp" srcset="/assets/chichibus-my-routes-200.webp 200w, /assets/chichibus-my-routes-280.webp 280w, /assets/chichibus-my-routes.webp 420w" sizes="140px" width="140" height="303" loading="lazy" alt="Chichi Bus My routes screen with a map of nearby stops and followed routes"></div>
-    </article><article class="project" id="sequik">
-      <div class="project-copy">
-        <h3>Sequik</h3>
-        <p class="tag">Rent tracking for small landlords · iOS &amp; Android</p>
-        <p>See what rent has come in this month, who owes what and which leases are ending, then log payments, store documents and track repairs from your phone.</p>
-        <ul><li>Rent collected vs expected, with overdue reminders</li><li>Tenants, properties, documents and repairs in one place</li><li>Six months of payment history for each tenant</li><li>Each landlord’s data and receipts are kept private</li></ul>
-        <p class="stack">React Native · Expo · TypeScript · Supabase</p><a class="link" href="https://sequik.netlify.app" target="_blank" rel="noopener">Join the waitlist<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </details><details class="project" id="sequik" data-l0="99" data-l1="129">
+      <summary>
+        <span class="project-cover"><img src="/assets/sequik-overview-200.webp" width="96" height="208" loading="lazy" alt=""><img src="/assets/sequik-tenants-200.webp" width="96" height="208" loading="lazy" alt=""></span>
+        <span class="project-sum">
+          <span class="project-name">Sequik</span>
+          <span class="tag">Rent tracking for small landlords · iOS &amp; Android</span>
+          <span class="project-text">See what rent has come in this month, who owes what and which leases are ending, then log payments, store documents and track repairs from your phone.</span>
+          <span class="more" aria-hidden="true"><span class="more-closed">Details</span><span class="more-open">Close</span><svg class="icon" aria-hidden="true"><use href="#i-caret"/></svg></span>
+        </span>
+      </summary>
+      <div class="project-body">
+        <div>
+          <ul><li>Rent collected vs expected, with overdue reminders</li><li>Tenants, properties, documents and repairs in one place</li><li>Six months of payment history for each tenant</li><li>Each landlord’s data and receipts are kept private</li></ul>
+          <ul class="chips"><li>React Native</li><li>Expo</li><li>TypeScript</li><li>Supabase</li></ul>
+          <a class="link" href="https://sequik.netlify.app" target="_blank" rel="noopener">Join the waitlist<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="shots"><button type="button" class="shot" data-full="/assets/sequik-overview.webp" aria-label="Enlarge screenshot"><img src="/assets/sequik-overview-280.webp" srcset="/assets/sequik-overview-200.webp 200w, /assets/sequik-overview-280.webp 280w, /assets/sequik-overview.webp 420w" sizes="160px" width="160" height="346" loading="lazy" alt="Sequik rent tracker overview showing rent collected this month, outstanding balance and overdue tenants"></button><button type="button" class="shot" data-full="/assets/sequik-tenants.webp" aria-label="Enlarge screenshot"><img src="/assets/sequik-tenants-280.webp" srcset="/assets/sequik-tenants-200.webp 200w, /assets/sequik-tenants-280.webp 280w, /assets/sequik-tenants.webp 420w" sizes="160px" width="160" height="346" loading="lazy" alt="Sequik tenants screen listing overdue and due tenants with amounts owed"></button></div>
       </div>
-      <div class="shots"><img src="/assets/sequik-overview-280.webp" srcset="/assets/sequik-overview-200.webp 200w, /assets/sequik-overview-280.webp 280w, /assets/sequik-overview.webp 420w" sizes="140px" width="140" height="303" loading="lazy" alt="Sequik rent tracker overview showing rent collected this month, outstanding balance and overdue tenants"><img src="/assets/sequik-tenants-280.webp" srcset="/assets/sequik-tenants-200.webp 200w, /assets/sequik-tenants-280.webp 280w, /assets/sequik-tenants.webp 420w" sizes="140px" width="140" height="303" loading="lazy" alt="Sequik tenants screen listing overdue and due tenants with amounts owed"></div>
-    </article><h3 class="pv-heading">More projects</h3><div class="items"><article class="item" id="request-inspector">
+    </details></div><h3 class="pv-heading" data-l0="131" data-l1="131">More projects</h3><div class="items"><article class="item" id="request-inspector" data-l0="133" data-l1="146">
       <h3>Request Inspector</h3>
       <p class="tag">Developer tool</p>
-      <p>Captures incoming HTTP requests on temporary public links and shows them live, so developers can see exactly what their apps receive. Any request can be replayed with changed headers or data, and it starts with one Docker command.</p>
-      <p class="stack">Go · PostgreSQL · React · Docker</p><a class="link" href="https://github.com/RajaeDev6/request-inspector" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </article><article class="item" id="due">
+      <p class="item-text">Captures incoming HTTP requests on temporary public links and shows them live, so developers can see exactly what their apps receive. Any request can be replayed with changed headers or data, and it starts with one Docker command.</p>
+      <ul class="chips"><li>Go</li><li>PostgreSQL</li><li>React</li><li>Docker</li></ul><a class="link" href="https://github.com/RajaeDev6/request-inspector" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </article><article class="item" id="due" data-l0="148" data-l1="159">
       <h3>Due &amp; ExpenseTrakr</h3>
       <p class="tag">In progress</p>
-      <p>Two money apps: Due splits household bills between housemates, and ExpenseTrakr tracks spending across wallets, with recurring transactions and budgets.</p>
-      <p class="stack">React Native · TypeScript · Firebase</p>
-    </article><article class="item" id="public-eye">
+      <p class="item-text">Two money apps: Due splits household bills between housemates, and ExpenseTrakr tracks spending across wallets, with recurring transactions and budgets.</p>
+      <ul class="chips"><li>React Native</li><li>TypeScript</li><li>Firebase</li></ul>
+    </article><article class="item" id="public-eye" data-l0="161" data-l1="172">
       <h3>Public Eye JA</h3>
       <p class="tag">Earlier project</p>
-      <p>Take a photo of an infrastructure problem, like a pothole or broken light, and the app classifies it, adds your location and reports it to the authorities.</p>
-      <p class="stack">React Native</p><a class="link" href="https://github.com/RajaeDev6/public-eye-ja" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <p class="item-text">Take a photo of an infrastructure problem, like a pothole or broken light, and the app classifies it, adds your location and reports it to the authorities.</p>
+      <ul class="chips"><li>React Native</li></ul><a class="link" href="https://github.com/RajaeDev6/public-eye-ja" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </article></div>
 </section>
 <section class="static-section pv" id="security">
-<h2 class="pv-title">Security Projects</h2><div class="items"><article class="item" id="soc-shift">
+<h2 class="pv-title" data-l0="3" data-l1="3">Security Projects</h2><div class="items"><article class="item" id="soc-shift" data-l0="5" data-l1="23">
       <h3>SOC Shift</h3>
       <p class="tag">Security analyst training</p>
-      <p>Practice the day-to-day work of a security analyst. Classify each alert in a queue as a real threat, a false alarm or expected activity, rank the real threats, and map them to MITRE ATT&amp;CK tactics. Other shifts give you an inbox to sort phishing from legitimate email. Fifteen shifts get harder as you go, and each ends with a score and an explanation of every call.</p>
-      <p class="stack">JavaScript · Firebase</p><a class="link" href="https://socshift.vercel.app" target="_blank" rel="noopener">Open SOC Shift<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </article><article class="item" id="coresight">
+      <p class="item-text">Practice the day-to-day work of a security analyst. Classify each alert in a queue as a real threat, a false alarm or expected activity, rank the real threats, and map them to MITRE ATT&amp;CK tactics. Other shifts give you an inbox to sort phishing from legitimate email. Fifteen shifts get harder as you go, and each ends with a score and an explanation of every call.</p>
+      <ul class="chips"><li>JavaScript</li><li>Firebase</li></ul><a class="link" href="https://socshift.vercel.app" target="_blank" rel="noopener">Open SOC Shift<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </article><article class="item" id="coresight" data-l0="25" data-l1="38">
       <h3>CoreSight</h3>
       <p class="tag">Log search</p>
-      <p>Parses syslog, login and web access logs into a searchable index. You can filter with its own query operators, and it flags suspicious patterns such as repeated failed logins from one address.</p>
-      <p class="stack">Python</p><a class="link" href="https://github.com/RajaeDev6/coresight" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </article><article class="item" id="pingsweeper">
+      <p class="item-text">Parses syslog, login and web access logs into a searchable index. You can filter with its own query operators, and it flags suspicious patterns such as repeated failed logins from one address.</p>
+      <ul class="chips"><li>Python</li></ul><a class="link" href="https://github.com/RajaeDev6/coresight" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </article><article class="item" id="pingsweeper" data-l0="40" data-l1="52">
       <h3>PingSweeper</h3>
       <p class="tag">Network scanner</p>
-      <p>Sends ICMP echo requests (pings) to every address in a subnet at the same time using Go’s goroutines, then reports which hosts are up and how long each took to respond.</p>
-      <p class="stack">Go</p><a class="link" href="https://github.com/RajaeDev6/PingSweeper" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </article></div><h3 class="pv-heading">Labs from my degree</h3><div class="items"><article class="item" id="pentest">
+      <p class="item-text">Sends ICMP echo requests (pings) to every address in a subnet at the same time using Go’s goroutines, then reports which hosts are up and how long each took to respond.</p>
+      <ul class="chips"><li>Go</li></ul><a class="link" href="https://github.com/RajaeDev6/PingSweeper" target="_blank" rel="noopener">GitHub<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </article></div><h3 class="pv-heading" data-l0="54" data-l1="54">Labs from my degree</h3><div class="items"><article class="item" id="pentest" data-l0="56" data-l1="66">
       <h3>Penetration test</h3>
       <p class="tag">GreenFields Financial Services · Team of 3</p>
-      <p>Scanned, exploited and reported on a deliberately vulnerable network, capturing unencrypted passwords and presenting a fix plan in an executive summary.</p>
-      <p class="stack">Kali Linux · Wireshark</p>
-    </article><article class="item" id="vuln-assessment">
+      <p class="item-text">Scanned, exploited and reported on a deliberately vulnerable network, capturing unencrypted passwords and presenting a fix plan in an executive summary.</p>
+      <ul class="chips"><li>Kali Linux</li><li>Wireshark</li></ul>
+    </article><article class="item" id="vuln-assessment" data-l0="68" data-l1="77">
       <h3>Vulnerability assessment</h3>
       <p class="tag">University lab</p>
-      <p>Inventoried services, ports and software versions on a Windows system, researched known CVEs in NVD and MITRE, and wrote up the risks and fixes.</p>
-      <p class="stack">Nmap · PowerShell · CVE research</p>
-    </article><article class="item" id="network-lab">
+      <p class="item-text">Inventoried services, ports and software versions on a Windows system, researched known CVEs in NVD and MITRE, and wrote up the risks and fixes.</p>
+      <ul class="chips"><li>Nmap</li><li>PowerShell</li><li>CVE research</li></ul>
+    </article><article class="item" id="network-lab" data-l0="79" data-l1="89">
       <h3>Network security lab</h3>
       <p class="tag">University lab</p>
-      <p>Analyzed DNS, web and ICMP traffic in Wireshark, scanned hosts for open ports, and configured firewall rules to block unwanted connections.</p>
-      <p class="stack">Wireshark · Nmap · Windows Firewall</p>
+      <p class="item-text">Analyzed DNS, web and ICMP traffic in Wireshark, scanned hosts for open ports, and configured firewall rules to block unwanted connections.</p>
+      <ul class="chips"><li>Wireshark</li><li>Nmap</li><li>Windows Firewall</li></ul>
     </article></div>
 </section>
 <section class="static-section pv" id="skills">
-<h2 class="pv-title">Skills</h2><dl class="skills"><dt>Languages</dt><dd>TypeScript, JavaScript, Go, Python, Rust, SQL, Bash</dd><dt>Web &amp; mobile</dt><dd>React, React Native, Expo, Next.js</dd><dt>Backend</dt><dd>FastAPI, Flask, PostgreSQL, Supabase, Firebase, MongoDB</dd><dt>Security</dt><dd>Wireshark, Nmap, Kali Linux, log analysis, alert triage, MITRE ATT&amp;CK</dd><dt>Tools</dt><dd>Git, GitHub Actions, Docker, Linux, Vercel</dd></dl>
+<h2 class="pv-title" data-l0="3" data-l1="3">Skills</h2><div class="skills" data-l0="5" data-l1="22"><div class="skill-group" data-l0="6" data-l1="6"><h3>Languages</h3><ul class="chips"><li>TypeScript</li><li>JavaScript</li><li>Go</li><li>Python</li><li>Rust</li><li>SQL</li><li>Bash</li></ul></div><div class="skill-group" data-l0="9" data-l1="9"><h3>Web &amp; mobile</h3><ul class="chips"><li>React</li><li>React Native</li><li>Expo</li><li>Next.js</li></ul></div><div class="skill-group" data-l0="12" data-l1="12"><h3>Backend</h3><ul class="chips"><li>FastAPI</li><li>Flask</li><li>PostgreSQL</li><li>Supabase</li><li>Firebase</li><li>MongoDB</li></ul></div><div class="skill-group" data-l0="15" data-l1="15"><h3>Security</h3><ul class="chips"><li>Wireshark</li><li>Nmap</li><li>Kali Linux</li><li>log analysis</li><li>alert triage</li><li>MITRE ATT&amp;CK</li></ul></div><div class="skill-group" data-l0="19" data-l1="19"><h3>Tools</h3><ul class="chips"><li>Git</li><li>GitHub Actions</li><li>Docker</li><li>Linux</li><li>Vercel</li></ul></div></div>
 </section>
 <section class="static-section pv" id="education">
-<h2 class="pv-title">Education</h2><div class="entries"><div class="entry"><svg class="icon" aria-hidden="true"><use href="#i-cap"/></svg><span><strong>BSc Cyber Security &amp; Digital Forensics</strong><small>Caribbean Maritime University · Present</small></span></div><a class="entry" href="https://www.coursera.org/account/accomplishments/specialization/CYH35LX5QN9V" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-award"/></svg><span><strong>Google Cybersecurity Certificate</strong><small>Google · 2023</small></span></a></div>
+<h2 class="pv-title" data-l0="3" data-l1="3">Education</h2><div class="entries"><div class="entry" data-l0="5" data-l1="11"><span class="entry-icon"><svg class="icon" aria-hidden="true"><use href="#i-cap"/></svg></span><span><strong>BSc Cyber Security &amp; Digital Forensics</strong><small>Caribbean Maritime University · Present</small></span></div><a class="entry" href="https://www.coursera.org/account/accomplishments/specialization/CYH35LX5QN9V" target="_blank" rel="noopener" data-l0="13" data-l1="19"><span class="entry-icon"><svg class="icon" aria-hidden="true"><use href="#i-award"/></svg></span><span><strong>Google Cybersecurity Certificate</strong><small>Google · 2023</small></span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </section>
 <section class="static-section pv" id="contact">
-<h2 class="pv-title">Contact</h2><div class="pv-contact">
+<h2 class="pv-title" data-l0="3" data-l1="3">Contact</h2><div class="pv-contact" data-l0="5" data-l1="15">
       <p class="lead">Open to software engineer and security analyst roles, internships and freelance work. Feel free to reach out.</p>
       <div class="cta"><a class="btn btn-primary" href="#contact" data-email="rgivans9|gmail.com"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Email me</a><a class="btn" href="https://github.com/RajaeDev6" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a><a class="btn" href="https://linkedin.com/in/rajae-g" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</a></div>
     </div>

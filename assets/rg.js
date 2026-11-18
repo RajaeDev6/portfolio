@@ -6,14 +6,16 @@
 //   heading "More projects"       a sub-heading
 //   job jaia {                    a block: <kind> <name> {
 //     role "Software Engineer"    a property: <key> <args...>
-//          .. "continues here"    continues the last string
+//          .. "continues here"    .. continues the last string (or list)
+//          "another argument"     a line starting with a string adds an argument
+//          -> :e projects         a line starting with -> sets the target
 //     stack [Go, Python]          a list
-//     button "Email me" -> mail   an arrow points at a target
 //   }
 //
-// parse() never throws: half-typed code just produces fewer blocks, which is
-// what lets the preview build up while the code is still being written.
-// This file has no DOM code so the build script can run it in Node.
+// parse() never throws: half-typed or broken code just produces fewer blocks,
+// which is what lets the preview update while code is being written or edited.
+// Every node remembers its source lines so the preview and the editor can point at each other.
+// No DOM code here, so the build script can run it in Node.
 
 export const KINDS = ['profile', 'job', 'project', 'item', 'skills', 'entry', 'contact'];
 const STATEMENTS = ['module', 'title', 'heading'];
@@ -46,6 +48,8 @@ export function tokenize(line) {
 
 /* ---------- parser ---------- */
 
+const val = (t) => (t.type === 'string' ? t.value : t.text);
+
 function parseArgs(tokens) {
   const args = [];
   let target = null;
@@ -54,7 +58,7 @@ function parseArgs(tokens) {
     if (t.type === 'string') args.push(t.value);
     else if (t.type === 'word') args.push(t.text);
     else if (t.type === 'arrow') {
-      target = tokens.slice(i + 1).map((x) => (x.type === 'string' ? x.value : x.text)).join(' ').trim();
+      target = tokens.slice(i + 1).map(val).join(' ').trim();
       break;
     } else if (t.text === '[') {
       // list: everything up to ] split on commas; bare words may contain spaces
@@ -64,7 +68,7 @@ function parseArgs(tokens) {
       for (; j < tokens.length && tokens[j].text !== ']'; j++) {
         const x = tokens[j];
         if (x.text === ',') { if (cur.trim()) items.push(cur.trim()); cur = ''; }
-        else cur += (cur ? ' ' : '') + (x.type === 'string' ? x.value : x.text);
+        else cur += (cur ? ' ' : '') + val(x);
       }
       if (j === tokens.length) return null; // list not closed yet
       if (cur.trim()) items.push(cur.trim());
@@ -80,44 +84,56 @@ export function parse(src, { partial = false } = {}) {
   let block = null;
   let last = null;
   let module = null;
+  const srcLines = src.split('\n');
 
-  for (const line of src.split('\n')) {
+  srcLines.forEach((line, n) => {
     const tokens = tokenize(line).filter((t) => t.type !== 'space' && t.type !== 'comment');
-    if (!tokens.length) continue;
-    if (tokens.some((t) => t.type === 'open-string')) continue; // still being typed
+    if (!tokens.length) return;
+    if (tokens.some((t) => t.type === 'open-string')) return; // still being typed
     const [first, ...rest] = tokens;
 
     if (block) {
-      if (first.text === '}') { out.push(block); block = null; last = null; continue; }
+      block.end = n;
+      if (first.text === '}') { out.push(block); block = null; last = null; return; }
+      if (!last && first.type !== 'word') return;
       if (first.type === 'concat') {
-        const s = rest.find((t) => t.type === 'string');
-        if (last && s) {
-          const i = last.args.length - 1;
-          if (typeof last.args[i] === 'string') last.args[i] += ' ' + s.value;
-        }
-        continue;
+        const more = parseArgs(rest);
+        if (!more || !more.args.length) return;
+        const i = last.args.length - 1;
+        const add = more.args[0];
+        if (typeof last.args[i] === 'string' && typeof add === 'string') last.args[i] += ' ' + add;
+        else if (Array.isArray(last.args[i]) && Array.isArray(add)) last.args[i] = last.args[i].concat(add);
+        else last.args.push(add);
+        return;
       }
-      if (first.type !== 'word') continue;
+      if (first.type === 'string' || first.type === 'arrow') {
+        const more = parseArgs(tokens);
+        if (!more) return;
+        last.args.push(...more.args);
+        if (more.target) last.target = more.target;
+        return;
+      }
+      if (first.type !== 'word') return;
       const parsed = parseArgs(rest);
-      if (!parsed) continue;
-      last = { key: first.text, ...parsed };
+      if (!parsed) return;
+      last = { key: first.text, line: n, ...parsed };
       (block.props[first.text] ||= []).push(last);
-      continue;
+      return;
     }
 
-    if (first.type !== 'word') continue;
+    if (first.type !== 'word') return;
     if (STATEMENTS.includes(first.text)) {
-      const arg = rest[0] && (rest[0].type === 'string' ? rest[0].value : rest[0].text);
-      if (!arg) continue;
+      const arg = rest[0] && val(rest[0]);
+      if (!arg) return;
       if (first.text === 'module') module = arg;
-      else out.push({ kind: first.text, text: arg });
-      continue;
+      else out.push({ kind: first.text, text: arg, start: n, end: n });
+      return;
     }
     if (KINDS.includes(first.text) && rest.length >= 2 && rest[rest.length - 1].text === '{') {
-      block = { kind: first.text, name: rest[0].text, props: {} };
+      block = { kind: first.text, name: rest[0].text, props: {}, start: n, end: n };
       last = null;
     }
-  }
+  });
   // an unclosed block is left out, unless the caller wants work-in-progress output
   if (block && partial) out.push(block);
   return { module, nodes: out };
@@ -125,11 +141,13 @@ export function parse(src, { partial = false } = {}) {
 
 /* ---------- renderer ---------- */
 
-const esc = (s = '') => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const esc = (s = '') => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const one = (b, k, i = 0) => b.props[k]?.[0]?.args[i];
 const all = (b, k) => (b.props[k] || []);
 const icon = (id) => `<svg class="icon" aria-hidden="true"><use href="#i-${id}"/></svg>`;
-const ext = (url) => /^https?:/.test(url);
+const ext = (url) => /^https?:/.test(url || '');
+const src = (n) => ` data-l0="${n.start}" data-l1="${n.end}"`;
+const slug = (b) => esc(b.name.replace(/_/g, '-'));
 
 function linkFor(target) {
   if (!target) return { href: '#' };
@@ -139,33 +157,42 @@ function linkFor(target) {
   return { href: target, attrs: ext(target) ? ' target="_blank" rel="noopener"' : '' };
 }
 
-function anchor(label, target, cls, iconId) {
-  const { href, attrs = '' } = linkFor(target);
-  return `<a class="${cls}" href="${esc(href)}"${attrs}>${iconId ? icon(iconId) : ''}${esc(label)}</a>`;
+const BUTTON_ICONS = { 'Email me': 'mail', GitHub: 'github', LinkedIn: 'linkedin' };
+
+function button(p, i) {
+  const { href, attrs = '' } = linkFor(p.target);
+  const label = p.args[0] || '';
+  return `<a class="btn${i === 0 ? ' btn-primary' : ''}" href="${esc(href)}"${attrs}>${BUTTON_ICONS[label] ? icon(BUTTON_ICONS[label]) : ''}${esc(label)}</a>`;
 }
 
-function arrowLink(label, url) {
+function arrowLink(b) {
+  const label = one(b, 'link', 0);
+  const url = one(b, 'link', 1);
+  if (!label || !url) return '';
   return `<a class="link" href="${esc(url)}" target="_blank" rel="noopener">${esc(label)}${icon('arrow')}</a>`;
 }
 
-const stack = (b) => {
-  const s = one(b, 'stack');
-  return Array.isArray(s) && s.length ? `<p class="stack">${s.map(esc).join(' · ')}</p>` : '';
-};
+function chips(list) {
+  return Array.isArray(list) && list.length ? `<ul class="chips">${list.map((s) => `<li>${esc(s)}</li>`).join('')}</ul>` : '';
+}
 
-const BUTTON_ICONS = { 'Email me': 'mail', GitHub: 'github', LinkedIn: 'linkedin' };
+function shot(p, size = 280) {
+  const f = esc(p.args[0] || '');
+  if (!f) return '';
+  return `<button type="button" class="shot" data-full="/assets/${f}.webp" aria-label="Enlarge screenshot"><img src="/assets/${f}-${size}.webp" srcset="/assets/${f}-200.webp 200w, /assets/${f}-280.webp 280w, /assets/${f}.webp 420w" sizes="160px" width="160" height="346" loading="lazy" alt="${esc(p.args[1] || '')}"></button>`;
+}
 
 const render = {
-  title: (n) => `<h2 class="pv-title">${esc(n.text)}</h2>`,
-  heading: (n) => `<h3 class="pv-heading">${esc(n.text)}</h3>`,
+  title: (n) => `<h2 class="pv-title"${src(n)}>${esc(n.text)}</h2>`,
+  heading: (n) => `<h3 class="pv-heading"${src(n)}>${esc(n.text)}</h3>`,
 
   profile(b) {
     const name = one(b, 'name') || '';
     const [firstName, ...restName] = name.split(' ');
-    const buttons = all(b, 'button').map((p, i) => anchor(p.args[0], p.target, i === 0 ? 'btn btn-primary' : 'btn', BUTTON_ICONS[p.args[0]]));
-    const socials = all(b, 'social').map((p) => `<a href="${esc(p.args[1])}" target="_blank" rel="noopener" aria-label="${esc(p.args[0])}">${icon(p.args[0])}</a>`);
-    return `<div class="pv-hero">
-      <h1><span>${esc(firstName)}</span> ${esc(restName.join(' '))}</h1>
+    const buttons = all(b, 'button').map(button);
+    const socials = all(b, 'social').filter((p) => p.args[1]).map((p) => `<a href="${esc(p.args[1])}" target="_blank" rel="noopener" aria-label="${esc(p.args[0])}">${icon(p.args[0])}</a>`);
+    return `<div class="pv-hero"${src(b)}>
+      ${name ? `<h1><span>${esc(firstName)}</span> ${esc(restName.join(' '))}</h1>` : ''}
       ${one(b, 'role') ? `<p class="role">${esc(one(b, 'role'))}</p>` : ''}
       ${one(b, 'bio') ? `<p class="bio">${esc(one(b, 'bio'))}</p>` : ''}
       ${buttons.length || socials.length ? `<div class="cta">${buttons.join('')}${socials.length ? `<span class="socials">${socials.join('')}</span>` : ''}</div>` : ''}
@@ -174,70 +201,77 @@ const render = {
 
   job(b) {
     const did = all(b, 'did').map((p) => `<li>${esc(p.args[0])}</li>`).join('');
-    const link = b.props.link ? arrowLink(one(b, 'link', 0), one(b, 'link', 1)) : '';
-    return `<article class="job">
+    return `<article class="job"${src(b)}>
+      <span class="job-dot" aria-hidden="true"></span>
       <div class="job-head"><h3>${esc(one(b, 'role'))}</h3><span class="when">${esc(one(b, 'when'))}</span></div>
       <p class="org">${esc(one(b, 'org'))}</p>
-      ${did ? `<ul>${did}</ul>` : ''}${link}
+      ${did ? `<ul>${did}</ul>` : ''}${arrowLink(b)}
     </article>`;
   },
 
+  // A card that opens to show the full write-up
   project(b) {
     const features = all(b, 'feature').map((p) => `<li>${esc(p.args[0])}</li>`).join('');
-    const link = b.props.link ? arrowLink(one(b, 'link', 0), one(b, 'link', 1)) : '';
-    const shots = all(b, 'shot').map((p) => {
-      const f = esc(p.args[0]);
-      return `<img src="/assets/${f}-280.webp" srcset="/assets/${f}-200.webp 200w, /assets/${f}-280.webp 280w, /assets/${f}.webp 420w" sizes="140px" width="140" height="303" loading="lazy" alt="${esc(p.args[1] || '')}">`;
-    }).join('');
-    return `<article class="project" id="${esc(b.name.replace(/_/g, '-'))}">
-      <div class="project-copy">
-        <h3>${esc(one(b, 'name'))}</h3>
-        ${one(b, 'tag') ? `<p class="tag">${esc(one(b, 'tag'))}</p>` : ''}
-        ${one(b, 'text') ? `<p>${esc(one(b, 'text'))}</p>` : ''}
-        ${features ? `<ul>${features}</ul>` : ''}
-        ${stack(b)}${link}
+    const shots = all(b, 'shot');
+    return `<details class="project" id="${slug(b)}"${src(b)}>
+      <summary>
+        ${shots[0] ? `<span class="project-cover">${shots.map((p) => `<img src="/assets/${esc(p.args[0])}-200.webp" width="96" height="208" loading="lazy" alt="">`).join('')}</span>` : ''}
+        <span class="project-sum">
+          <span class="project-name">${esc(one(b, 'name'))}</span>
+          ${one(b, 'tag') ? `<span class="tag">${esc(one(b, 'tag'))}</span>` : ''}
+          ${one(b, 'text') ? `<span class="project-text">${esc(one(b, 'text'))}</span>` : ''}
+          <span class="more" aria-hidden="true"><span class="more-closed">Details</span><span class="more-open">Close</span>${icon('caret')}</span>
+        </span>
+      </summary>
+      <div class="project-body">
+        <div>
+          ${features ? `<ul>${features}</ul>` : ''}
+          ${chips(one(b, 'stack'))}
+          ${arrowLink(b)}
+        </div>
+        ${shots.length ? `<div class="shots">${shots.map((p) => shot(p)).join('')}</div>` : ''}
       </div>
-      ${shots ? `<div class="shots">${shots}</div>` : ''}
-    </article>`;
+    </details>`;
   },
 
   item(b) {
-    const link = b.props.link ? arrowLink(one(b, 'link', 0), one(b, 'link', 1)) : '';
-    return `<article class="item" id="${esc(b.name.replace(/_/g, '-'))}">
+    return `<article class="item" id="${slug(b)}"${src(b)}>
       <h3>${esc(one(b, 'name'))}</h3>
       ${one(b, 'tag') ? `<p class="tag">${esc(one(b, 'tag'))}</p>` : ''}
-      ${one(b, 'text') ? `<p>${esc(one(b, 'text'))}</p>` : ''}
-      ${stack(b)}${link}
+      ${one(b, 'text') ? `<p class="item-text">${esc(one(b, 'text'))}</p>` : ''}
+      ${chips(one(b, 'stack'))}${arrowLink(b)}
     </article>`;
   },
 
   skills(b) {
-    const rows = all(b, 'group').map((p) => `<dt>${esc(p.args[0])}</dt><dd>${(Array.isArray(p.args[1]) ? p.args[1] : []).map(esc).join(', ')}</dd>`).join('');
-    return `<dl class="skills">${rows}</dl>`;
+    const groups = all(b, 'group').map((p) => `<div class="skill-group" data-l0="${p.line}" data-l1="${p.line}"><h3>${esc(p.args[0])}</h3>${chips(p.args.find(Array.isArray))}</div>`).join('');
+    return `<div class="skills"${src(b)}>${groups}</div>`;
   },
 
   entry(b) {
-    const inner = `${icon(one(b, 'icon') || 'cap')}<span><strong>${esc(one(b, 'name'))}</strong><small>${esc(one(b, 'sub'))}</small></span>`;
+    const inner = `<span class="entry-icon">${icon(one(b, 'icon') || 'cap')}</span><span><strong>${esc(one(b, 'name'))}</strong><small>${esc(one(b, 'sub'))}</small></span>`;
     const href = one(b, 'href');
-    return href ? `<a class="entry" href="${esc(href)}" target="_blank" rel="noopener">${inner}</a>` : `<div class="entry">${inner}</div>`;
+    return href ? `<a class="entry" href="${esc(href)}" target="_blank" rel="noopener"${src(b)}>${inner}${icon('arrow')}</a>` : `<div class="entry"${src(b)}>${inner}</div>`;
   },
 
   contact(b) {
-    const buttons = all(b, 'button').map((p, i) => anchor(p.args[0], p.target, i === 0 ? 'btn btn-primary' : 'btn', BUTTON_ICONS[p.args[0]]));
-    return `<div class="pv-contact">
+    const buttons = all(b, 'button').map(button);
+    return `<div class="pv-contact"${src(b)}>
       ${one(b, 'text') ? `<p class="lead">${esc(one(b, 'text'))}</p>` : ''}
       ${buttons.length ? `<div class="cta">${buttons.join('')}</div>` : ''}
     </div>`;
   },
 };
 
-// Consecutive items and entries share a grid
+// Consecutive blocks of the same kind share a container
+const GROUPS = { item: 'items', entry: 'entries', job: 'jobs', project: 'projects' };
+
 export function toHTML(nodes) {
   let html = '';
   let group = null;
   const close = () => { if (group) { html += '</div>'; group = null; } };
   for (const n of nodes) {
-    const g = n.kind === 'item' ? 'items' : n.kind === 'entry' ? 'entries' : n.kind === 'job' ? 'jobs' : null;
+    const g = GROUPS[n.kind] || null;
     if (g !== group) { close(); if (g) { html += `<div class="${g}">`; group = g; } }
     html += (render[n.kind] || (() => ''))(n);
   }

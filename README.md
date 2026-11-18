@@ -1,6 +1,6 @@
 # Rajae Givans - Portfolio
 
-My portfolio is a Vim-style editor. The left pane shows the site's source written in **rg**, a small language I made for it; the right pane is a live preview of what the rg interpreter renders. Each section (about, experience, projects, security, skills, education, contact) is a buffer.
+My portfolio is a live coding environment. A narrow Vim-style editor on the left holds the site's source, written in **rg**, a small language I made for it. The large pane on the right is a browser-style preview of what the rg interpreter renders. Each section (about, experience, projects, security, skills, education, contact) is a buffer.
 
 Live: [rajaedev.space](https://rajaedev.space)
 
@@ -10,8 +10,12 @@ Live: [rajaedev.space](https://rajaedev.space)
 
 - **Buffers as sections.** Click a tab, press `1`–`7`, use `gt` / `gT`, or type `:e projects`. Links in the preview open other buffers too. Each buffer has its own URL (`/#projects`).
 - **Code that writes itself.** The first time a buffer opens, its source types out in insert mode and the preview builds up as each property is written. Click the code, press `Esc` or hit "skip typing" to jump to the end. Visitors who prefer reduced motion get the finished code straight away.
+- **Edit it yourself.** Click the code and type: the preview re-renders as you go, even while a block is half-written. Edits stay in the tab; `:e!` or "undo my edits" restores the original.
+- **Code and preview are linked.** Hover anything in the preview to highlight the lines that produce it; click it to jump the editor there. Moving the cursor in the code outlines the matching block in the preview.
+- **Interactive preview.** Project cards open into the full write-up, and screenshots open full size.
+- **Layout.** Drag the divider to resize the code pane, or hide the code entirely. Both are remembered.
 - **A real interpreter.** `assets/rg.js` tokenizes, parses and renders rg. It never throws on half-typed code, which is what lets the preview update while the code is still being written.
-- **Vim touches.** Line numbers, cursor line, `~` past the end of the file, a mode indicator, a status line and a command line (`:e`, `:b 3`, `:bn`, `:ls`, `:w`, `:help`, `:12`). `j`/`k`, `gg`/`G` and `Ctrl-d`/`Ctrl-u` move the cursor.
+- **Vim touches.** Line numbers, cursor line, `~` past the end of the file, a mode indicator, a status line and a command line (`:e`, `:e!`, `:b 3`, `:bn`, `:ls`, `:w`, `:help`, `:12`). `j`/`k`, `gg`/`G` and `Ctrl-d`/`Ctrl-u` move the cursor.
 - **Phones.** One pane at a time with a Preview / Code switch; the preview shows first.
 - **No JavaScript.** Every section is prerendered into `index.html`, so search engines and visitors without JavaScript get the full content as a plain page.
 
@@ -29,6 +33,8 @@ project shop_weh {               block: <kind> <name> {
        .. "which store has it cheapest"     .. continues the last string
   stack   [Next.js, Firebase]    list
   button  "Email me" -> mail     arrow points at a target (mail, :e buffer, or a URL)
+  link    "GitHub"               a line starting with a string adds an argument
+          "https://github.com/RajaeDev6"
 }
 ```
 
