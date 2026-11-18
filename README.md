@@ -12,7 +12,7 @@ Live Demo: [Rajae's portfolio](https://rajaedev.space)
 - **HTML**
 - **CSS** (hand-written, no framework), inlined into the page so nothing blocks the first render
 - **JavaScript**
-- **Nunito Sans**, a self-hosted Latin subset with preload
+- **JetBrains Mono**, a self-hosted Latin subset with preload
 - **Hugeicons** as an inline SVG sprite, plus Devicon badges
 
 No frameworks or build tools - the site is lightweight and loads quickly by design.
@@ -54,10 +54,10 @@ The home page shows four short picks (Shop Weh, EStore Trust, Chichi Bus, Sequik
 `_headers` sets a strict Content-Security-Policy (no inline scripts or styles), HSTS, `nosniff`, a referrer policy, a permissions policy and frame blocking for Netlify.
 
 ### **5. Restrained Motion**
-The hero rises slightly on load; everything else is static. Motion is turned off for visitors who prefer reduced motion.
+Nothing animates except small colour changes on hover. Smooth scrolling is turned off for visitors who prefer reduced motion.
 
-### **6. Minimalist Aesthetic**
-Dark theme with cool grays and a teal accent, with a plain-text `now.txt` note beside the hero. Type and icons follow EStore Trust (Nunito Sans, Hugeicons), with 20px cards, 10px inner tiles, and pill-shaped buttons and chips.
+### **6. Terminal Aesthetic**
+Styled like a Linux console, with Arch blue as the only accent and JetBrains Mono throughout. Each section opens with a shell prompt line (`[rajae@kingston ~]$ cat experience.txt`) above a plain heading, so it reads like a terminal but stays easy to scan for anyone. Boxes are square with 1px borders; there is no glow, blinking cursor or typing effect.
 
 ---
 
