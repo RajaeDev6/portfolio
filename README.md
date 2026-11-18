@@ -13,7 +13,7 @@ Live Demo: [Rajae's portfolio](https://rajaedev.space)
 - **CSS** (hand-written, no framework), inlined into the page so nothing blocks the first render
 - **JavaScript**
 - **Nunito Sans**, a self-hosted Latin subset with preload
-- **Hugeicons** as an inline SVG sprite, plus Devicon badges
+- **Hugeicons** as an inline SVG sprite
 
 No frameworks or build tools - the site is lightweight and loads quickly by design.
 
@@ -27,17 +27,11 @@ Styles live in `assets/styles.css`. After editing it, run `python3 tools/inline-
 Works smoothly across desktop, tablet, and mobile.  
 Includes a clean mobile hamburger menu with auto-close behavior.
 
-### **2. Security**
-The home page has a Security section: SOC Shift (SOC analyst training platform), CoreSight (log analysis engine) and PingSweeper (subnet scanner).
+### **2. Work**
+Four short project tiles (Shop Weh, EStore Trust, Chichi Bus, Sequik) link to `projects.html` (served at `/projects`), which has the full write-ups and screenshots, security tools and labs, and smaller projects.
 
-### **3. Projects**
-The home page shows four short picks (Shop Weh, EStore Trust, Chichi Bus, Sequik) that link to `projects.html` (served at `/projects`). That page has the full write-ups and screenshots:
-- Shop Weh: grocery price comparison for Jamaica ([shopweh.store](https://shopweh.store))
-- EStore Trust: scam checker for Jamaican Instagram shops ([estoretrust.vercel.app](https://estoretrust.vercel.app))
-- Sequik: rent tracker for landlords ([sequik.netlify.app](https://sequik.netlify.app))
-- Chichi Bus: crowdsourced JUTC bus tracker ([chichibus.vercel.app](https://chichibus.vercel.app))
-- Security tools and labs from my degree (penetration test, vulnerability assessment, network security)
-- Request Inspector, Due & ExpenseTrakr and Public Eye JA in a compact, expandable list
+### **3. Security**
+SOC Shift (security analyst training), CoreSight (log search) and PingSweeper (network scanner).
 
 ### **4. Experience, Skills & Education**
 - Software Engineer Intern at the Jamaica Artificial Intelligence Association
@@ -53,11 +47,11 @@ The home page shows four short picks (Shop Weh, EStore Trust, Chichi Bus, Sequik
 ### **Security headers**
 `_headers` sets a strict Content-Security-Policy (no inline scripts or styles), HSTS, `nosniff`, a referrer policy, a permissions policy and frame blocking for Netlify.
 
-### **5. Restrained Motion**
-The hero rises slightly on load; everything else is static. Motion is turned off for visitors who prefer reduced motion.
+### **5. Navigation**
+The nav highlights the section you're reading as you scroll. Motion is limited to small hover effects and is turned off for visitors who prefer reduced motion.
 
-### **6. Minimalist Aesthetic**
-Dark theme with Nunito Sans and a blue accent. The nav highlights the section you are reading. Cards use a 14px radius; buttons and chips are pills.
+### **6. Look**
+Dark, with Nunito Sans and one blue accent. Copy is short and plain.
 
 ---
 
