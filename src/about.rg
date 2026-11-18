@@ -3,18 +3,15 @@
 -- for this site. The preview is its
 -- output: click in here and edit it.
 --
--- each file hides a secret next to
--- something worth knowing about me,
--- and it isn't in plain text.
--- tools: / search, :decode :hex
--- :rot13 :rev. click the preview to
--- jump to the code behind it.
+-- there's a small CTF in here:
+-- 4 challenges, :ctf for the board.
+-- or click "Normal site" for the
+-- plain version.
 
 module about
 
 profile rajae {
   name    "Rajae Givans"
-  -- cmd7c2VjdXJpdHlfbWVldHNfc29mdHdhcmV9
   role    "Cybersecurity and software"
        .. "engineering student, based in"
        .. "Kingston, Jamaica."

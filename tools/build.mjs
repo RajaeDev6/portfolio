@@ -8,7 +8,7 @@ import { parse, toHTML } from '../assets/rg.js';
 
 const root = new URL('..', import.meta.url);
 const BUFFERS = ['about', 'experience', 'projects', 'security', 'skills', 'education', 'contact'];
-const HIDDEN = [];
+const HIDDEN = ['.notes']; // CTF buffer: shipped to the editor, left out of the prerendered page
 
 const sources = Object.fromEntries([...BUFFERS, ...HIDDEN].map((b) => [b, readFileSync(new URL(`src/${b}.rg`, root), 'utf8')]));
 writeFileSync(new URL('assets/sources.js', root),

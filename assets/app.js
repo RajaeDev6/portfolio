@@ -6,7 +6,7 @@ import { parse, toHTML, highlight, urlsIn, findInjection } from './rg.js';
 import SOURCES from './sources.js';
 
 const BUFFERS = ['about', 'experience', 'projects', 'security', 'skills', 'education', 'contact'];
-const HIDDEN = [];                                // unlisted buffers, if any
+const HIDDEN = ['.notes'];                         // unlisted buffers (part of the CTF)
 const ALL = [...BUFFERS, ...HIDDEN];
 // Only URLs that appear in the original source may ever become working links
 const ALLOWED_URLS = urlsIn(Object.values(SOURCES).join('\n'));
@@ -31,7 +31,6 @@ app.innerHTML = `
       ${BUFFERS.map((b, i) => `<button class="tab" role="tab" type="button" data-buf="${b}" aria-selected="false"><span class="tab-n">${i + 1}</span>${b}.rg</button>`).join('')}
     </div>
     <button type="button" class="code-toggle" id="code-toggle"></button>
-    <button type="button" class="ctf-btn" id="ctf-btn" aria-label="Capture the flag progress">CTF 0/3</button>
     <a class="site-link" href="/site/">Normal site</a>
     <div class="view-toggle" role="group" aria-label="View">
       <button type="button" data-view="preview">Preview</button>
@@ -56,13 +55,12 @@ app.innerHTML = `
         <span class="addr"><span class="addr-host">rajaedev.space</span><span id="addr-path">/#about</span></span>
         <span class="run-status" id="run-status"></span>
       </div>
-      <div class="mission" id="mission">
-        <span class="mission-tag">CTF</span>
-        <span class="mission-text" id="mission-text"></span>
-        <button type="button" class="mission-btn" id="mission-btn">Hints</button>
-      </div>
       <div class="edit-note" id="edit-note" hidden>You’re editing a copy. Changes only show in your browser and reset when you reload, and links are switched off. <button type="button" id="edit-undo">Undo my edits</button></div>
       <div class="preview-body pv" id="preview" tabindex="-1"></div>
+      <div class="intro" id="intro" hidden role="note">
+        <p><b>This is my portfolio as a code editor, with a CTF hidden in it.</b> The left side is the source, the right side is what it renders. Click the tabs to look around, or open the challenge board and start hunting.</p>
+        <div class="intro-actions"><button type="button" class="btn btn-primary" id="intro-ctf">Challenge board</button><button type="button" class="btn" id="intro-ok">Look around</button><a class="btn" href="/site/">Normal site</a></div>
+      </div>
     </section>
   </div>
   <div class="statusline">
@@ -72,6 +70,7 @@ app.innerHTML = `
     <button type="button" class="sl-btn" id="skip" hidden>skip typing ▸</button>
     <button type="button" class="sl-btn" id="reset" hidden>undo my edits</button>
     <span class="fill"></span>
+    <button type="button" class="sl-btn flags" id="flags">ctf 0/4</button>
     <span class="hint" id="hint">click the code to edit it · <kbd>:help</kbd></span>
     <span class="ft">rg</span>
     <span class="pos" id="pos">1:1</span>
@@ -93,35 +92,30 @@ app.innerHTML = `
         <dt><kbd>:e projects</kbd></dt><dd>open a section by name</dd>
         <dt><kbd>:e!</kbd></dt><dd>undo your edits</dd>
         <dt><kbd>:ctf</kbd></dt><dd>the capture-the-flag challenges</dd>
-        <dt><kbd>/word</kbd>, <kbd>n</kbd></dt><dd>search the code, jump to the next match</dd>
-        <dt><kbd>:decode</kbd> <kbd>:hex</kbd> <kbd>:rot13</kbd> <kbd>:rev</kbd></dt><dd>decode base64, hex, ROT13 or reversed text: the line under the cursor, or whatever you type after it</dd>
+      </dl>
+      <dl>
+        <dt><kbd>/word</kbd>, <kbd>n</kbd></dt><dd>search the code</dd>
+        <dt><kbd>:decode</kbd> <kbd>:hex</kbd> <kbd>:rot13</kbd> <kbd>:rev</kbd></dt><dd>decode the line under the cursor, or text typed after it</dd>
+        <dt><kbd>:ctf</kbd>, <kbd>:flag rg{…}</kbd></dt><dd>challenge board, submit a flag</dd>
       </dl>
       <p class="help-text">Not into code? The <a href="/site/">normal site</a> has the same content as a plain page.</p>
       <p class="help-foot">Press <kbd>Esc</kbd> to close.</p>
     </div>
   </div>
-  <div class="overlay" id="intro" hidden role="dialog" aria-modal="true" aria-labelledby="intro-title">
-    <div class="help-box start-box">
-      <p class="start-kicker">rajaedev.space</p>
-      <h2 class="start-title" id="intro-title">Capture the flag</h2>
-      <p class="help-text">This portfolio is a Vim editor with a small capture-the-flag. Each file hides an encoded flag next to something worth knowing about me. Crack the clue, find the flag, decode it, and the next file opens. The last one unlocks my contact details.</p>
-      <p class="help-text">Just want to read my portfolio? The <a href="/site/">normal site</a> has everything, no puzzles.</p>
-      <dl class="start-keys">
-        <dt>click the preview</dt><dd>jumps to the code behind it</dd>
-        <dt><kbd>/</kbd></dt><dd>searches the code (type a word, press Enter)</dd>
-        <dt><kbd>:decode</kbd> <kbd>:hex</kbd> <kbd>:rot13</kbd> <kbd>:rev</kbd></dt><dd>decode the line under the cursor</dd>
-      </dl>
-      <div class="intro-actions">
-        <button type="button" class="btn btn-primary" id="intro-start">Start the CTF</button>
-        <a class="btn" href="/site/">Go to the normal site</a>
-        <button type="button" class="btn" id="intro-ok">Look around first</button>
-      </div>
+  <div class="overlay" id="ctf" hidden role="dialog" aria-modal="true" aria-label="Capture the flag">
+    <div class="help-box ctf-box">
+      <div class="board-head"><p class="help-title">Challenge board</p><p class="score" id="score">0 / 900 pts</p></div>
+      <p class="help-text">Flags look like <code>rg{...}</code>. Decoding one with <kbd>:decode</kbd>, <kbd>:hex</kbd>, <kbd>:rot13</kbd> or <kbd>:rev</kbd> submits it automatically, or paste it below. Not playing? The <a href="/site/">normal site</a> has everything.</p>
+      <ol class="ctf-list" id="ctf-list"></ol>
+      <form class="flag-form" id="flag-form"><input id="flag-input" placeholder="rg{...}" autocomplete="off" spellcheck="false" aria-label="Flag"><button type="submit" class="btn btn-primary">Submit</button></form>
+      <p class="flag-msg" id="flag-msg" aria-live="polite"></p>
+      <p class="help-foot">Press <kbd>Esc</kbd> to close.</p>
     </div>
   </div>
   <div class="overlay" id="done" hidden role="dialog" aria-modal="true" aria-labelledby="done-title">
     <div class="help-box start-box">
-      <p class="start-kicker">4/4 flags</p>
-      <h2 class="start-title" id="done-title">You got them all</h2>
+      <p class="start-kicker">900 / 900 pts</p>
+      <h2 class="start-title" id="done-title">Board cleared</h2>
       <p class="help-text">Thanks for playing. If you’d like to talk about a role or a project, here’s where to find me.</p>
       <div class="intro-actions">
         <a class="btn btn-primary" id="done-email" href="#contact"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Email me</a>
@@ -129,16 +123,6 @@ app.innerHTML = `
         <a class="btn" href="https://linkedin.com/in/rajae-g" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</a>
       </div>
       <p class="help-foot"><button type="button" class="linkish" id="done-close">Close</button> to keep looking around.</p>
-    </div>
-  </div>
-  <div class="overlay" id="ctf" hidden role="dialog" aria-modal="true" aria-label="Capture the flag">
-    <div class="help-box ctf-box">
-      <p class="help-title">Capture the flag</p>
-      <p class="help-text">Each file hides an encoded flag next to the answer to its clue. Decode it with <kbd>:decode</kbd>, <kbd>:hex</kbd>, <kbd>:rot13</kbd> or <kbd>:rev</kbd> and it’s checked automatically, or submit a flag below or with <kbd>:flag rg{...}</kbd>. Stuck? The <a href="/site/">normal site</a> has everything without the puzzles.</p>
-      <ol class="ctf-list" id="ctf-list"></ol>
-      <form class="flag-form" id="flag-form"><input id="flag-input" placeholder="rg{...}" autocomplete="off" spellcheck="false" aria-label="Flag"><button type="submit" class="btn btn-primary">Submit</button></form>
-      <p class="flag-msg" id="flag-msg" aria-live="polite"></p>
-      <p class="help-foot">Press <kbd>Esc</kbd> to close.</p>
     </div>
   </div>
   <div class="overlay lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Screenshot">
@@ -229,7 +213,6 @@ function drawPreview(value, { done = true } = {}) {
   const ms = (performance.now() - t0).toFixed(1);
   const blocks = nodes.filter((n) => n.name).length;
   $('run-status').textContent = done ? `rg run ${current}.rg · ${blocks} block${blocks === 1 ? '' : 's'} · ${ms}ms` : 'rg run · interpreting…';
-  if (done && typeof syncFlags === 'function') syncFlags();
   previewEl.querySelectorAll('[data-email]').forEach((a) => {
     const [user, domain] = a.dataset.email.split('|');
     a.href = `mailto:${user}@${domain}`;
@@ -335,8 +318,6 @@ function open(buf, { scrollTo } = {}) {
   if (location.hash.slice(1) !== (scrollTo || buf)) history.replaceState(null, '', `#${scrollTo || buf}`);
   bandLink.hidden = true;
 
-  if (isLocked(buf)) { showLocked(buf); return true; }
-
   if (typed.has(buf) || reduced || !editorVisible() || scrollTo) {
     typed.add(buf);
     settle(buf);
@@ -385,7 +366,7 @@ function bufferFor(hash) {
 
 /* ---------- editing ---------- */
 
-ta.addEventListener('focus', () => { if (typing) stopTyping(); if (!isLocked(current)) setMode('INSERT'); });
+ta.addEventListener('focus', () => { if (typing) stopTyping(); setMode('INSERT'); });
 ta.addEventListener('blur', () => { if (!typing) setMode('NORMAL'); });
 ta.addEventListener('input', () => {
   edits[current] = ta.value;
@@ -398,7 +379,7 @@ ta.addEventListener('input', () => {
   const attack = findInjection(ta.value);
   if (attack && attack !== lastAttack) {
     lastAttack = attack;
-    message(`Blocked ${attack}. Everything you type is rendered as plain text, so it can’t run.`);
+    message(`Blocked ${attack}. Everything you type is rendered as plain text, so it can’t run. flag 3: ${flag3()}`);
   } else if (!attack) lastAttack = null;
 });
 let lastAttack = null;
@@ -438,7 +419,6 @@ previewEl.addEventListener('focusin', (e) => showLink(e.target.closest('[data-l0
 previewEl.addEventListener('click', (e) => {
   const shot = e.target.closest('.shot');
   if (shot) { openLightbox(shot); return; }
-  if (e.target.closest('[data-ctf]')) { showCtf(); return; }
   if (e.target.closest('[data-inert]')) {
     e.preventDefault();
     message(current in edits
@@ -534,7 +514,7 @@ function run(cmd) {
   const arg = (args[0] || '').replace(/\.rg$/, '');
   if (/^\d+$/.test(c)) { markCursor(Number(c) - 1, { sync: true }); return; }
   switch (name) {
-    case 'e!': return isLocked(current) ? message(`"${current}.rg" is encrypted`, true) : resetEdits();
+    case 'e!': return resetEdits();
     case 'e': case 'edit': case 'o': case 'open':
       if (!arg) return message('E32: No file name', true);
       if (!open(arg)) message(`E484: Can't open file ${arg}.rg  (try: ${BUFFERS.join(', ')})`, true);
@@ -548,6 +528,7 @@ function run(cmd) {
     case 'bn': case 'bnext': case 'tabn': case 'tabnext': return step(1);
     case 'bp': case 'bprev': case 'bprevious': case 'tabp': case 'tabprevious': return step(-1);
     case 'ls': case 'buffers': return message(BUFFERS.map((b, i) => `${i + 1} ${b}.rg${b in edits ? ' [+]' : ''}`).join('   '));
+    case 'ls!': case 'buffers!': return message([...BUFFERS.map((b, i) => `${i + 1} ${b}.rg`), `${BUFFERS.length + 1}u ${HIDDEN[0]}.rg (unlisted)`].join('   '));
     case 'ctf': return showCtf();
     case 'decode': case 'b64': case 'base64': return decodeWith('base64', args.join(' '));
     case 'hex': return decodeWith('hex', args.join(' '));
@@ -594,7 +575,7 @@ document.addEventListener('keydown', (e) => {
   if (e.target === cmdInput || e.target === ta || e.target.id === 'flag-input') { if (e.key === 'Escape' && e.target.id === 'flag-input') ctfEl.hidden = true; return; }
   if (!lightbox.hidden) { if (e.key === 'Escape') closeLightbox(); return; }
   if (!ctfEl.hidden) { if (e.key === 'Escape' || e.key === 'q') { e.preventDefault(); ctfEl.hidden = true; } return; }
-  if (!intro.hidden) { if (e.key === 'Escape') dismissIntro(); return; }
+  if (!intro.hidden && e.key === 'Escape') { dismissIntro(); return; }
   if (!$('done').hidden) { if (e.key === 'Escape') $('done').hidden = true; return; }
   if (!helpEl.hidden) { if (e.key === 'Escape' || e.key === 'q') { e.preventDefault(); hideHelp(); } return; }
   if (e.metaKey || e.altKey) return;
@@ -711,50 +692,44 @@ window.addEventListener('hashchange', () => {
 
 /* ---------- capture the flag ---------- */
 
-// Each file hides an encoded flag next to a detail worth noticing. The clue points at the
-// detail without naming it; decoding the line beside it gives the flag, which opens the next
-// file, so solving walks through the portfolio in order. Flags are checked by SHA-256 hash.
+// A small jeopardy-style board. Each flag is hidden somewhere a real CTF would hide it,
+// next to something on the site worth a look. Flags are checked by SHA-256 hash.
 const CHALLENGES = [
   {
-    where: 'about', unlocks: ['experience'],
-    clue: 'I stand where two fields meet. Beside my title, a line is written in base sixty-four.',
-    hints: [
-      'The title is my role: the line that says what I study.',
-      'Click my role in the preview to jump to its code. Put the cursor on the odd line above it (j / k) and run :decode.',
-    ],
-    hash: '4f2fe91023d1ed9b9592df53852f6d11f5bd6938cff6d1da9b36b8a546ad9cd0',
+    category: 'Recon', points: 100, title: 'Unlisted',
+    blurb: 'Not everything open in this editor has a tab.',
+    hints: ['Vim can list buffers that are hidden from the normal list.', 'Run :ls! and open what you find with :e.'],
+    hash: '5b78a99b3c6c582b58cc6c42989ed5e0d62d21782d78c98e15720a391b7dd7e9',
   },
   {
-    where: 'experience', unlocks: ['projects'],
-    clue: '4a 41 49 41. I spent a summer there, and the line beside it reads right to left.',
-    hints: [
-      'The numbers are hex. Try :hex 4a 41 49 41, then search for the answer with /.',
-      'Put the cursor on the backwards line and run :rev.',
-    ],
-    hash: 'aaa84e22db90106eb3cc62052131406f77f3d86f773ccba67f0dbe5bf1720f66',
+    category: 'Crypto', points: 200, title: 'Summer job',
+    blurb: 'One line in my internship isn’t written for humans.',
+    hints: ['Open experience.rg and read the internship’s code closely.', 'Put the cursor on the odd line and try the decoders, starting with :decode.'],
+    hash: 'f633a3187b0e3e9c9a0adf0296d301377a9031729c9b21b6a48b57d412b6a203',
   },
   {
-    where: 'projects', unlocks: ['security'],
-    clue: 'Fubc Jru. Turn it thirteen places, then turn the line beside it too.',
-    hints: [
-      'That’s ROT13. Try :rot13 Fubc Jru.',
-      'Click that project’s card to jump to its code, put the cursor on the odd line and run :rot13.',
-    ],
-    hash: '30f7c04a9c9c87335717e8f832ef9468b99f32203e20f925104ea85f7ffa399b',
+    category: 'Web', points: 300, title: 'Defended',
+    blurb: 'This editor says you can’t run code in it. Prove it wrong.',
+    hints: ['Press i to edit the code; the preview re-renders as you type.', 'Change a link to javascript:alert(1), or slip in a <script> tag.'],
+    hash: 'f55a6d298066c78a134b366dd482a88d2a84fc4e4aebddeda7a602c37eb7ff8b',
   },
   {
-    where: 'security', unlocks: ['skills', 'education', 'contact'],
-    clue: 'Three letters watch the network day and night. Whatever trains them keeps the last flag in hex.',
-    hints: [
-      'SOC: Security Operations Center. Which of my projects trains people to work in one?',
-      'Click it in the preview to jump to its code, put the cursor on one of the hex lines and run :hex.',
-    ],
-    hash: '10a872a71b9d49fa051c7579518509dfc58abc7f241c3f8fc2ceea8dc03c2fd5',
+    category: 'Forensics', points: 300, title: 'View source',
+    blurb: 'The normal site left a note for anyone who reads its source.',
+    hints: ['Open the normal site and view the page source (Ctrl+U, or Cmd+Option+U on a Mac).', 'Look near SOC Shift, copy the numbers and run :hex followed by them here.'],
+    hash: '118ed10ece64dc05d9ef5675fd698c3e5605b9fa92155f6c9d9eb4bcccd5f61b',
   },
 ];
-const found = new Set(JSON.parse(store.get('rg-flags') || '[]').filter((i) => i < CHALLENGES.length));
+const TOTAL = CHALLENGES.reduce((n, c) => n + c.points, 0);
+const found = new Set(JSON.parse(store.get('rg-ctf') || '[]').filter((i) => i < CHALLENGES.length));
 const hintsShown = CHALLENGES.map(() => 0);
-const nextChallenge = () => CHALLENGES.findIndex((_, n) => !found.has(n));
+const score = () => [...found].reduce((n, i) => n + CHALLENGES[i].points, 0);
+
+// The Web flag is shown when an injection attempt is blocked; it is stored scrambled
+function flag3() {
+  return [97, 125, 90, 77, 92, 85, 92, 52, 46, 13, 60, 22, 2, 28, 12, 8, 235, 227, 255, 255, 226]
+    .map((c, i) => String.fromCharCode(c ^ ((19 + i * 7) % 256))).join('');
+}
 
 /* decoders: the line under the cursor, or the text after the command */
 
@@ -763,98 +738,34 @@ const DECODERS = {
   hex: (t) => {
     const clean = t.replace(/0x/gi, '').replace(/[^0-9a-f]/gi, '');
     if (!clean || clean.length % 2) throw new Error();
-    return clean.match(/../g).map((h) => String.fromCharCode(parseInt(h, 16))).join('');
+    const out = clean.match(/../g).map((h) => String.fromCharCode(parseInt(h, 16))).join('');
+    if (!/^[\x20-\x7e]+$/.test(out)) throw new Error();
+    return out;
   },
   rot13: (t) => t.replace(/[a-z]/gi, (c) => String.fromCharCode((c <= 'Z' ? 65 : 97) + ((c.toLowerCase().charCodeAt(0) - 97 + 13) % 26))),
   rev: (t) => [...t].reverse().join(''),
 };
 
-// The text on the cursor line: a "string", or a comment (joined with the comment lines
-// right next to it, so a hex value split over several lines decodes in one go)
+// The text on the cursor line: a "string", or a comment
 function payloadAtCursor() {
   const ls = (ta.value || text()).split('\n');
-  const at = ta === document.activeElement ? lineOfCaret() : cursorLine;
-  const line = ls[at] || '';
+  const line = ls[ta === document.activeElement ? lineOfCaret() : cursorLine] || '';
+  if (/^\s*--/.test(line)) return line.replace(/^\s*--\s?/, '').trim();
   const str = line.match(/"([^"]*)"/);
-  if (str && !/^\s*--/.test(line)) return str[1];
-  if (!/^\s*--/.test(line)) return null;
-  let a = at;
-  let b = at;
-  while (a > 0 && /^\s*--/.test(ls[a - 1]) && /^\s+--/.test(ls[a - 1]) === /^\s+--/.test(line)) a--;
-  while (b < ls.length - 1 && /^\s*--/.test(ls[b + 1]) && /^\s+--/.test(ls[b + 1]) === /^\s+--/.test(line)) b++;
-  return ls.slice(a, b + 1).map((l) => l.replace(/^\s*--\s?/, '')).join(' ').trim();
+  return str ? str[1] : null;
 }
 
 function decodeWith(kind, arg) {
   const input = arg.trim() || payloadAtCursor();
-  if (!input) return message(`Put the cursor on a line to decode, or type :${kind === 'base64' ? 'decode' : kind} followed by some text.`, true);
+  const cmd = kind === 'base64' ? 'decode' : kind;
+  if (!input) return message(`Put the cursor on a line to decode, or type :${cmd} followed by some text.`, true);
   let out;
   try { out = DECODERS[kind](input); } catch {
-    return message(`That doesn’t look like ${kind === 'rev' ? 'text' : kind}. Try another decoder.`, true);
+    return message(`That doesn’t decode as ${kind}. Try another decoder.`, true);
   }
   message(`${kind} → ${out}`);
   const flag = out.match(/rg\{[^}]+\}/);
-  if (flag) submitFlag(flag[0], { quietMiss: true });
-}
-
-// Which flag opens each buffer; about.rg is always open
-const LOCKS = Object.fromEntries(CHALLENGES.flatMap((c, i) => c.unlocks.map((b) => [b, i])));
-function isLocked(buf) { return buf in LOCKS && !found.has(LOCKS[buf]); }
-
-// Locked buffers show scrambled code: same shape, unreadable letters
-const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-function scramble(buf) {
-  let i = 0;
-  const body = SOURCES[buf].split('\n').slice(1).join('\n')
-    .replace(/[A-Za-z0-9]/g, (ch) => GLYPHS[(ch.charCodeAt(0) * 17 + (i++) * 29) % 64]);
-  return `-- ${buf}.rg  [locked]\n-- solve the puzzle in ${CHALLENGES[LOCKS[buf]].where}.rg to open it\n${body}`;
-}
-
-const LOCK_ICON = '<svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>';
-
-function showLocked(buf) {
-  const c = CHALLENGES[LOCKS[buf]];
-  const value = scramble(buf);
-  ta.value = value;
-  ta.readOnly = true;
-  setMode('NORMAL');
-  $('modified').textContent = '[locked]';
-  $('reset').hidden = true;
-  $('skip').hidden = true;
-  $('edit-note').hidden = true;
-  cursorLine = 0;
-  drawCode(value);
-  editorEl.scrollTop = 0;
-  lastHTML = '';
-  previewEl.innerHTML = `<div class="locked">
-    <span class="locked-icon">${LOCK_ICON}</span>
-    <p class="locked-kicker">${buf}.rg</p>
-    <h2>Locked for now</h2>
-    <p>Solve the puzzle in <b>${c.where}.rg</b> to open this file.</p>
-    <div class="cta">
-      <a class="btn btn-primary" href="#${c.where}" data-buf="${c.where}">Go to ${c.where}.rg</a>
-      <a class="btn" href="/site/#${buf}">Read it on the normal site</a>
-    </div>
-  </div>`;
-  $('run-status').textContent = `rg run ${buf}.rg · locked`;
-  message(`"${buf}.rg" is locked. Solve the puzzle in ${c.where}.rg first, or read it on the normal site (:site).`);
-}
-
-// Tabs show a lock until their flag is found
-function syncLocks() {
-  tabs.forEach((t) => {
-    const locked = isLocked(t.dataset.buf);
-    t.classList.toggle('locked', locked);
-    t.querySelector('.tab-lock')?.remove();
-    if (locked) t.insertAdjacentHTML('beforeend', `<span class="tab-lock">${LOCK_ICON}</span>`);
-    t.setAttribute('aria-label', `${t.dataset.buf}.rg${locked ? ' (locked)' : ''}`);
-  });
-}
-
-// Take the visitor to the file the current puzzle is in
-function goToChallenge() {
-  const i = nextChallenge();
-  if (i >= 0) open(CHALLENGES[i].where);
+  if (flag) submitFlag(flag[0], { quiet: true });
 }
 
 async function sha256(t) {
@@ -862,27 +773,24 @@ async function sha256(t) {
   return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
-async function submitFlag(value, { quietMiss = false } = {}) {
+async function submitFlag(value, { quiet = false } = {}) {
   const say = (t, err = false) => { message(t, err); $('flag-msg').textContent = t; $('flag-msg').classList.toggle('error', err); };
   const v = value.trim();
   if (!v) return say('Usage: :flag rg{...}', true);
   if (!window.crypto?.subtle) return say('Your browser can’t check flags here.', true);
   const h = await sha256(v);
   const i = CHALLENGES.findIndex((c) => c.hash === h);
-  if (i < 0) return quietMiss ? undefined : say('Not a flag. Keep looking.', true);
-  if (found.has(i)) return say('You already found that one.');
+  if (i < 0) return quiet ? undefined : say('Not a flag. Keep looking.', true);
+  const c = CHALLENGES[i];
+  if (found.has(i)) return say(`Already solved: ${c.category} · ${c.title}.`);
   found.add(i);
-  store.set('rg-flags', JSON.stringify([...found]));
-  CHALLENGES[i].unlocks.forEach((b) => typed.delete(b));   // opening a file types its code out
+  store.set('rg-ctf', JSON.stringify([...found]));
   syncFlags();
   if (found.size === CHALLENGES.length) { finish(); return; }
-  ctfEl.hidden = true;
-  const next = CHALLENGES[nextChallenge()];
-  open(next.where);
-  say(`Flag found. ${next.where}.rg is open. Next clue: ${next.clue}`);
+  say(`Solved ${c.category} · ${c.title} (+${c.points}). ${score()} / ${TOTAL} pts. :ctf for the board.`);
 }
 
-// All flags: show where to reach me and open the contact buffer behind it
+// Board cleared: open the contact buffer and show where to reach me
 function finish() {
   ctfEl.hidden = true;
   open('contact');
@@ -899,26 +807,17 @@ $('flag-form').addEventListener('submit', (e) => {
 });
 
 function syncFlags() {
-  const total = CHALLENGES.length;
-  const i = nextChallenge();
-  $('ctf-btn').textContent = `CTF ${found.size}/${total}`;
-  $('ctf-btn').classList.toggle('complete', found.size === total);
-  $('ctf-list').innerHTML = CHALLENGES.map((c, n) => {
-    if (found.has(n)) return `<li class="done"><b>${c.where}.rg</b><span class="got">found</span></li>`;
-    if (n !== i) return `<li class="later"><b>${c.where}.rg</b><span>Locked until the puzzle before it is solved.</span></li>`;
-    const shown = c.hints.slice(0, hintsShown[n]).map((h) => `<span class="tip">${h}</span>`).join('');
-    const more = hintsShown[n] < c.hints.length ? `<button type="button" class="linkish" data-hint="${n}">Show a hint (${hintsShown[n] + 1} of ${c.hints.length})</button>` : '';
-    return `<li class="current"><b>${c.where}.rg</b><span class="clue">${c.clue}</span>${shown}${more}</li>`;
+  $('flags').textContent = `ctf ${found.size}/${CHALLENGES.length}`;
+  $('score').textContent = `${score()} / ${TOTAL} pts`;
+  $('ctf-list').innerHTML = CHALLENGES.map((c, i) => {
+    const solved = found.has(i);
+    const shown = solved ? '' : c.hints.slice(0, hintsShown[i]).map((h) => `<span class="tip">${h}</span>`).join('');
+    const more = !solved && hintsShown[i] < c.hints.length ? `<button type="button" class="linkish" data-hint="${i}">Hint ${hintsShown[i] + 1}</button>` : '';
+    return `<li class="chal${solved ? ' done' : ''}">
+      <div class="chal-head"><span class="chal-cat">${c.category}</span><b>${c.title}</b><span class="chal-pts">${solved ? 'solved' : c.points + ' pts'}</span></div>
+      <span class="chal-blurb">${c.blurb}</span>${shown}${more}
+    </li>`;
   }).join('');
-  syncLocks();
-  $('mission').classList.toggle('complete', i < 0);
-  if (i < 0) {
-    $('mission-text').innerHTML = `<b>All ${total} flags found.</b> Thanks for playing.`;
-    $('mission-btn').textContent = 'Contact me';
-  } else {
-    $('mission-text').innerHTML = `<b>Flag ${i + 1} of ${total}</b> · ${CHALLENGES[i].clue}`;
-    $('mission-btn').textContent = current === CHALLENGES[i].where ? 'Hints' : `Go to ${CHALLENGES[i].where}.rg`;
-  }
 }
 $('ctf-list').addEventListener('click', (e) => {
   const b = e.target.closest('[data-hint]');
@@ -926,15 +825,9 @@ $('ctf-list').addEventListener('click', (e) => {
   hintsShown[Number(b.dataset.hint)]++;
   syncFlags();
 });
-$('mission-btn').addEventListener('click', () => {
-  const i = nextChallenge();
-  if (i < 0) { $('done-email').href = `mailto:${['rgivans9', 'gmail.com'].join('@')}`; $('done').hidden = false; open('contact'); return; }
-  if (current === CHALLENGES[i].where) showCtf();
-  else goToChallenge();
-});
 
 function showCtf() { dismissIntro(); syncFlags(); $('flag-msg').textContent = ''; ctfEl.hidden = false; }
-$('ctf-btn').addEventListener('click', showCtf);
+$('flags').addEventListener('click', showCtf);
 ctfEl.addEventListener('click', (e) => { if (e.target === ctfEl) ctfEl.hidden = true; });
 
 /* ---------- first visit ---------- */
@@ -945,8 +838,7 @@ function dismissIntro() {
   store.set('rg-intro', 'seen');
 }
 $('intro-ok').addEventListener('click', dismissIntro);
-$('intro-start').addEventListener('click', () => { dismissIntro(); goToChallenge(); });
-intro.addEventListener('click', (e) => { if (e.target === intro) dismissIntro(); });
+$('intro-ctf').addEventListener('click', showCtf);
 if (!store.get('rg-intro')) intro.hidden = false;
 
 /* ---------- start ---------- */

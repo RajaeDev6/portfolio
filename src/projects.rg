@@ -4,7 +4,6 @@ module projects
 title "Projects"
 
 project shop_weh {
-  -- et{ohvyg_sbe_wnznvpn}
   name    "Shop Weh"
   tag     "Grocery prices in Jamaica"
   text    "Add your grocery list and Shop Weh"
