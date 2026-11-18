@@ -76,7 +76,7 @@ app.innerHTML = `
           <ul class="intro-steps"><li>Scroll down to read it.</li><li>Tap the tabs at the top (about, experience, projects…) to switch sections.</li><li>Tap <b>Code</b> to see the code behind it.</li></ul>
         </div>
         <div class="intro-actions wide-only"><button type="button" class="btn btn-primary intro-ctf">Challenge board</button><button type="button" class="btn intro-ok">Look around</button><a class="btn" href="/site/">Normal portfolio</a></div>
-        <div class="intro-actions narrow-only"><button type="button" class="btn btn-primary intro-ok">Start reading</button><button type="button" class="btn intro-ctf">Try the CTF</button><a class="btn" href="/site/">Normal portfolio</a></div>
+        <div class="intro-actions narrow-only"><a class="btn btn-primary" href="/site/">Normal portfolio</a><button type="button" class="btn btn-soft intro-ok">Start reading</button><button type="button" class="btn intro-ctf">Try the CTF</button></div>
       </div>
     </section>
   </div>
