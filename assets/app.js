@@ -32,11 +32,11 @@ app.innerHTML = `
     </div>
     <button type="button" class="code-toggle" id="code-toggle"></button>
     <span class="site-wrap">
-      <a class="site-link" href="/site/" id="site-link">Normal site</a>
+      <a class="site-link" href="/site/" id="site-link">Normal portfolio</a>
       <div class="nudge" id="nudge" hidden role="note">
         <svg class="nudge-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <p><b>This is Rajae Givans’ portfolio</b>, built as a code editor. Prefer a plain page?</p>
-        <div class="nudge-actions"><a class="btn btn-primary" href="/site/">Open the normal site</a><button type="button" class="btn" id="nudge-close">Stay here</button></div>
+        <div class="nudge-actions"><a class="btn btn-primary" href="/site/">Open the normal portfolio</a><button type="button" class="btn" id="nudge-close">Stay here</button></div>
       </div>
     </span>
     <div class="view-toggle" role="group" aria-label="View">
@@ -75,8 +75,8 @@ app.innerHTML = `
           <p><b>I’m Rajae Givans, and this is my portfolio.</b></p>
           <ul class="intro-steps"><li>Scroll down to read it.</li><li>Tap the tabs at the top (about, experience, projects…) to switch sections.</li><li>Tap <b>Code</b> to see the code behind it.</li></ul>
         </div>
-        <div class="intro-actions wide-only"><button type="button" class="btn btn-primary intro-ctf">Challenge board</button><button type="button" class="btn intro-ok">Look around</button><a class="btn" href="/site/">Normal site</a></div>
-        <div class="intro-actions narrow-only"><button type="button" class="btn btn-primary intro-ok">Start reading</button><button type="button" class="btn intro-ctf">Try the CTF</button><a class="btn" href="/site/">Normal site</a></div>
+        <div class="intro-actions wide-only"><button type="button" class="btn btn-primary intro-ctf">Challenge board</button><button type="button" class="btn intro-ok">Look around</button><a class="btn" href="/site/">Normal portfolio</a></div>
+        <div class="intro-actions narrow-only"><button type="button" class="btn btn-primary intro-ok">Start reading</button><button type="button" class="btn intro-ctf">Try the CTF</button><a class="btn" href="/site/">Normal portfolio</a></div>
       </div>
     </section>
   </div>
@@ -115,14 +115,14 @@ app.innerHTML = `
         <dt><kbd>:decode</kbd> <kbd>:hex</kbd> <kbd>:rot13</kbd> <kbd>:rev</kbd></dt><dd>decode the line under the cursor, or text typed after it</dd>
         <dt><kbd>:ctf</kbd>, <kbd>:flag rg{…}</kbd></dt><dd>challenge board, submit a flag</dd>
       </dl>
-      <p class="help-text">Not into code? The <a href="/site/">normal site</a> has the same content as a plain page.</p>
+      <p class="help-text">Not into code? The <a href="/site/">normal portfolio</a> has the same content as a plain page.</p>
       <p class="help-foot">Press <kbd>Esc</kbd> to close.</p>
     </div>
   </div>
   <div class="overlay" id="ctf" hidden role="dialog" aria-modal="true" aria-label="Capture the flag">
     <div class="help-box ctf-box">
       <div class="board-head"><p class="help-title">Challenge board</p><p class="score" id="score">0 / 900 pts</p><button type="button" class="dialog-close" id="ctf-close" aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
-      <p class="help-text">Flags look like <code>rg{...}</code>. Decoding one with <kbd>:decode</kbd>, <kbd>:hex</kbd>, <kbd>:rot13</kbd> or <kbd>:rev</kbd> submits it automatically, or paste it below. Not playing? The <a href="/site/">normal site</a> has everything.</p>
+      <p class="help-text">Flags look like <code>rg{...}</code>. Decoding one with <kbd>:decode</kbd>, <kbd>:hex</kbd>, <kbd>:rot13</kbd> or <kbd>:rev</kbd> submits it automatically, or paste it below. Not playing? The <a href="/site/">normal portfolio</a> has everything.</p>
       <form class="flag-form" id="flag-form"><input id="flag-input" placeholder="rg{...}" autocomplete="off" spellcheck="false" aria-label="Flag"><button type="submit" class="btn btn-primary">Submit</button></form>
       <p class="flag-msg" id="flag-msg" aria-live="polite"></p>
       <div class="vim-help">
@@ -747,8 +747,8 @@ const CHALLENGES = [
   },
   {
     category: 'Forensics', points: 300, title: 'View source',
-    blurb: 'The normal site left a note for anyone who reads its source.',
-    hints: ['Open the normal site and view the page source (Ctrl+U, or Cmd+Option+U on a Mac).', 'Look near SOC Shift, copy the numbers and run :hex followed by them here.'],
+    blurb: 'The normal portfolio left a note for anyone who reads its source.',
+    hints: ['Open the normal portfolio and view the page source (Ctrl+U, or Cmd+Option+U on a Mac).', 'Look near SOC Shift, copy the numbers and run :hex followed by them here.'],
     hash: '118ed10ece64dc05d9ef5675fd698c3e5605b9fa92155f6c9d9eb4bcccd5f61b',
   },
 ];
@@ -886,7 +886,7 @@ app.querySelectorAll('.intro-ok').forEach((b) => b.addEventListener('click', dis
 app.querySelectorAll('.intro-ctf').forEach((b) => b.addEventListener('click', showCtf));
 if (!store.get('rg-intro')) intro.hidden = false;
 
-// A pointer to the normal site, so nobody is lost in the editor. Shows until closed or used.
+// A pointer to the normal portfolio, so nobody is lost in the editor. Shows until closed or used.
 const nudge = $('nudge');
 function closeNudge() { nudge.hidden = true; store.set('rg-nudge', 'closed'); }
 function showNudge() { if (!store.get('rg-nudge')) setTimeout(() => { nudge.hidden = false; }, 700); }

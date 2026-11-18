@@ -370,7 +370,7 @@ a.entry:hover { border-color: var(--line-strong); }
 /* ---------- phones ---------- */
 .vim-phone { display: none; margin-top: 8px; }
 @media (max-width: 899px) {
-  /* tabs get their own full-width row under the view switch and Normal site */
+  /* tabs get their own full-width row under the view switch and Normal portfolio */
   .tabline { flex-wrap: wrap; }
   .tabs { order: 2; flex-basis: 100%; border-top: 1px solid var(--ed-line); }
   .view-toggle { order: -1; margin-right: auto; border-left: 0; }
