@@ -376,6 +376,9 @@ a.entry:hover { border-color: var(--line-strong); }
 .pv .is-inert { cursor: not-allowed; opacity: .55; }
 .intro { position: absolute; right: 20px; bottom: 20px; z-index: 5; width: min(400px, calc(100% - 40px)); padding: 20px; background: var(--ed-bar); border: 1px solid var(--line-strong); border-radius: 14px; font-family: var(--sans); font-size: 15px; line-height: 23px; color: var(--sub); box-shadow: 0 12px 32px rgb(0 0 0 / 0.4); }
 .intro b { color: var(--ink); }
+.intro-steps { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 4px; }
+.intro .narrow-only { display: none; }
+@media (max-width: 899px) { .intro .wide-only { display: none; } .intro .narrow-only { display: block; } .intro .intro-actions.narrow-only { display: flex; } }
 .intro-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 .intro .btn { min-height: 38px; padding: 0 14px; font-size: 14px; }
 .sl-btn.flags { border-color: var(--accent); background: var(--accent); color: #fff; font-weight: 700; }

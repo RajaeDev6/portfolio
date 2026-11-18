@@ -70,8 +70,13 @@ app.innerHTML = `
       <div class="edit-note" id="edit-note" hidden>You’re editing a copy. Changes only show in your browser and reset when you reload, and links are switched off. <button type="button" id="edit-undo">Undo my edits</button></div>
       <div class="preview-body pv" id="preview" tabindex="-1"></div>
       <div class="intro" id="intro" hidden role="note">
-        <p><b>This is my portfolio as a code editor, with a CTF hidden in it.</b> The left side is the source, the right side is what it renders. Click the tabs to look around, or open the challenge board and start hunting. No Vim experience needed: the board shows the few keys you’ll use.</p>
-        <div class="intro-actions"><button type="button" class="btn btn-primary" id="intro-ctf">Challenge board</button><button type="button" class="btn" id="intro-ok">Look around</button><a class="btn" href="/site/">Normal site</a></div>
+        <p class="wide-only"><b>This is my portfolio as a code editor, with a CTF hidden in it.</b> The left side is the source, the right side is what it renders. Click the tabs to look around, or open the challenge board and start hunting. No Vim experience needed: the board shows the few keys you’ll use.</p>
+        <div class="narrow-only">
+          <p><b>I’m Rajae Givans, and this is my portfolio.</b></p>
+          <ul class="intro-steps"><li>Scroll down to read it.</li><li>Tap the tabs at the top (about, experience, projects…) to switch sections.</li><li>Tap <b>Code</b> to see the code behind it.</li></ul>
+        </div>
+        <div class="intro-actions wide-only"><button type="button" class="btn btn-primary intro-ctf">Challenge board</button><button type="button" class="btn intro-ok">Look around</button><a class="btn" href="/site/">Normal site</a></div>
+        <div class="intro-actions narrow-only"><button type="button" class="btn btn-primary intro-ok">Start reading</button><button type="button" class="btn intro-ctf">Try the CTF</button><a class="btn" href="/site/">Normal site</a></div>
       </div>
     </section>
   </div>
@@ -877,8 +882,8 @@ function dismissIntro() {
   intro.hidden = true;
   store.set('rg-intro', 'seen');
 }
-$('intro-ok').addEventListener('click', dismissIntro);
-$('intro-ctf').addEventListener('click', showCtf);
+app.querySelectorAll('.intro-ok').forEach((b) => b.addEventListener('click', dismissIntro));
+app.querySelectorAll('.intro-ctf').forEach((b) => b.addEventListener('click', showCtf));
 if (!store.get('rg-intro')) intro.hidden = false;
 
 // A pointer to the normal site, so nobody is lost in the editor. Shows until closed or used.
@@ -886,7 +891,7 @@ const nudge = $('nudge');
 function closeNudge() { nudge.hidden = true; store.set('rg-nudge', 'closed'); }
 function showNudge() { if (!store.get('rg-nudge')) setTimeout(() => { nudge.hidden = false; }, 700); }
 // On phones, don't stack it on top of the first-visit note; wait until that's closed
-if (narrow.matches && !intro.hidden) { $('intro-ok').addEventListener('click', showNudge); $('intro-ctf').addEventListener('click', showNudge); }
+if (narrow.matches && !intro.hidden) app.querySelectorAll('.intro-ok, .intro-ctf').forEach((b) => b.addEventListener('click', showNudge));
 else showNudge();
 $('nudge-close').addEventListener('click', closeNudge);
 nudge.querySelector('a').addEventListener('click', () => store.set('rg-nudge', 'closed'));
