@@ -418,6 +418,19 @@ a.entry:hover { border-color: var(--line-strong); }
 .vim-help b { color: var(--ink); }
 .vim-help dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin-top: 8px; }
 .vim-help dt { color: var(--ink); font-family: var(--mono); font-size: 12.5px; white-space: nowrap; }
+
+/* CTF strip across the top of the preview */
+.mission { display: flex; align-items: center; gap: 10px; padding: 8px 16px; border-bottom: 1px solid var(--line); background: #141c25; font-family: var(--sans); font-size: 14px; line-height: 20px; color: var(--sub); min-width: 0; }
+.mission b { color: var(--ink); }
+.mission-tag { flex: none; padding: 1px 8px; border-radius: 6px; background: var(--accent); color: #fff; font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .04em; }
+.mission-text { flex: 1; min-width: 0; }
+.mission-btn { flex: none; padding: 3px 12px; border-radius: 999px; border: 1px solid #2f4a60; background: none; color: #9fd3f0; font-weight: 700; font-size: 13px; cursor: pointer; }
+.mission-btn:hover { border-color: var(--accent); }
+.mission.complete { background: #17221a; }
+.mission.complete .mission-tag { background: #4f8a36; }
+.mission.complete .mission-btn { border-color: #3d5e2c; color: #a8d58a; }
+.preview { grid-template-rows: auto auto auto 1fr; }
+@media (max-width: 899px) { .mission { padding: 8px 12px; font-size: 13px; } }
   </style>
   <script type="module" src="/assets/app.js"></script>
 </head>

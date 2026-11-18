@@ -55,6 +55,11 @@ app.innerHTML = `
         <span class="addr"><span class="addr-host">rajaedev.space</span><span id="addr-path">/#about</span></span>
         <span class="run-status" id="run-status"></span>
       </div>
+      <div class="mission" id="mission">
+        <span class="mission-tag">CTF</span>
+        <span class="mission-text" id="mission-text"></span>
+        <button type="button" class="mission-btn" id="mission-btn">Open the board</button>
+      </div>
       <div class="edit-note" id="edit-note" hidden>You’re editing a copy. Changes only show in your browser and reset when you reload, and links are switched off. <button type="button" id="edit-undo">Undo my edits</button></div>
       <div class="preview-body pv" id="preview" tabindex="-1"></div>
       <div class="intro" id="intro" hidden role="note">
@@ -820,6 +825,14 @@ $('flag-form').addEventListener('submit', (e) => {
 
 function syncFlags() {
   $('flags').textContent = `CTF ${found.size}/${CHALLENGES.length}`;
+  const cleared = found.size === CHALLENGES.length;
+  $('mission').classList.toggle('complete', cleared);
+  $('mission-text').innerHTML = cleared
+    ? `<b>Board cleared.</b> ${TOTAL} / ${TOTAL} points. Thanks for playing.`
+    : found.size
+      ? `<b>${found.size} of ${CHALLENGES.length} solved</b> · ${score()} / ${TOTAL} points`
+      : `<b>There’s a CTF hidden in this site.</b> ${CHALLENGES.length} challenges, ${TOTAL} points. No Vim experience needed.`;
+  $('mission-btn').textContent = cleared ? 'Contact me' : 'Open the board';
   $('score').textContent = `${score()} / ${TOTAL} pts`;
   $('ctf-list').innerHTML = CHALLENGES.map((c, i) => {
     const solved = found.has(i);
@@ -840,6 +853,10 @@ $('ctf-list').addEventListener('click', (e) => {
 
 function showCtf() { dismissIntro(); syncFlags(); $('flag-msg').textContent = ''; ctfEl.hidden = false; }
 $('flags').addEventListener('click', showCtf);
+$('mission-btn').addEventListener('click', () => {
+  if (found.size === CHALLENGES.length) { finish(); return; }
+  showCtf();
+});
 ctfEl.addEventListener('click', (e) => { if (e.target === ctfEl) ctfEl.hidden = true; });
 
 /* ---------- first visit ---------- */
