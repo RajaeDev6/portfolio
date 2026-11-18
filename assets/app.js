@@ -109,8 +109,10 @@ app.innerHTML = `
   </div>
   <div class="overlay" id="ctf" hidden role="dialog" aria-modal="true" aria-label="Capture the flag">
     <div class="help-box ctf-box">
-      <div class="board-head"><p class="help-title">Challenge board</p><p class="score" id="score">0 / 900 pts</p></div>
+      <div class="board-head"><p class="help-title">Challenge board</p><p class="score" id="score">0 / 900 pts</p><button type="button" class="dialog-close" id="ctf-close" aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
       <p class="help-text">Flags look like <code>rg{...}</code>. Decoding one with <kbd>:decode</kbd>, <kbd>:hex</kbd>, <kbd>:rot13</kbd> or <kbd>:rev</kbd> submits it automatically, or paste it below. Not playing? The <a href="/site/">normal site</a> has everything.</p>
+      <form class="flag-form" id="flag-form"><input id="flag-input" placeholder="rg{...}" autocomplete="off" spellcheck="false" aria-label="Flag"><button type="submit" class="btn btn-primary">Submit</button></form>
+      <p class="flag-msg" id="flag-msg" aria-live="polite"></p>
       <div class="vim-help">
         <p><b>New to Vim?</b> These are all you need:</p>
         <dl>
@@ -121,8 +123,6 @@ app.innerHTML = `
         </dl>
       </div>
       <ol class="ctf-list" id="ctf-list"></ol>
-      <form class="flag-form" id="flag-form"><input id="flag-input" placeholder="rg{...}" autocomplete="off" spellcheck="false" aria-label="Flag"><button type="submit" class="btn btn-primary">Submit</button></form>
-      <p class="flag-msg" id="flag-msg" aria-live="polite"></p>
       <p class="help-foot">Press <kbd>Esc</kbd> to close.</p>
     </div>
   </div>
@@ -858,6 +858,7 @@ $('mission-btn').addEventListener('click', () => {
   showCtf();
 });
 ctfEl.addEventListener('click', (e) => { if (e.target === ctfEl) ctfEl.hidden = true; });
+$('ctf-close').addEventListener('click', () => { ctfEl.hidden = true; });
 
 /* ---------- first visit ---------- */
 

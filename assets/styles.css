@@ -131,8 +131,8 @@ kbd { font-family: var(--mono); font-size: .88em; padding: 0 4px; border: 1px so
 .msg.error { color: #e06c75; }
 
 /* ---------- overlays ---------- */
-.overlay { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 20px; background: rgb(0 0 0 / 0.6); }
-.help-box { width: min(460px, 100%); padding: 24px; background: var(--ed-bar); border: 1px solid #2c323b; border-radius: 12px; font-size: 13px; line-height: 22px; }
+.overlay { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 20px; background: rgb(0 0 0 / 0.6); overflow-y: auto; }
+.help-box { width: min(460px, 100%); max-height: calc(100vh - 40px); max-height: calc(100dvh - 40px); overflow-y: auto; overscroll-behavior: contain; padding: 24px; background: var(--ed-bar); border: 1px solid #2c323b; border-radius: 12px; font-size: 13px; line-height: 22px; }
 .help-title { color: var(--ink); font-weight: 700; margin-bottom: 8px; }
 .help-text { color: var(--sub); font-family: var(--sans); font-size: 14px; line-height: 22px; margin-bottom: 16px; }
 .help-box dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; }
@@ -301,8 +301,8 @@ a.entry:hover { border-color: var(--line-strong); }
 .board-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 8px; }
 .board-head .help-title { margin: 0; }
 .score { font-family: var(--mono); font-size: 12px; color: var(--accent-text); }
-.ctf-list { list-style: none; padding: 0; gap: 10px; }
-.chal { padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--ed-bg); }
+.ctf-list { list-style: none; padding: 0; gap: 8px; }
+.chal { padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--ed-bg); }
 .chal-head { display: flex; align-items: center; gap: 10px; }
 .chal-cat { padding: 1px 7px; border-radius: 5px; background: rgb(23 147 209 / 0.15); color: var(--accent-text); font-family: var(--mono); font-size: 11px; font-weight: 700; }
 .chal-head b { flex: 1; color: var(--ink); font-size: 15px; }
@@ -324,7 +324,7 @@ a.entry:hover { border-color: var(--line-strong); }
 
 /* Empty command line hint, and the Vim primer on the board */
 .msg.idle { color: var(--muted); }
-.vim-help { margin: 4px 0 14px; padding: 12px 14px; border-radius: 10px; background: var(--ed-bg); border: 1px solid var(--ed-line); font-family: var(--sans); font-size: 13.5px; line-height: 20px; color: var(--sub); }
+.vim-help { margin: 4px 0 12px; padding: 10px 12px; border-radius: 10px; background: var(--ed-bg); border: 1px solid var(--ed-line); font-family: var(--sans); font-size: 13.5px; line-height: 20px; color: var(--sub); }
 .vim-help b { color: var(--ink); }
 .vim-help dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin-top: 8px; }
 .vim-help dt { color: var(--ink); font-family: var(--mono); font-size: 12.5px; white-space: nowrap; }
@@ -341,3 +341,14 @@ a.entry:hover { border-color: var(--line-strong); }
 .mission.complete .mission-btn { border-color: #3d5e2c; color: #a8d58a; }
 .preview { grid-template-rows: auto auto auto 1fr; }
 @media (max-width: 899px) { .mission { padding: 8px 12px; font-size: 13px; } }
+
+/* Phones: dialogs use the full height and keep the submit box reachable */
+@media (max-width: 560px) {
+  .overlay { padding: 10px; }
+  .help-box { padding: 18px; max-height: calc(100vh - 20px); max-height: calc(100dvh - 20px); }
+  .vim-help dl { grid-template-columns: 1fr; gap: 2px; }
+  .vim-help dd { margin-bottom: 6px; }
+}
+.dialog-close { flex: none; display: grid; place-items: center; width: 32px; height: 32px; margin: -6px -8px 0 4px; border: 0; border-radius: 8px; background: none; color: var(--muted); font-size: 18px; cursor: pointer; }
+.dialog-close:hover { color: var(--ink); background: var(--ed-bg); }
+.board-head .score { margin-left: auto; }
