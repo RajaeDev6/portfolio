@@ -58,7 +58,7 @@ app.innerHTML = `
       <div class="edit-note" id="edit-note" hidden>You’re editing a copy. Changes only show in your browser and reset when you reload, and links are switched off. <button type="button" id="edit-undo">Undo my edits</button></div>
       <div class="preview-body pv" id="preview" tabindex="-1"></div>
       <div class="intro" id="intro" hidden role="note">
-        <p><b>This is my portfolio as a code editor, with a CTF hidden in it.</b> The left side is the source, the right side is what it renders. Click the tabs to look around, or open the challenge board and start hunting.</p>
+        <p><b>This is my portfolio as a code editor, with a CTF hidden in it.</b> The left side is the source, the right side is what it renders. Click the tabs to look around, or open the challenge board and start hunting. No Vim experience needed: the board shows the few keys you’ll use.</p>
         <div class="intro-actions"><button type="button" class="btn btn-primary" id="intro-ctf">Challenge board</button><button type="button" class="btn" id="intro-ok">Look around</button><a class="btn" href="/site/">Normal site</a></div>
       </div>
     </section>
@@ -70,7 +70,7 @@ app.innerHTML = `
     <button type="button" class="sl-btn" id="skip" hidden>skip typing ▸</button>
     <button type="button" class="sl-btn" id="reset" hidden>undo my edits</button>
     <span class="fill"></span>
-    <button type="button" class="sl-btn flags" id="flags">ctf 0/4</button>
+    <button type="button" class="sl-btn flags" id="flags">CTF 0/4</button>
     <span class="hint" id="hint">click the code to edit it · <kbd>:help</kbd></span>
     <span class="ft">rg</span>
     <span class="pos" id="pos">1:1</span>
@@ -106,6 +106,15 @@ app.innerHTML = `
     <div class="help-box ctf-box">
       <div class="board-head"><p class="help-title">Challenge board</p><p class="score" id="score">0 / 900 pts</p></div>
       <p class="help-text">Flags look like <code>rg{...}</code>. Decoding one with <kbd>:decode</kbd>, <kbd>:hex</kbd>, <kbd>:rot13</kbd> or <kbd>:rev</kbd> submits it automatically, or paste it below. Not playing? The <a href="/site/">normal site</a> has everything.</p>
+      <div class="vim-help">
+        <p><b>New to Vim?</b> These are all you need:</p>
+        <dl>
+          <dt><kbd>:</kbd></dt><dd>opens the command line at the bottom. Type a command, press Enter.</dd>
+          <dt><kbd>/</kbd></dt><dd>searches the code. Type a word, press Enter.</dd>
+          <dt>click a line</dt><dd>puts the cursor on it (or use <kbd>j</kbd> / <kbd>k</kbd>)</dd>
+          <dt><kbd>i</kbd></dt><dd>edits the code, <kbd>Esc</kbd> stops</dd>
+        </dl>
+      </div>
       <ol class="ctf-list" id="ctf-list"></ol>
       <form class="flag-form" id="flag-form"><input id="flag-input" placeholder="rg{...}" autocomplete="off" spellcheck="false" aria-label="Flag"><button type="submit" class="btn btn-primary">Submit</button></form>
       <p class="flag-msg" id="flag-msg" aria-live="polite"></p>
@@ -464,9 +473,12 @@ function setMode(m) {
   el.dataset.mode = m.toLowerCase();
 }
 
+// An empty command line shows how to use it
+const IDLE = 'press : to type a command, try :ctf';
 function message(t, isError = false) {
-  msgEl.textContent = t;
+  msgEl.textContent = t || IDLE;
   msgEl.classList.toggle('error', isError);
+  msgEl.classList.toggle('idle', !t);
 }
 
 /* ---------- command line ---------- */
@@ -807,7 +819,7 @@ $('flag-form').addEventListener('submit', (e) => {
 });
 
 function syncFlags() {
-  $('flags').textContent = `ctf ${found.size}/${CHALLENGES.length}`;
+  $('flags').textContent = `CTF ${found.size}/${CHALLENGES.length}`;
   $('score').textContent = `${score()} / ${TOTAL} pts`;
   $('ctf-list').innerHTML = CHALLENGES.map((c, i) => {
     const solved = found.has(i);
