@@ -4,9 +4,10 @@ module contact
 title "Contact"
 
 contact me {
-  text    "Open to software engineer and"
-       .. "security analyst roles,"
-       .. "internships and freelance work."
+  text    "Open to junior software engineer"
+       .. "and SOC analyst roles,"
+       .. "Summer 2027 internships and"
+       .. "freelance work, in Jamaica or abroad."
        .. "Feel free to reach out."
   button  "Email me" -> mail
   button  "GitHub"

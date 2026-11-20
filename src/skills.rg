@@ -13,11 +13,12 @@ skills stack {
   group   "Backend"
        .. [FastAPI, Flask, PostgreSQL]
        .. [Supabase, Firebase, MongoDB]
+       .. [REST APIs, GraphQL, OpenAI API]
   group   "Security"
        .. [Wireshark, Nmap, Kali Linux]
        .. [log analysis, alert triage]
        .. [MITRE ATT&CK]
   group   "Tools"
        .. [Git, GitHub Actions, Docker]
-       .. [Linux, Vercel]
+       .. [CI/CD, Linux, Vercel]
 }
