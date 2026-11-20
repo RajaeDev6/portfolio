@@ -32,11 +32,11 @@ app.innerHTML = `
     </div>
     <button type="button" class="code-toggle" id="code-toggle"></button>
     <span class="site-wrap">
-      <a class="site-link" href="/site/" id="site-link">Normal portfolio</a>
+      <a class="site-link" href="/" id="site-link">Normal portfolio</a>
       <div class="nudge" id="nudge" hidden role="note">
         <svg class="nudge-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <p><b>This is Rajae Givans’ interactive portfolio</b>, built as a code editor. You can switch to the normal portfolio anytime.</p>
-        <div class="nudge-actions"><a class="btn btn-primary" href="/site/">Open the normal portfolio</a><button type="button" class="btn" id="nudge-close">Stay here</button></div>
+        <div class="nudge-actions"><a class="btn btn-primary" href="/">Open the normal portfolio</a><button type="button" class="btn" id="nudge-close">Stay here</button></div>
       </div>
     </span>
     <div class="view-toggle" role="group" aria-label="View">
@@ -75,8 +75,8 @@ app.innerHTML = `
           <p><b>I’m Rajae Givans, and this is my interactive portfolio.</b> Prefer a simple page? Switch to the normal portfolio.</p>
           <ul class="intro-steps"><li>Scroll down to read it.</li><li>Tap the tabs at the top (about, experience, projects…) to switch sections.</li><li>Tap <b>Code</b> to see the code behind it.</li></ul>
         </div>
-        <div class="intro-actions wide-only"><button type="button" class="btn btn-primary intro-ctf">Challenge board</button><button type="button" class="btn intro-ok">Look around</button><a class="btn" href="/site/">Normal portfolio</a></div>
-        <div class="intro-actions narrow-only"><a class="btn btn-primary" href="/site/">Normal portfolio</a><button type="button" class="btn btn-soft intro-ok">Start reading</button><button type="button" class="btn intro-ctf">Try the CTF</button></div>
+        <div class="intro-actions wide-only"><button type="button" class="btn btn-primary intro-ctf">Challenge board</button><button type="button" class="btn intro-ok">Look around</button><a class="btn" href="/">Normal portfolio</a></div>
+        <div class="intro-actions narrow-only"><a class="btn btn-primary" href="/">Normal portfolio</a><button type="button" class="btn btn-soft intro-ok">Start reading</button><button type="button" class="btn intro-ctf">Try the CTF</button></div>
       </div>
     </section>
   </div>
@@ -115,14 +115,14 @@ app.innerHTML = `
         <dt><kbd>:decode</kbd> <kbd>:hex</kbd> <kbd>:rot13</kbd> <kbd>:rev</kbd></dt><dd>decode the line under the cursor, or text typed after it</dd>
         <dt><kbd>:ctf</kbd>, <kbd>:flag rg{…}</kbd></dt><dd>challenge board, submit a flag</dd>
       </dl>
-      <p class="help-text">Not into code? The <a href="/site/">normal portfolio</a> has the same content as a plain page.</p>
+      <p class="help-text">Not into code? The <a href="/">normal portfolio</a> has the same content as a plain page.</p>
       <p class="help-foot">Press <kbd>Esc</kbd> to close.</p>
     </div>
   </div>
   <div class="overlay" id="ctf" hidden role="dialog" aria-modal="true" aria-label="Capture the flag">
     <div class="help-box ctf-box">
       <div class="board-head"><p class="help-title">Challenge board</p><p class="score" id="score">0 / 900 pts</p><button type="button" class="dialog-close" id="ctf-close" aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
-      <p class="help-text">Flags look like <code>rg{...}</code>. Decoding one with <kbd>:decode</kbd>, <kbd>:hex</kbd>, <kbd>:rot13</kbd> or <kbd>:rev</kbd> submits it automatically, or paste it below. Not playing? The <a href="/site/">normal portfolio</a> has everything.</p>
+      <p class="help-text">Flags look like <code>rg{...}</code>. Decoding one with <kbd>:decode</kbd>, <kbd>:hex</kbd>, <kbd>:rot13</kbd> or <kbd>:rev</kbd> submits it automatically, or paste it below. Not playing? The <a href="/">normal portfolio</a> has everything.</p>
       <form class="flag-form" id="flag-form"><input id="flag-input" placeholder="rg{...}" autocomplete="off" spellcheck="false" aria-label="Flag"><button type="submit" class="btn btn-primary">Submit</button></form>
       <p class="flag-msg" id="flag-msg" aria-live="polite"></p>
       <div class="vim-help">
@@ -567,7 +567,7 @@ function run(cmd) {
     case 'rot13': return decodeWith('rot13', args.join(' '));
     case 'rev': case 'reverse': return decodeWith('rev', args.join(' '));
     case 'flag': return submitFlag(args.join(' '));
-    case 'site': case 'normal': location.href = '/site/'; return;
+    case 'site': case 'normal': location.href = '/'; return;
     case 'h': case 'help': return showHelp();
     case 'w': case 'write': {
       const v = text();

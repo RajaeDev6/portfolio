@@ -184,3 +184,17 @@ footer { border-top: 1px solid var(--line); }
 
 /* Link back to the interactive version */
 .nav-links a.nav-editor { color: var(--accent-text); }
+
+/* Invitation to the interactive version (home hero) */
+.try-interactive { display: flex; gap: 24px; align-items: center; margin-top: 48px; padding: 20px; background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: var(--r); transition: border-color .15s var(--ease); }
+.try-interactive:hover { border-color: var(--muted); border-left-color: var(--accent); }
+.try-code { flex: none; padding: 14px 16px; border-radius: 10px; background: var(--bg); border: 1px solid var(--line); font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; line-height: 22px; color: var(--sub); white-space: nowrap; }
+.try-code .k { color: var(--accent-text); }
+.try-code .s { color: #9fd18b; }
+.try-text { display: flex; flex-direction: column; gap: 6px; }
+.try-label { font-size: 13px; line-height: 20px; font-weight: 700; color: var(--accent-text); text-transform: uppercase; letter-spacing: 0.06em; }
+.try-title { font-size: 20px; line-height: 28px; font-weight: 800; }
+.try-line { font-size: 15px; line-height: 23px; color: var(--sub); max-width: 36rem; }
+.try-interactive .link { margin-top: 4px; }
+.try-interactive:hover .link .icon { transform: translate(2px, -2px); }
+@media (max-width: 600px) { .try-code { display: none; } }

@@ -1,6 +1,6 @@
 // Build step: run the rg interpreter over src/*.rg.
 //  1. writes assets/sources.js, which the editor loads
-//  2. prerenders every section into index.html, so the page has real content
+//  2. prerenders every section into interactive/index.html, so the page has real content
 //     for search engines and for anyone without JavaScript
 // Run: node tools/build.mjs   (then python3 tools/inline-css.py if styles changed)
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -16,10 +16,10 @@ writeFileSync(new URL('assets/sources.js', root),
   `export default ${JSON.stringify(sources, null, 2)};\n`);
 
 const sections = BUFFERS.map((b) => `<section class="static-section pv" id="${b}">\n${toHTML(parse(sources[b]).nodes)}\n</section>`).join('\n');
-const page = new URL('index.html', root);
+const page = new URL('interactive/index.html', root);
 const html = readFileSync(page, 'utf8');
 const start = '<!-- prerender:start -->';
 const end = '<!-- prerender:end -->';
-if (!html.includes(start) || !html.includes(end)) throw new Error('index.html: prerender markers missing');
+if (!html.includes(start) || !html.includes(end)) throw new Error('interactive/index.html: prerender markers missing');
 writeFileSync(page, html.slice(0, html.indexOf(start) + start.length) + '\n' + sections + '\n' + html.slice(html.indexOf(end)));
 console.log(`built ${BUFFERS.length} buffers`);

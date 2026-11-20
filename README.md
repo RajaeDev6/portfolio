@@ -1,6 +1,6 @@
 # Rajae Givans - Portfolio
 
-My portfolio has two versions. The **normal site** (`/site/`) is a plain portfolio page. The root is an **interactive version** with a small capture-the-flag hidden in it.
+My portfolio has two versions. The root is the **normal portfolio**, a plain portfolio page with a callout that invites visitors to try the **interactive version** (`/interactive/`), which has a small capture-the-flag hidden in it.
 
 The interactive version is a live coding environment. A narrow Vim-style editor on the left holds the site's source, written in **rg**, a small language I made for it. The large pane on the right is a browser-style preview of what the rg interpreter renders. Each section (about, experience, projects, security, skills, education, contact) is a buffer.
 
@@ -10,7 +10,7 @@ Live: [rajaedev.space](https://rajaedev.space)
 
 ## How it works
 
-- **Buffers as sections.** Click a tab, press `1`–`7`, use `gt` / `gT`, or type `:e projects`. Links in the preview open other buffers too. Each buffer has its own URL (`/#projects`).
+- **Buffers as sections.** Click a tab, press `1`–`7`, use `gt` / `gT`, or type `:e projects`. Links in the preview open other buffers too. Each buffer has its own URL (`/interactive/#projects`).
 - **Code that writes itself.** The first time a buffer opens, its source types out in insert mode and the preview builds up as each property is written. Click the code, press `Esc` or hit "skip typing" to jump to the end. Visitors who prefer reduced motion get the finished code straight away.
 - **Edit it yourself.** Click the code and type: the preview re-renders as you go, even while a block is half-written. Edits stay in the tab; `:e!` or "undo my edits" restores the original.
 - **Code and preview are linked.** Hover anything in the preview to highlight the lines that produce it; click it to jump the editor there. Moving the cursor in the code outlines the matching block in the preview.
@@ -21,14 +21,14 @@ Live: [rajaedev.space](https://rajaedev.space)
   - Recon (100): an unlisted buffer, found with `:ls!`
   - Crypto (200): an encoded line in the internship entry
   - Web (300): try to inject code into the editor; the blocked attempt gives up the flag
-  - Forensics (300): a comment in the normal site's page source, beside SOC Shift
+  - Forensics (300): a comment in the normal portfolio's page source, beside SOC Shift
 
   Tools: `/` search and `:decode`, `:hex`, `:rot13`, `:rev`, which decode the line under the cursor or typed text and submit any flag they reveal. `:flag rg{...}` submits directly. Flags are checked against SHA-256 hashes. Clearing the board opens `contact.rg` and shows my email, GitHub and LinkedIn.
-- **Normal site.** `/site/` has the same content as a plain portfolio page, linked from the editor's tab bar, the first-visit note and the help.
+- **Normal portfolio.** `/` has the same content as a plain portfolio page. It links to the interactive version from the hero callout, the nav and the footer; the editor links back from its tab bar, the first-visit note and the help.
 - **A real interpreter.** `assets/rg.js` tokenizes, parses and renders rg. It never throws on half-typed code, which is what lets the preview update while the code is still being written.
 - **Vim touches.** Line numbers, cursor line, `~` past the end of the file, a mode indicator, a status line and a command line (`:e`, `:e!`, `:b 3`, `:bn`, `:ls`, `:w`, `:help`, `:12`) and search (`/pattern`, `n`, `N`). `j`/`k`, `gg`/`G` and `Ctrl-d`/`Ctrl-u` move the cursor.
 - **Phones.** One pane at a time with a Preview / Code switch; the preview shows first.
-- **No JavaScript.** Every section is prerendered into `index.html`, so search engines and visitors without JavaScript get the full content as a plain page.
+- **No JavaScript.** Every section is prerendered into `interactive/index.html`, so search engines and visitors without JavaScript get the full content as a plain page.
 
 ## The rg language
 
@@ -54,10 +54,10 @@ Block kinds: `profile`, `job`, `project`, `item`, `skills`, `entry`, `contact`.
 ## Editing content
 
 1. Edit the files in `src/*.rg`.
-2. Run `node tools/build.mjs`. It writes `assets/sources.js` (what the editor loads) and prerenders every section into `index.html`.
-3. If you changed `assets/styles.css` (editor) or `assets/site.css` (normal site), run `python3 tools/inline-css.py`. It inlines each stylesheet into its pages and updates the CSP hashes in `_headers`.
+2. Run `node tools/build.mjs`. It writes `assets/sources.js` (what the editor loads) and prerenders every section into `interactive/index.html`.
+3. If you changed `assets/styles.css` (editor) or `assets/site.css` (normal portfolio), run `python3 tools/inline-css.py`. It inlines each stylesheet into its pages and updates the CSP hashes in `_headers`.
 
-The normal site's pages (`site/index.html`, `site/projects.html`) are plain HTML; edit them directly.
+The normal portfolio's pages (`index.html`, `projects.html`) are plain HTML; edit them directly.
 
 ## Tech
 

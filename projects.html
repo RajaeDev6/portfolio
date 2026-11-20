@@ -10,7 +10,7 @@
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="theme-color" content="#101012" />
   <meta name="color-scheme" content="dark" />
-  <link rel="canonical" href="https://rajaedev.space/site/projects" />
+  <link rel="canonical" href="https://rajaedev.space/projects" />
   <link rel="icon" type="image/png" href="/assets/favicon.png" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
 
@@ -19,7 +19,7 @@
   <meta property="og:site_name" content="Rajae Givans" />
   <meta property="og:title" content="Projects | Rajae Givans" />
   <meta property="og:description" content="Software engineer in Kingston, Jamaica building full-stack web and mobile apps, APIs and security tools. Projects include Shop Weh, EStore Trust, Sequik and Chichi Bus." />
-  <meta property="og:url" content="https://rajaedev.space/site/projects" />
+  <meta property="og:url" content="https://rajaedev.space/projects" />
   <meta property="og:image" content="https://rajaedev.space/assets/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -32,7 +32,7 @@
 
   <link rel="preload" href="/assets/fonts/nunito-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
 
-  <!-- Inlined from assets/styles.css by tools/inline-css.py: edit that file, then run the script -->
+  <!-- Inlined from assets/site.css by tools/inline-css.py: edit that file, then run the script -->
   <style>
 /*
  * Dark and plain. Nunito Sans throughout, one blue accent.
@@ -220,6 +220,20 @@ footer { border-top: 1px solid var(--line); }
 
 /* Link back to the interactive version */
 .nav-links a.nav-editor { color: var(--accent-text); }
+
+/* Invitation to the interactive version (home hero) */
+.try-interactive { display: flex; gap: 24px; align-items: center; margin-top: 48px; padding: 20px; background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: var(--r); transition: border-color .15s var(--ease); }
+.try-interactive:hover { border-color: var(--muted); border-left-color: var(--accent); }
+.try-code { flex: none; padding: 14px 16px; border-radius: 10px; background: var(--bg); border: 1px solid var(--line); font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; line-height: 22px; color: var(--sub); white-space: nowrap; }
+.try-code .k { color: var(--accent-text); }
+.try-code .s { color: #9fd18b; }
+.try-text { display: flex; flex-direction: column; gap: 6px; }
+.try-label { font-size: 13px; line-height: 20px; font-weight: 700; color: var(--accent-text); text-transform: uppercase; letter-spacing: 0.06em; }
+.try-title { font-size: 20px; line-height: 28px; font-weight: 800; }
+.try-line { font-size: 15px; line-height: 23px; color: var(--sub); max-width: 36rem; }
+.try-interactive .link { margin-top: 4px; }
+.try-interactive:hover .link .icon { transform: translate(2px, -2px); }
+@media (max-width: 600px) { .try-code { display: none; } }
   </style>
   <script src="/assets/site.js" defer></script>
 </head>
@@ -237,16 +251,17 @@ footer { border-top: 1px solid var(--line); }
 <!-- NAV -->
 <header class="nav">
   <nav class="nav-inner" aria-label="Main">
-    <a href="/site/" class="brand">Rajae Givans</a>
+    <a href="/" class="brand">Rajae Givans</a>
     <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
       <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
     </button>
     <div class="nav-links" id="nav-links">
-      <a href="/site/#experience">Experience</a>
-      <a href="/site/#projects" aria-current="page">Projects</a>
-      <a href="/site/#security">Security Projects</a>
-      <a href="/site/#skills">Skills</a>
-      <a href="/site/#contact">Contact</a>
+      <a href="/#experience">Experience</a>
+      <a href="/#projects" aria-current="page">Projects</a>
+      <a href="/#security">Security Projects</a>
+      <a href="/#skills">Skills</a>
+      <a href="/#contact">Contact</a>
+      <a href="/interactive/" class="nav-editor">Interactive version</a>
     </div>
   </nav>
 </header>
@@ -254,7 +269,7 @@ footer { border-top: 1px solid var(--line); }
 <main>
 
 <section class="section page-head">
-  <a class="back" href="/site/"><svg class="icon" aria-hidden="true"><use href="#i-back"/></svg>Home</a>
+  <a class="back" href="/"><svg class="icon" aria-hidden="true"><use href="#i-back"/></svg>Home</a>
   <h1>Projects</h1>
   <p class="lead">Things I’ve built, from apps people use every day to security tools.</p>
 </section>
@@ -421,7 +436,7 @@ footer { border-top: 1px solid var(--line); }
 <footer>
   <div class="footer-inner">
     <span>© <span id="year">2026</span> Rajae Givans</span>
-    <a href="/site/">Home</a>
+    <a href="/">Home</a>
   </div>
 </footer>
 

@@ -4,15 +4,15 @@
 Stylesheets are inlined so they don't block the first render. Edit the .css file, then run:
     python3 tools/inline-css.py
 
-  assets/styles.css  ->  index.html               (the editor)
-  assets/site.css    ->  site/index.html, site/projects.html   (the normal site)
+  assets/styles.css  ->  interactive/index.html   (the interactive version)
+  assets/site.css    ->  index.html, projects.html   (the normal portfolio)
 """
 import base64, hashlib, pathlib, re
 
 root = pathlib.Path(__file__).resolve().parent.parent
 PAGES = {
-    "assets/styles.css": ["index.html"],
-    "assets/site.css": ["site/index.html", "site/projects.html"],
+    "assets/styles.css": ["interactive/index.html"],
+    "assets/site.css": ["index.html", "projects.html"],
 }
 
 hashes = []
