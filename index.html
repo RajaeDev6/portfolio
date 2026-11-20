@@ -274,19 +274,14 @@ footer { border-top: 1px solid var(--line); }
 /* Link back to the interactive version */
 .nav-links a.nav-editor { color: var(--accent-text); }
 
-/* Invitation to the interactive version (home hero) */
-.try-interactive { display: flex; gap: 24px; align-items: center; margin-top: 48px; padding: 20px; background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: var(--r); transition: border-color .15s var(--ease); }
-.try-interactive:hover { border-color: var(--muted); border-left-color: var(--accent); }
-.try-code { flex: none; padding: 14px 16px; border-radius: 10px; background: var(--bg); border: 1px solid var(--line); font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; line-height: 22px; color: var(--sub); white-space: nowrap; }
-.try-code .k { color: var(--accent-text); }
-.try-code .s { color: #9fd18b; }
-.try-text { display: flex; flex-direction: column; gap: 6px; }
-.try-label { font-size: 13px; line-height: 20px; font-weight: 700; color: var(--accent-text); text-transform: uppercase; letter-spacing: 0.06em; }
-.try-title { font-size: 20px; line-height: 28px; font-weight: 800; }
-.try-line { font-size: 15px; line-height: 23px; color: var(--sub); max-width: 36rem; }
-.try-interactive .link { margin-top: 4px; }
-.try-interactive:hover .link .icon { transform: translate(2px, -2px); }
-@media (max-width: 600px) { .try-code { display: none; } }
+/* Suggestion pointing at the Interactive version link (menu button on phones) */
+.nav-inner { position: relative; }
+.nav-tip { position: absolute; top: calc(100% - 4px); right: var(--gutter); display: flex; align-items: center; gap: 4px; padding: 6px 6px 6px 14px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-size: 14px; line-height: 20px; font-weight: 700; white-space: nowrap; }
+.nav-tip[hidden] { display: none; }
+.nav-tip::before { content: ''; position: absolute; top: -5px; right: 64px; width: 10px; height: 10px; background: var(--accent); transform: rotate(45deg); }
+.nav-tip button { display: inline-grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 0; border-radius: 50%; background: none; color: inherit; cursor: pointer; font-size: 14px; }
+.nav-tip button:hover { background: rgb(255 255 255 / 0.18); }
+@media (max-width: 720px) { .nav-tip::before { right: 15px; } .nav-links.open ~ .nav-tip { display: none; } }
   </style>
   <script src="/assets/site.js" defer></script>
 </head>
@@ -320,6 +315,7 @@ footer { border-top: 1px solid var(--line); }
       <a href="#contact">Contact</a>
       <a href="/interactive/" class="nav-editor">Interactive version</a>
     </div>
+    <div class="nav-tip" id="nav-tip" hidden><span>Try the interactive version</span><button type="button" id="nav-tip-close" aria-label="Dismiss"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
   </nav>
 </header>
 
@@ -345,16 +341,6 @@ footer { border-top: 1px solid var(--line); }
       </div>
     </div>
   </div>
-
-  <a class="try-interactive" href="/interactive/">
-    <span class="try-code" aria-hidden="true"><span class="k">project</span> portfolio {<br>&nbsp;&nbsp;<span class="k">mode</span> <span class="s">"interactive"</span><br>}</span>
-    <span class="try-text">
-      <span class="try-label">Interactive version</span>
-      <span class="try-title">This portfolio, as a code editor</span>
-      <span class="try-line">The same content written in rg, a small language I made. Edit the code and watch the page change, or hunt for the four flags in the CTF hidden inside.</span>
-      <span class="link">Open the interactive version<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
-    </span>
-  </a>
 </section>
 
 <!-- EXPERIENCE -->

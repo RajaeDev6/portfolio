@@ -37,3 +37,15 @@ document.querySelectorAll('[data-email]').forEach((a) => {
   const [user, domain] = a.dataset.email.split('|');
   a.href = `mailto:${user}@${domain}`;
 });
+
+// Suggest the interactive version once, pointing at its nav link. Hidden for good once closed or used.
+const tip = document.getElementById('nav-tip');
+if (tip) {
+  const KEY = 'rg-tip';
+  let seen = false;
+  try { seen = localStorage.getItem(KEY) === 'closed'; } catch {}
+  const close = () => { tip.hidden = true; try { localStorage.setItem(KEY, 'closed'); } catch {} };
+  if (!seen) tip.hidden = false;
+  document.getElementById('nav-tip-close').addEventListener('click', close);
+  document.querySelector('.nav-editor').addEventListener('click', close);
+}
